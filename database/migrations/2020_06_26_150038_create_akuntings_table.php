@@ -20,6 +20,7 @@ class CreateAkuntingsTable extends Migration
             $table->date('date');
             $table->boolean('status');
             $table->string('description')->nullable();
+            $table->bigInteger('id_customer')->unsigned()->nullable();
             $table->timestamps();
         });
     }

@@ -37,8 +37,20 @@
                                 @endforeach
                             </td>
                             <td>
-                                <a href="{{ route('filling', $customer->id) }}" class="btn btn-primary">Pemberkasan</a>
-                                <a href="{{ route('pemberkasan.show', $customer->id) }}" class="btn btn-primary">Detail</a>
+                                @if ($customer->status_dp !== 0)
+                                <a href="" class="btn btn-success btn-sm">Sudah DP</a>
+                                @else
+                                <button type="button" class="btn btn-danger btn-sm id_customer" data-toggle="modal"
+                                data-target="#modals-dp" data-id="{{ $customer->id }}" id="id_customer" >Pelunasan DP</button>
+                                @endif
+                                @if ($customer->status_dp !== 0)
+                                <a href="{{ route('filling', $customer->id) }}" class="btn btn-warning btn-sm">Pemberkasan</a>
+                                @else
+                                <a href="javascript: void(0)"
+                                        class="btn btn-sm btn-primary" onclick="return alert('Harap melunasi DP terlebih dahulu')">Pemberkasan</a>
+                                @endif
+                                
+                                <a href="{{ route('pemberkasan.show', $customer->id) }}" class="btn btn-primary btn-sm">Detail</a>
                             </td>
                         </tr>
                     @endforeach
@@ -47,8 +59,56 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="modals-dp">
+    <div class="modal-dialog">
+        <form class="modal-content" method="post" action="{{ route('customer.payDP') }}">
+        @csrf
+            <div class="modal-header">
+                <h5 class="modal-title">Pembayaran
+                    <span class="font-weight-light">Uang Tanda Jadi</span>
+                    <br>
+                </h5>
+                <a type="button" class="close" data-dismiss="modal" aria-label="Close">×</a>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label class="form-label">ID</label>
+                        <input type="text" class="form-control" id="id_customer_input" name="id_customer">
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col mb-0">
+                        <label class="form-label">Total Uang Muka</label>
+                        <input type="text" class="form-control input-dp" name="total_dp">
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a type="button" class="btn btn-default" data-dismiss="modal">Close</a>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="{{ asset('assets/js/money.js') }}"></script>
 
 <script>
     $('#filing-table').DataTable({});
+    $(document).on("click",".id_customer", function(){
+        var idCustomer = $(this).data('id');
+        $('#id_customer_input').val(idCustomer);
+
+    });
+    $(document).ready(function () {
+        $(".input-dp").maskMoney({
+            thousands: '.',
+            decimal: ',',
+            affixesStay: false,
+            precision: 0
+        });
+    });
 </script>
 @endsection

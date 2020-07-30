@@ -26,6 +26,7 @@ Route::resource('customer', 'CustomerController');
 Route::get('customer/{id}/choose','CustomerController@choose')->name('choose_house');
 Route::post('customer/store_house','CustomerController@store_house')->name('store_house');
 Route::post('customer/utj','CustomerController@payUTJ')->name('customer.pay');
+Route::post('customer/dp','CustomerController@payDP')->name('customer.payDP');
 
 Route::resource('pemberkasan', 'FilingController');
 Route::get('pemberkasan/{id}/isi','FilingController@filling')->name('filling');
@@ -44,3 +45,8 @@ Route::get('pengeluaran', 'ReportController@spending')->name('spending');
 
 Route::resource('permission', 'PermissionController');
 Route::resource('kategori-transaksi', 'CategoryTransaksiController');
+
+//Chart
+Route::get('/incomeChart', 'ChartController@incomeChart')->name('incomeChart');
+Route::get('/outcomeChart', 'ChartController@outcomeChart')->name('outcomeChart');
+Route::get('/statusHouse', 'ChartController@statusHouse')->name('statusHouse');

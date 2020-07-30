@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('content')
-<h4 class="font-weight-bold py-3 mb-0">Blok Rumah</h4>
+<h4 class="font-weight-bold py-3 mb-0">Perumahan</h4>
 <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#"><i class="feather icon-home"></i></a></li>
         <li class="breadcrumb-item"><a href="#!">Projek</a></li>
-        <li class="breadcrumb-item active"><a href="#!">Blok Rumah</a></li>
+        <li class="breadcrumb-item active"><a href="#!">Perumahan</a></li>
     </ol>
 </div>
 
@@ -13,14 +13,14 @@
     <div class="col-md-4">
         <div class="card">
             <div class="card-header">
-                <h5>Tambah Blok Baru</h5>
+                <h5>Tambah Perumahan Baru</h5>
             </div>
             <div class="card-body">
                 <form action="" method="post">
                     @csrf
                     <div class="form-group">
-                        <label for="">Nama Blok</label>
-                        <input type="text" name="block_name" class="form-control @error('block_name') is-invalid @enderror" id="block_name">
+                        <label for="">Nama Perumahan</label>
+                        <input type="text" name="block_name" class="form-control @error('block_name') is-invalid @enderror" id="block_name" placeholder="Masukan Nama Perumahan">
                         @error('block_name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -28,7 +28,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-primary btn-round ">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -37,7 +37,7 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-header">
-                <h5>Tabel Blok</h5>
+                <h5>Tabel Perumahan</h5>
             </div>
             <div class="card-body">
                 <div class="table-responsive text-center">
@@ -45,7 +45,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama Blok</th>
+                                <th>Nama Perumahan</th>
                                 <th>Opsi</th>
                             </tr>
                         </thead>

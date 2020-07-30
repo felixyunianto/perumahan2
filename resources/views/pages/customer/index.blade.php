@@ -147,13 +147,13 @@
     $('#report-table').DataTable({});
     // DataTable end
     $(document).ready(function () {
-      $(".input-utj").maskMoney({
-          thousands: '.',
-          decimal: ',',
-          affixesStay: false,
-          precision: 0
-      });
-  });
+        $(".input-utj").maskMoney({
+            thousands: '.',
+            decimal: ',',
+            affixesStay: false,
+            precision: 0
+        });
+    });
 
 </script>
 <script src="{{ asset('assets/js/money.js') }}"></script>

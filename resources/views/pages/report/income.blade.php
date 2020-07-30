@@ -51,7 +51,7 @@
                         <tr>
                             <td>{{ $no++ }}</td>
                             <td>{{ $income->name }}</td>
-                            <td>{{ date('d M Y', strtotime($income->date,)) }}</td>
+                            <td>{{ date('d F Y', strtotime($income->date)) }}</td>
                             <td>Rp. {{ number_format($income->price,2,',','.') }}</td>
                         </tr>
                     @endforeach

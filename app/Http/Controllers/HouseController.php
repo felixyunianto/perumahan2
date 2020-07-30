@@ -58,9 +58,13 @@ class HouseController extends Controller
     public function destroy($rumah){
         $this->authorize('house');
         $house = House::findOrFail($rumah);
-        $house->delete();
+        if($house->status_process == 'Kosong' ){
+            $house->delete();
 
-        return redirect()->route('rumah.index')->with('success', 'Data berhasil dihapus!');
+            return redirect()->route('rumah.index')->with('success', 'Data berhasil dihapus!');
+        }else{
+            return redirect()->route('rumah.index')->with('warning', 'Maaf rumah sudah dipesan!');
+        }
     }
 
     public function edit($rumah){

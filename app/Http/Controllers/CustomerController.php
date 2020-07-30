@@ -168,22 +168,96 @@ class CustomerController extends Controller
 
         $customer = Customer::where('id', $request->id_customer)->first();
 
-        $customer->update([
-            'utj_status' => 1
-        ]);
-
         $price = (int)str_replace(".","",$request->input('total-utj'));
+        if($price >= 7500000){
+            $customer->update([
+                'utj_status' => 1,
+                'status_dp' => 1,
+            ]);
+
+            $utj = Akunting::create([
+                'name' => 'UTJ atas nama '. $customer->name,
+                'price' => $price,
+                'date' => date('Y-m-d'),
+                'status' => 1,
+                'description' => 'Pembayaran UTJ dan DP atas nama ' . $customer->name,
+                'category_id' => 1,
+                'id_customer' => $request->id_customer
+            ]);
+        }else{
+            $customer->update([
+                'utj_status' => 1,
+            ]);
+
+            $utj = Akunting::create([
+                'name' => 'UTJ atas nama '. $customer->name,
+                'price' => $price,
+                'date' => date('Y-m-d'),
+                'status' => 1,
+                'description' => 'Pembayaran UTJ atas nama ' . $customer->name,
+                'category_id' => 1,
+                'id_customer' => $request->id_customer
+            ]);
+        }
+
         
 
-        $utj = Akunting::create([
-            'name' => 'UTJ atas nama '. $customer->name,
-            'price' => $price,
-            'date' => date('Y-m-d'),
-            'status' => 1,
-            'description' => 'Pembayaran UTJ atas nama ' . $customer->name,
-            'category_id' => 1
-        ]);
-
         return redirect()->route('customer.index')->with('success', 'Pembayaran UTJ telah berhasil');
+    }
+
+    public function payDP(Request $request){
+        $this->authorize('pelanggan');
+        $rule = [
+            'total_dp' => 'required'
+        ];
+        
+        $message = [
+            'required' => 'Bidang :attribute tidak boleh kosong!'
+        ];
+
+        $this->validate($request, $rule, $message);
+
+        $customer = Customer::where('id', $request->id_customer)->first();
+        $statusDP = Akunting::where('id_customer', $request->id_customer)->sum('price');
+        
+        $price = (int)str_replace(".","",$request->input('total_dp'));
+        
+        $canFilling = $statusDP + $price;
+        
+        if((int)$canFilling >= 7500000){
+            $customer->update([
+                'utj_status' => 1,
+                'status_dp' => 1
+            ]);
+
+            $dp = Akunting::create([
+                'name' => 'DP atas nama '. $customer->name,
+                'price' => $price,
+                'date' => date('Y-m-d'),
+                'status' => 1,
+                'description' => 'Pelunasan DP atas nama ' . $customer->name,
+                'category_id' => 1,
+                'id_customer' => $request->id_customer
+            ]);
+        }else{
+            $customer->update([
+                'utj_status' => 1,
+                'status_dp' => 1
+            ]);
+
+            $dp = Akunting::create([
+                'name' => 'DP atas nama '. $customer->name,
+                'price' => $price,
+                'date' => date('Y-m-d'),
+                'status' => 1,
+                'description' => 'Pembayarab DP atas nama ' . $customer->name,
+                'category_id' => 1,
+                'id_customer' => $request->id_customer
+            ]);
+        }
+
+        
+
+        return redirect()->route('pemberkasan.index')->with('success', 'Pembayaran DP telah berhasil');
     }
 }

@@ -17,7 +17,7 @@
                 @foreach ($detail_house as $dp)
                     <tr>
                         <td>Rumah</td>
-                        <td style="text-align:center">{{ $dp->house->name }}</td>
+                        <td style="text-align:center">{{ $dp->house->block->name_block .' '.$dp->house->name }}</td>
                     </tr>
                 @endforeach
                 @foreach ($filings as $filing)

@@ -6,3 +6,4 @@
 <script src="{{asset('assets/js/material-ripple.js')}}"></script>
 <script src="{{asset('assets/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
 <script src="{{asset('assets/js/demo.js')}}"></script>
+@yield('script')

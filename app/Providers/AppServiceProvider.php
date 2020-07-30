@@ -28,7 +28,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
-        $notYet = Customer::with('filing')->where('file_status', 0)->get();
-        View::share('notYet', $notYet);
+        if(!Schema::hasTable('customers')){
+            return;
+        }else{
+            $notYet = Customer::with('filing')->where('file_status', 0)->get();
+            View::share('notYet', $notYet);
+        }
+        
     }
 }

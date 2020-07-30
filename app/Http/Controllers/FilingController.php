@@ -152,12 +152,12 @@ class FilingController extends Controller
 
     public function show($id){
         $this->authorize('pemberkasan');
-        $detail_house = DetailHouse::where('customer_id', $id)->get();
+        $detail_house = DetailHouse::with(['house', 'house.block'])->where('customer_id', $id)->get();
+        
         $customers = Customer::find($id);
         
         $filings = Filing::where('customer_id', $id)->get();
         
-
         return view('pages.filing.show', compact('customers','filings','detail_house'));
     }
 
