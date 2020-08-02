@@ -19,7 +19,6 @@ class CustomerController extends Controller
 
     public function index(){
         $this->authorize('pelanggan');
-
         $confirmed = Customer::where('file_status', 1)->count();
         $not_yet_confirmed = Customer::where('file_status', 0)->count();
         $customers = Customer::all();
@@ -218,11 +217,14 @@ class CustomerController extends Controller
         $this->validate($request, $rule, $message);
 
         $customer = Customer::where('id', $request->id_customer)->first();
-        $statusDP = Akunting::where('id_customer', $request->id_customer)->sum('price');
+        
+        $statusDP = Akunting::select(
+            \DB::raw('sum(price) as price')
+        )->where('id_customer', $request->id_customer)->first();
         
         $price = (int)str_replace(".","",$request->input('total_dp'));
         
-        $canFilling = $statusDP + $price;
+        $canFilling = $statusDP->price + $price;
         
         if((int)$canFilling >= 7500000){
             $customer->update([
