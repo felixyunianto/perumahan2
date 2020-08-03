@@ -37,13 +37,13 @@
                                 @endforeach
                             </td>
                             <td>
-                                @if ($customer->status_dp !== 0)
+                                @if ($customer->dp_status !== 0)
                                 <a href="" class="btn btn-success btn-sm">Sudah DP</a>
                                 @else
                                 <button type="button" class="btn btn-danger btn-sm id_customer" data-toggle="modal"
                                 data-target="#modals-dp" data-id="{{ $customer->id }}" id="id_customer" >Pelunasan DP</button>
                                 @endif
-                                @if ($customer->status_dp !== 0)
+                                @if ($customer->dp_status !== 0)
                                 <a href="{{ route('filling', $customer->id) }}" class="btn btn-warning btn-sm">Pemberkasan</a>
                                 @else
                                 <a href="javascript: void(0)"

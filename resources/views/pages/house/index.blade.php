@@ -11,7 +11,7 @@
 <div class="card">
   <div class="card-body">
     <div>
-      <a href="{{ route('rumah.create') }}" class="btn btn-primary float-right">Tambah</a>
+      <a href="{{ route('rumah.create') }}" class="btn btn-success btn-sm float-right">Tambah</a>
     </div><br><br>
     <hr>
     <div class="table-responsive text-center">

@@ -25,6 +25,7 @@ class FilingController extends Controller
     public function filling($id){
         $this->authorize('pemberkasan');
         $customers = Customer::find($id);
+        $detail_house = DetailHouse::where('customer_id', $id)->get();
         $filings = Filing::where('customer_id', $id)->firstOrFail();
 
         return view('pages.filing.create', compact('customers','filings'));
@@ -36,7 +37,7 @@ class FilingController extends Controller
         
         $photos = $filings->photos;
         if($request->photos){
-            $photos = $request->file('photos')->store('photos');
+            $photos = $request->file('photos')->store('file_customer/photos');
             $photo_path = $filings->photos;
             if(Storage::exists($photo_path)) {
                 Storage::delete($photo_path);
@@ -45,7 +46,7 @@ class FilingController extends Controller
 
         $fc_id_card = $filings->fc_id_card;
         if($request->fc_id_card){
-            $fc_id_card = $request->file('fc_id_card')->store('fc_id_card');
+            $fc_id_card = $request->file('fc_id_card')->store('file_customer/fc_id_card');
             $fc_id_card_path = $filings->fc_id_card;
             if(Storage::exists($fc_id_card_path)) {
                 Storage::delete($fc_id_card_path);
@@ -54,7 +55,7 @@ class FilingController extends Controller
 
         $fc_family_card = $filings->fc_family_card;
         if($request->fc_family_card){
-            $fc_family_card = $request->file('fc_family_card')->store('fc_family_card');
+            $fc_family_card = $request->file('fc_family_card')->store('file_customer/fc_family_card');
             $fc_family_card_path = $filings->fc_family_card;
             if(Storage::exists($fc_family_card_path)) {
                 Storage::delete($fc_family_card_path);
@@ -63,7 +64,7 @@ class FilingController extends Controller
 
         $fc_marriage_certificate = $filings->fc_marriage_certificate;
         if($request->fc_marriage_certificate){
-            $fc_marriage_certificate = $request->file('fc_marriage_certificate')->store('fc_marriage_certificate');
+            $fc_marriage_certificate = $request->file('fc_marriage_certificate')->store('file_customer/fc_marriage_certificate');
             $fc_marriage_certificate_path = $filings->fc_marriage_certificate;
             if(Storage::exists($fc_marriage_certificate_path)) {
                 Storage::delete($fc_marriage_certificate_path);
@@ -72,7 +73,7 @@ class FilingController extends Controller
 
         $fc_taxpayer_identification = $filings->fc_taxpayer_identification;
         if($request->fc_taxpayer_identification){
-            $fc_taxpayer_identification = $request->file('fc_taxpayer_identification')->store('fc_taxpayer_identification');
+            $fc_taxpayer_identification = $request->file('fc_taxpayer_identification')->store('file_customer/fc_taxpayer_identification');
             $fc_taxpayer_identification_path = $filings->fc_taxpayer_identification;
             if(Storage::exists($fc_taxpayer_identification_path)) {
                 Storage::delete($fc_taxpayer_identification_path);
@@ -81,7 +82,7 @@ class FilingController extends Controller
 
         $tax_status = $filings->tax_status;
         if($request->tax_status){
-            $tax_status = $request->file('tax_status')->store('tax_status');
+            $tax_status = $request->file('tax_status')->store('file_customer/tax_status');
             $tax_status_path = $filings->tax_status;
             if(Storage::exists($tax_status_path)) {
                 Storage::delete($tax_status_path);
@@ -90,7 +91,7 @@ class FilingController extends Controller
 
         $income = $filings->income;
         if($request->income){
-            $income = $request->file('income')->store('income');
+            $income = $request->file('income')->store('file_customer/income');
             $income_path = $filings->income;
             if(Storage::exists($income_path)) {
                 Storage::delete($income_path);
@@ -99,7 +100,7 @@ class FilingController extends Controller
 
         $current_account = $filings->current_account;
         if($request->current_account){
-          $current_account = $request->file('current_account')->store('current_account');
+          $current_account = $request->file('current_account')->store('file_customer/current_account');
           $current_account_path = $filings->current_account;
           if(Storage::exists($current_account_path)) {
             Storage::delete($current_account_path);
@@ -108,7 +109,7 @@ class FilingController extends Controller
 
         $saving = $filings->saving;
         if($request->saving){
-          $saving = $request->file('saving')->store('saving');
+          $saving = $request->file('saving')->store('file_customer/saving');
           $saving_path = $filings->saving;
           if(Storage::exists($saving_path)){
             Storage::delete($saving_path);
@@ -117,7 +118,7 @@ class FilingController extends Controller
 
         $ls_havent_house = $filings->ls_havent_house;
         if($request->ls_havent_house){
-          $ls_havent_house = $request->file('ls_havent_house')->store('ls_havent_house');
+          $ls_havent_house = $request->file('ls_havent_house')->store('file_customer/ls_havent_house');
           $ls_havent_house_path = $filings->ls_havent_house;
           if(Storage::exists($ls_havent_house_path)){
             Storage::delete($ls_havent_house_path);
@@ -146,6 +147,7 @@ class FilingController extends Controller
             'file_status' => 1
           ]);
         }
+
 
         return redirect()->route('pemberkasan.index');
     }

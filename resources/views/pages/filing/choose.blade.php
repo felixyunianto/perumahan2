@@ -50,7 +50,7 @@
                 @foreach ($detail_house as $dp)
                 <tr>
                     <td>Rumah</td>
-                    <td>{{ $dp->house->name }}</td>
+                    <td>{{ $dp->house->block->name_block.' Blok '.$dp->house->name }}</td>
                 </tr>
                 @endforeach
             </table>

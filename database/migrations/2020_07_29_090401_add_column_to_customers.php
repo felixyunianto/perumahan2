@@ -14,7 +14,9 @@ class AddColumnToCustomers extends Migration
     public function up()
     {
         Schema::table('customers', function (Blueprint $table) {
-            $table->boolean('status_dp')->default(false);
+            $table->boolean('dp_status')->default(false)->after('utj_status');
+            $table->boolean('sp3_status')->default(false)->after('dp_status');
+            $table->boolean('lpa_status')->default(false)->after('sp3_status');
         });
     }
 

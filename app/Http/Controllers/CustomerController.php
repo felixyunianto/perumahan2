@@ -149,7 +149,7 @@ class CustomerController extends Controller
             ]);
         }
 
-        return redirect()->route('pemberkasan.index')->with('success', 'Rumah berhasil dipilih!');
+        return redirect()->route('customer.index')->with('success', 'Rumah berhasil dipilih!');
     }
 
 
@@ -171,7 +171,7 @@ class CustomerController extends Controller
         if($price >= 7500000){
             $customer->update([
                 'utj_status' => 1,
-                'status_dp' => 1,
+                'dp_status' => 1,
             ]);
 
             $utj = Akunting::create([
@@ -229,7 +229,7 @@ class CustomerController extends Controller
         if((int)$canFilling >= 7500000){
             $customer->update([
                 'utj_status' => 1,
-                'status_dp' => 1
+                'dp_status' => 1
             ]);
 
             $dp = Akunting::create([
@@ -244,7 +244,6 @@ class CustomerController extends Controller
         }else{
             $customer->update([
                 'utj_status' => 1,
-                'status_dp' => 1
             ]);
 
             $dp = Akunting::create([
@@ -252,7 +251,7 @@ class CustomerController extends Controller
                 'price' => $price,
                 'date' => date('Y-m-d'),
                 'status' => 1,
-                'description' => 'Pembayarab DP atas nama ' . $customer->name,
+                'description' => 'Pembayaran DP atas nama ' . $customer->name,
                 'category_id' => 1,
                 'id_customer' => $request->id_customer
             ]);
@@ -261,5 +260,56 @@ class CustomerController extends Controller
         
 
         return redirect()->route('pemberkasan.index')->with('success', 'Pembayaran DP telah berhasil');
+    }
+
+    public function sp3(){
+        $customers = Customer::with('detail_house')->get();
+    
+        return view('pages.bank.sp3', compact('customers'));
+    }
+
+    public function updateSP3(Request $request){
+        $customer = Customer::where('id', $request->id_customer)->first();
+        $detail_house = DetailHouse::with('house')->where('customer_id', $request->id_customer)->first();
+        if ($request->sp3 == 1) {
+            $customer->update([
+                'sp3_status' => 1
+            ]);
+            $detail_house->house->update([
+                'status_process' => 'SP3'
+            ]);
+            return redirect()->route('sp3')->with('success', 'Sp3 telah berhasil');
+        } else {
+            $customer->update([
+                'sp3_status' => 0
+            ]);
+            return redirect()->route('sp3')->with('success', 'Pembatalan Sp3 telah berhasil');
+        }    
+    }
+
+    public function lpa(){
+        $customers = Customer::with('detail_house')->get();
+    
+        return view('pages.bank.lpa', compact('customers'));
+    }
+
+    public function updateLPA(Request $request){
+        $customer = Customer::where('id', $request->id_customer)->first();
+        $detail_house = DetailHouse::with('house')->where('customer_id', $request->id_customer)->first();
+        if ($request->lpa == 1) {
+            $customer->update([
+                'lpa_status' => 1
+            ]);
+
+            $detail_house->house->update([
+                'status_process' => 'ACC'
+            ]);
+            return redirect()->route('lpa')->with('success', 'LPA telah berhasil');
+        } else {
+            $customer->update([
+                'lpa_status' => 0
+            ]);
+            return redirect()->route('lpa')->with('success', 'Pembatalan LPA telah berhasil');
+        }    
     }
 }

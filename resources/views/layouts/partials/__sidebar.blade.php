@@ -52,6 +52,24 @@
             </a>
         </li>
         @endif
+        <li class="sidenav-item @if (Request::is('customer/sp3') || Request::is('customer/lpa')) active @endif">
+            <a href="javascript:" class="sidenav-link sidenav-toggle">
+                <i class="sidenav-icon lnr lnr-apartment"></i>
+                <div>Bank</div>
+            </a>
+            <ul class="sidenav-menu">
+                <li class="sidenav-item">
+                    <a href="{{ route('sp3') }}" class="sidenav-link">
+                        <div>SP3</div>
+                    </a>
+                </li>
+                <li class="sidenav-item ">
+                    <a href="{{ route('lpa') }}" class="sidenav-link">
+                        <div>LPA</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
         @if(Auth::user()->role->name == 'akuntansi' || Auth::user()->role->name == 'admin' )
         <li class="sidenav-item">
             <a href="{{ route('kategori-transaksi.index') }}" class="sidenav-link">
