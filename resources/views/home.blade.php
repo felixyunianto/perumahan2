@@ -12,7 +12,7 @@
     <div class="col-xl-6 col-md-12">
         <div class="card mb-4">
             <div class="card-header with-elements">
-                <h6 class="card-header-title mb-0">Statistik Pemasukan</h6>
+                <h6 class="card-header-title mb-0">Statistik Pemasukan & Pengeluaran</h6>
             </div>
             <div class="card-body">
                 <canvas id="canvas-income" height="280" width="600"></canvas>
@@ -22,80 +22,26 @@
     <div class="col-xl-6 col-md-12">
         <div class="card mb-4">
             <div class="card-header with-elements">
-                <h6 class="card-header-title mb-0">Statistik Pengeluaran</h6>
+                <h6 class="card-header-title mb-0">Status Rumah</h6>
             </div>
-            <div class="card-body">
-                <canvas id="canvas-out" height="280" width="600"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xl-6 col-md-12">
-        <div class="card mb-4">
-            <div class="card-header with-elements">
-                <h6 class="card-header-title mb-0">Status Proses</h6>
-            </div>
+
             <div class="row no-gutters row-bordered">
-                <div class="col-md-8 col-lg-12 col-xl-8">
+                <div class="col-md-12 col-lg-12 col-xl-12">
+                    <div class="justify-content-end m-3">
+                        <form action="{{ route('home') }}" method="get" id="block_chart">
+                            <select name="block_id" id="block_id" class="float-right">
+                                <option value="">Pilih</option>
+                                @foreach ($house as $h)
+                                <option value="{{ $h->id }}">{{ $h->name_block }}</option>
+                                @endforeach
+                            </select>
+                        </form>
+                    </div>
                     <div class="card-body">
-                        <canvas id="canvas-statusHouse" height="280" width="600"></canvas>
-                    </div>
-                </div>
-                <div class="col-md-4 col-lg-12 col-xl-4">
-                    <div class="card-body">
-
-                        <div class="row">
-                            <div class="col-6 col-xl-5 text-muted mb-3">Akad</div>
-                            <div class="col-6 col-xl-7 mb-3">
-                                <span class="text-big">{{ count($akad) }}</span>
-                            </div>
-                            <div class="col-6 col-xl-5 text-muted mb-3">ACC</div>
-                            <div class="col-6 col-xl-7 mb-3">
-                                <span class="text-big">{{ count($acc) }}</span>
-                            </div>
-                            <div class="col-6 col-xl-5 text-muted mb-3">Proses</div>
-                            <div class="col-6 col-xl-7 mb-3">
-                                <span class="text-big">{{ count($proses) }}</span>
-                            </div>
-                            <div class="col-6 col-xl-5 text-muted mb-3">Cash</div>
-                            <div class="col-6 col-xl-7 mb-3">
-                                <span class="text-big">{{ count($cash) }}</span>
-                            </div>
-                            <div class="col-6 col-xl-5 text-muted mb-3">Kosong</div>
-                            <div class="col-6 col-xl-7 mb-3">
-                                <span class="text-big">{{ count($kosong) }}</span>
-                            </div>
-                        </div>
-
+                        <canvas id="canvas-statusHouse" height="260" width="600"></canvas>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="col-xl-6 col-md-12">
-        <div class="card mb-4" style="height: 337px">
-            <div class="card-header with-elements">
-                <h6 class="card-header-title mb-0">Hutang / Piutang</h6>
-            </div>
-
-            <div class="card-body text-center">
-                <div class="row no-gutters row-bordered">
-                    <div class="col-6 col-xl-5 text-muted mb-3">Hutang</div>
-                    <div class="col-6 col-xl-7 mb-3">
-                        <span class="text-big">Rp. {{ number_format(1000000,0,'','.') }}</span>
-                    </div>
-                    <div class="col-6 col-xl-5 text-muted mb-3">Piutang</div>
-                    <div class="col-6 col-xl-7 mb-3">
-                        <span class="text-big">Rp. {{ number_format(2000000,0,'','.') }}</span>
-                    </div>
-                    <div class="col-6 col-xl-5 text-muted mb-3">Total</div>
-                    <div class="col-6 col-xl-7 mb-3">
-                        <span class="text-big">Rp. {{ number_format(1000000,0,'','.') }}</span>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 </div>
@@ -103,67 +49,55 @@
 
 @endsection
 @section('script')
+<script>
+
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js" charset="utf-8"></script>
+<script src="https://rawgit.com/beaver71/Chart.PieceLabel.js/master/build/Chart.PieceLabel.min.js"></script>
 <script>
     var urlIncome = "{{ route('incomeChart') }}";
-    var urlOutCome = "{{ route('outcomeChart') }}";
     var urlStatusHouse = "{{ route('statusHouse') }}";
 
-    
-        $(document).ready(function () {
-            $.get(urlIncome, function (response) {
-                var Years = new Array('', 'Januari', 'Februari', 'Maret', 'Mei', 'Juni',
-                    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember');
-                var Labels = new Array();
-                var Prices = new Array();
-                response.forEach(function (dataIncome) {
-                    Prices.push(dataIncome);
-                });
-                var ctx = document.getElementById("canvas-income").getContext('2d');
-                var myChart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: Years,
-                        datasets: [{
-                            label: "Laporan Pemasukan",
-                            data: Prices,
+
+
+    $(document).ready(function () {
+        $.get(urlIncome, function (response) {
+            var Years = new Array('Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember');
+            var Labels = new Array();
+            var priceIn = new Array();
+            var priceOut = new Array();
+
+            response[0].forEach(function (data) {
+                priceIn.push(data)
+                console.log('Data Masuk ' + data);
+            });
+
+            response[1].forEach(function (data) {
+                priceOut.push(data)
+                console.log('Data Keluar ' + data);
+            });
+
+            var ctx = document.getElementById("canvas-income").getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: Years,
+                    datasets: [{
+                            label: "Pemasukan",
+                            data: priceIn,
                             borderWidth: 1,
-                            borderColor: "#62d493",
-                            backgroundColor: "#62d493",
+                            borderColor: "#55bae7",
+                            backgroundColor: "#55bae7",
                             pointBackgroundColor: "#55bae7",
                             pointBorderColor: "#55bae7",
                             pointHoverBackgroundColor: "#55bae7",
                             pointHoverBorderColor: "#55bae7",
                             fill: false
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true
-                                }
-                            }]
-                        }
-                    }
-                });
-            })
-            $.get(urlOutCome, function (response) {
-                var Years = new Array('', 'Januari', 'Februari', 'Maret', 'Mei', 'Juni',
-                    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember');
-                var Labels = new Array();
-                var Prices = new Array();
-                response.forEach(function (dataOutcome) {
-                    Prices.push(dataOutcome);
-                });
-                var ctx = document.getElementById("canvas-out").getContext('2d');
-                var myChart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: Years,
-                        datasets: [{
-                            label: "Laporan Pengeluaran",
-                            data: Prices,
+                        },
+                        {
+                            label: "Pengeluaran",
+                            data: priceOut,
                             borderWidth: 1,
                             borderColor: "#FF6941",
                             backgroundColor: "#FF6941",
@@ -172,20 +106,42 @@
                             pointHoverBackgroundColor: "#FF4A00",
                             pointHoverBorderColor: "#FF4A00",
                             fill: false
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true
-                                }
-                            }]
                         }
+                    ]
+                },
+                options: {
+                    tooltips: {
+                        callbacks: {
+                            label: function (t, d) {
+                                var xLabel = d.datasets[t.datasetIndex].label;
+                                var yLabel = t.yLabel >= 1000 ? 'Rp.' + t.yLabel.toString()
+                                    .replace(/\B(?=(\d{3})+(?!\d))/g, ".") : '$' + t.yLabel;
+                                return xLabel + ': ' + yLabel;
+                            }
+                        }
+                    },
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                callback: function (value, index, values) {
+                                    if (parseInt(value) >= 1000) {
+                                        return 'Rp.' + value.toString().replace(
+                                            /\B(?=(\d{3})+(?!\d))/g, ".");
+                                    } else {
+                                        return 'Rp.' + value;
+                                    }
+                                },
+                                beginAtZero: true
+                            }
+                        }]
                     }
-                });
-            })
-
+                }
+            });
+        })
 
         $.get(urlStatusHouse, function (response) {
             var Total = new Array();
@@ -193,28 +149,100 @@
             var Labels = new Array();
             response.forEach(function (dataStatusHouse) {
                 Total.push(dataStatusHouse.total);
-                statusProcess.push(dataStatusHouse.status_process);
+                statusProcess.push(dataStatusHouse.status_process + ' = ' + dataStatusHouse
+                    .total);
             });
             var ctx = document.getElementById("canvas-statusHouse").getContext('2d');
             var myChart = new Chart(ctx, {
                 type: 'pie',
                 data: {
-                    labels: statusProcess,
+                    labels: ['Akad', 'ACC', 'SP3', 'Proses', 'Cash', 'Kosong'],
                     datasets: [{
-                        label: "Laporan Pengeluaran",
                         data: Total,
                         backgroundColor: ["#0074D9", "#FF4136", "#2ECC40",
-                            "#FF851B", "#7FDBFF", "#B10DC9", "#FFDC00",
-                            "#001f3f", "#39CCCC", "#01FF70", "#85144b",
-                            "#F012BE", "#3D9970", "#111111", "#AAAAAA"
+                            "#FF851B", "#7FDBFF", "#e9e9e9"
                         ]
                     }]
                 },
-                options: {}
+                options: {
+                    legend: {
+                        display: true,
+                        position: 'right'
+                    },
+                    pieceLabel: {
+                        render: 'value',
+                        fontColor: '#000',
+                        position: 'outside',
+                        segment: true
+                    },
+                }
             });
         })
-
     })
+
+    var chartStatusHouse = document.getElementById('block_id');
+    chartStatusHouse.addEventListener('change', function () {
+        $.get(urlStatusHouse + '?block_id=' + chartStatusHouse.options[chartStatusHouse.selectedIndex].value,
+            function (response) {
+                var Total = new Array();
+                var statusProcess = new Array();
+                var Labels = new Array();
+                response.forEach(function (dataStatusHouse) {
+                    Total.push(dataStatusHouse.total);
+                    statusProcess.push(dataStatusHouse.status_process + ' = ' + dataStatusHouse
+                        .total);
+                });
+                var ctx = document.getElementById("canvas-statusHouse").getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Akad', 'ACC', 'SP3', 'Proses', 'Cash', 'Kosong'],
+                        datasets: [{
+                            data: Total,
+                            backgroundColor: ["#0074D9", "#FF4136", "#2ECC40",
+                                "#FF851B", "#7FDBFF", "#e9e9e9"
+                            ]
+                        }]
+                    },
+                    options: {
+                        legend: {
+                            display: true,
+                            position: 'right'
+                        },
+                        pieceLabel: {
+                            render: 'value',
+                            fontColor: '#000',
+                            position: 'outside',
+                            segment: true
+                        },
+                    }
+                });
+
+            })
+    })
+
+    function number_format(number, decimals, dec_point, thousands_sep) {
+        number = (number + '').replace(',', '').replace(' ', '');
+        var n = !isFinite(+number) ? 0 : +number,
+            prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+            sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+            dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+            s = '',
+            toFixedFix = function (n, prec) {
+                var k = Math.pow(10, prec);
+                return '' + Math.round(n * k) / k;
+            };
+
+        s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+        if (s[0].length > 3) {
+            s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+        }
+        if ((s[1] || '').length < prec) {
+            s[1] = s[1] || '';
+            s[1] += new Array(prec - s[1].length + 1).join('0');
+        }
+        return s.join(dec);
+    }
 
 </script>
 @endsection

@@ -4,11 +4,6 @@
         <div class="pt-3">
             <span class="float-md-right d-none d-lg-block">&copy; 2020 PT.OMAH AGENG SENTOSA</span>
         </div>
-        <div>
-            <a href="javascript:" class="footer-link pt-3">About Us</a>
-            <a href="javascript:" class="footer-link pt-3 ml-4">Help</a>
-            <a href="javascript:" class="footer-link pt-3 ml-4">Contact</a>
-            <a href="javascript:" class="footer-link pt-3 ml-4">Terms &amp; Conditions</a>
-        </div>
+        
     </div>
 </nav>

@@ -17,8 +17,10 @@
     <link rel="stylesheet" href="{{asset('assets/css/bootstrap-material.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/shreerang-material.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/uikit.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/libs/perfect-scrollbar/perfect-scrollbar.css')}}">
+    {{-- <link rel="stylesheet" href="{{asset('assets/libs/perfect-scrollbar/perfect-scrollbar.css')}}"> --}}
     <link rel="stylesheet" href="{{asset('assets/css/pages/authentication.css')}}">
+    <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body>
@@ -105,18 +107,21 @@
 
         </div>
     </div>
+    
 
 
-    <script src="{{asset('assets/js/pace.js')}}"></script>
-    <script src="{{asset('assets/js/jquery-3.3.1.min.js')}}"></script>
-    <script src="{{asset('assets/libs/popper/popper.js')}}"></script>
-    <script src="{{asset('assets/js/bootstrap.js')}}"></script>
-    <script src="{{asset('assets/js/sidenav.js')}}"></script>
-    <script src="{{asset('assets/js/layout-helpers.js')}}"></script>
-    <script src="{{asset('assets/js/material-ripple.js')}}"></script>
-    <script src="{{asset('assets/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
-    <script src="{{asset('assets/js/demo.js')}}"></script>
-    <script src="{{asset('assets/js/analytics.js')}}"></script>
+    {{-- <script src="{{asset('assets/js/pace.js')}}"></script> --}}
+    {{-- <script src="{{asset('assets/js/jquery-3.3.1.min.js')}}"></script> --}}
+    {{-- <script src="{{asset('assets/libs/popper/popper.js')}}"></script> --}}
+    {{-- <script src="{{asset('assets/js/bootstrap.js')}}"></script> --}}
+    {{-- <script src="{{asset('assets/js/sidenav.js')}}"></script> --}}
+    {{-- <script src="{{asset('assets/js/layout-helpers.js')}}"></script> --}}
+    {{-- <script src="{{asset('assets/js/material-ripple.js')}}"></script> --}}
+    {{-- <script src="{{asset('assets/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script> --}}
+    {{-- <script src="{{asset('assets/js/demo.js')}}"></script> --}}
+    {{-- <script src="{{asset('assets/js/analytics.js')}}"></script> --}}
+    @include('sweet::alert')
+    
 </body>
 
 </html>

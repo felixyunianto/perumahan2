@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('content')
-<h4 class="font-weight-bold py-3 mb-0">LPA</h4>
+<h4 class="font-weight-bold py-3 mb-0">Akad</h4>
 <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#"><i class="feather icon-home"></i></a></li>
         <li class="breadcrumb-item"><a href="#!">Projek</a></li>
-        <li class="breadcrumb-item active"><a href="#!">LPA</a></li>
+        <li class="breadcrumb-item active"><a href="#!">Akad</a></li>
     </ol>
 </div>
 <div class="card">
@@ -37,19 +37,19 @@
                                 @endforeach
                             </td>
                             <td>
-                                <form action="{{ route('update.lpa') }}" method="post">
+                                <form action="{{ route('update.akad') }}" method="post">
                                     @csrf
                                     <input type="hidden" value="{{ $customer->id }}" name="id_customer">
                                     
-                                    @if ($customer->lpa_status !== 0)
-                                        <input type="hidden" value="0" name="lpa">
+                                    @if ($customer->akad_status !== 0)
+                                        <input type="hidden" value="0" name="akad">
                                         <button type="submit" class="btn btn-success btn-sm">
-                                            Lolos LPA
+                                            Telah Akad
                                         </button>
                                     @else
-                                        <input type="hidden" value="1" name="lpa">
+                                        <input type="hidden" value="1" name="akad">
                                         <button type="submit" class="btn btn-danger btn-sm">
-                                            LPA
+                                            AKAD
                                         </button>
                                     @endif
                                 </form>

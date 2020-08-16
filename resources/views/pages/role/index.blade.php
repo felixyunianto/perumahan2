@@ -62,8 +62,8 @@
                                         @csrf
                                         <input type="hidden" name="_method" value="DELETE">
                                     </form>
-                                    <a href="{{ route('role.edit', $role->id) }}" class="btn btn-warning btn-sm"><i class="feather icon-edit"></i>Edit</a>
-                                    <button class="btn btn-danger btn-sm" onclick="deleteRow({{$role->id}})"><i class="feather icon-trash"></i>Hapus</button>
+                                    <a href="{{ route('role.edit', $role->id) }}" class="btn btn-warning btn-sm btn-round"><i class="feather icon-edit"></i>Edit</a>
+                                    <button class="btn btn-danger btn-sm btn-round" onclick="deleteRow({{$role->id}})"><i class="feather icon-trash"></i>Hapus</button>
                                 </td>
                             </tr>
                             @endforeach

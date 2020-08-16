@@ -25,8 +25,12 @@ Route::get('delete-data', 'AuthorizationController@deleteData');
 Route::resource('customer', 'CustomerController')->except('show');
 Route::get('customer/{id}/choose','CustomerController@choose')->name('choose_house');
 Route::post('customer/store_house','CustomerController@store_house')->name('store_house');
+
 Route::post('customer/utj','CustomerController@payUTJ')->name('customer.pay');
 Route::post('customer/dp','CustomerController@payDP')->name('customer.payDP');
+Route::post('customer/lpa/update', 'CustomerController@payLPA')->name('customer.payLPA');
+
+Route::post('customer/fail-process','CustomerController@failProcess')->name('customer.fail');
 
 Route::resource('pemberkasan', 'FilingController');
 Route::get('pemberkasan/{id}/isi','FilingController@filling')->name('filling');
@@ -34,8 +38,8 @@ Route::get('pemberkasan/{id}/isi','FilingController@filling')->name('filling');
 Route::get('customer/sp3', 'CustomerController@sp3')->name('sp3');
 Route::post('customer/sp3/update', 'CustomerController@updateSP3')->name('update.sp3');
 
-Route::get('customer/lpa', 'CustomerController@lpa')->name('lpa');
-Route::post('customer/lpa/update', 'CustomerController@updateLPA')->name('update.lpa');
+Route::get('customer/akad', 'CustomerController@akad')->name('akad');
+Route::post('customer/akad/update', 'CustomerController@updateAkad')->name('update.akad');
 
 Route::resource('akunting', 'AkuntingController');
 

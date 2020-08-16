@@ -63,9 +63,9 @@
                                         @csrf
                                         <input type="hidden" name="_method" value="DELETE">
                                     </form>
-                                    <a href="{{ route('blok.edit', $block->id) }}" class="btn btn-warning btn-sm"><i
+                                    <a href="{{ route('blok.edit', $block->id) }}" class="btn btn-warning btn-sm btn-round"><i
                                             class="feather icon-edit"></i>Edit</a>
-                                    <button class="btn btn-danger btn-sm" onclick="deleteRow({{$block->id}})"><i
+                                    <button class="btn btn-danger btn-sm btn-round" onclick="deleteRow({{$block->id}})"><i
                                             class="feather icon-trash"></i>Hapus</button>
                                 </td>
                             </tr>

@@ -64,8 +64,8 @@
                     </a>
                 </li>
                 <li class="sidenav-item ">
-                    <a href="{{ route('lpa') }}" class="sidenav-link">
-                        <div>LPA</div>
+                    <a href="{{ route('akad') }}" class="sidenav-link">
+                        <div>Akad</div>
                     </a>
                 </li>
             </ul>

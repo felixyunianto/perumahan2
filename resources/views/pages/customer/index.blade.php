@@ -81,22 +81,27 @@
                                         <input type="hidden" name="_method" value="DELETE">
                                     </form>
                                     @if($customer->utj_status !== 0)
-                                    <a href="" class="btn btn-success btn-sm">Sudah UTJ</a>
+                                    <a href="" class="btn btn-success btn-sm  btn-round">Sudah UTJ</a>
                                     @else
-                                    <button type="button" class="btn btn-danger btn-sm id_customer" data-toggle="modal"
+                                    <button type="button" class="btn btn-danger btn-sm id_customer btn-round" data-toggle="modal"
                                         data-target="#modals-utj" data-id="{{ $customer->id }}" id="id_customer" >Belum UTJ</button>
 
                                     @endif
                                     @if($customer->utj_status !== 0)
                                     <a href="{{ route('choose_house', $customer->id) }}"
-                                        class="btn btn-sm btn-primary">Pilih Rumah</a>
+                                        class="btn btn-sm btn-info btn-round">Pilih Rumah</a>
                                     @else
                                     <a href="javascript: void(0)"
-                                        class="btn btn-sm btn-primary" onclick="return alert('Harap membayar UTJ terlebih dahulu')">Pilih Rumah</a>
+                                        class="btn btn-sm btn-info btn-round" onclick="return alert('Harap membayar UTJ terlebih dahulu')">Pilih Rumah</a>
                                     @endif
+                                    @if ($customer->akad_status == 0)
+                                    <button class="btn btn-primary btn-sm btn-round fail_customer" data-toggle="modal"
+                                    data-target="#modals-fail" data-id="{{ $customer->id }}" id="fail_customer">Gagal</button>    
+                                    @endif
+                                    
                                     <a href="{{ route('customer.edit', $customer->id) }}"
-                                        class="btn btn-warning btn-sm"> <i class="feather icon-edit"></i>Ubah</a>
-                                    <button onclick="deleteRow({{$customer->id}})" class="btn btn-danger btn-sm"><i
+                                        class="btn btn-warning btn-sm btn-round"> <i class="feather icon-edit"></i>Ubah</a>
+                                    <button onclick="deleteRow({{$customer->id}})" class="btn btn-danger btn-sm btn-round"><i
                                             class="feather icon-trash"></i>&nbsp;Hapus</button>
                                 </td>
                             </tr>
@@ -142,12 +147,54 @@
         </form>
     </div>
 </div>
+<div class="modal fade" id="modals-fail">
+    <div class="modal-dialog">
+        <form class="modal-content" method="post" action="{{ route('customer.fail') }}">
+        @csrf
+            <div class="modal-header">
+                <h5 class="modal-title">Nomimal
+                    <span class="font-weight-light">yang dikembalikan</span>
+                    <br>
+                </h5>
+                <a type="button" class="close" data-dismiss="modal" aria-label="Close">×</a>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label class="form-label">ID</label>
+                        <input type="text" class="form-control" id="id_customer_fail" name="id_customer">
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col mb-0">
+                        <label class="form-label">Total refund</label>
+                        <input type="text" class="form-control input-fail" name="total-fail">
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a type="button" class="btn btn-default" data-dismiss="modal">Close</a>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
 <script>
     // DataTable start
     $('#report-table').DataTable({});
     // DataTable end
     $(document).ready(function () {
         $(".input-utj").maskMoney({
+            thousands: '.',
+            decimal: ',',
+            affixesStay: false,
+            precision: 0
+        });
+    });
+    $(document).ready(function () {
+        $(".input-fail").maskMoney({
             thousands: '.',
             decimal: ',',
             affixesStay: false,
@@ -176,6 +223,13 @@
     $(document).on("click",".id_customer", function(){
         var idCustomer = $(this).data('id');
         $('#id_customer_input').val(idCustomer);
+
+    })
+
+    $(document).on("click",".fail_customer", function(){
+        var idCustomer = $(this).data('id');
+        console.log(idCustomer);
+        $('#id_customer_fail').val(idCustomer);
 
     })
     

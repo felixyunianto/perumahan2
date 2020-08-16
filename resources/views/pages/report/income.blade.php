@@ -52,14 +52,14 @@
                             <td>{{ $no++ }}</td>
                             <td>{{ $income->name }}</td>
                             <td>{{ date('d F Y', strtotime($income->date)) }}</td>
-                            <td>Rp. {{ number_format($income->price,2,',','.') }}</td>
+                            <td>Rp. {{ number_format($income->price,0,'','.') }}</td>
                         </tr>
                     @endforeach
                     <tr>
                         <td style="text-align: center"><b>TOTAL</b></td>
                         <td></td>
                         <td></td>
-                        <td>Rp. {{ number_format($total,2,'.','.') }}</td>
+                        <td>Rp. {{ number_format($total,0,'','.') }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -67,35 +67,6 @@
     </div>
 </div>
 
-{{-- <table border width="100%">
-    <thead>
-        <tr>
-            <th>No</th>
-            <th>Nama</th>
-            <th>Tanggal</th>
-            <th>Total</th>
-        </tr>
-    </thead>
-    <tbody>
-        @php
-            $no = 1;
-        @endphp
-        @foreach ($incomes as $income)
-            <tr>
-                <td>{{ $no++ }}</td>
-                <td>{{ $income->name }}</td>
-                <td>{{ date('d M Y', strtotime($income->date,)) }}</td>
-                <td>Rp. {{ number_format($income->price,2,',','.') }}</td>
-            </tr>
-        @endforeach
-        <tr>
-            <td colspan="3" style="text-align: center"><b>Total</b></td>
-            <td><b>Rp. {{ number_format($total_income,2,',','.') }}</b></td>
-            
-            
-        </tr>
-    </tbody>
-</table> --}}
 <script>
     $('#income-table').DataTable({});
 </script>

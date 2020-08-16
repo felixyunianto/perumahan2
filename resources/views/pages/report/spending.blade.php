@@ -51,8 +51,8 @@
                         <tr>
                             <td>{{ $no++ }}</td>
                             <td>{{ $spending->name }}</td>
-                            <td>{{ date('d M Y', strtotime($spending->date,)) }}</td>
-                            <td>Rp. {{ number_format($spending->price,2,',','.') }}</td>
+                            <td>{{ date('d M Y', strtotime($spending->date)) }}</td>
+                            <td>Rp. {{ number_format($spending->price,0,'','.') }}</td>
                         </tr>
                     @endforeach
                     <tr>
@@ -60,7 +60,7 @@
                         <td  style="text-align: left"><b>Total</b></td>
                         <td></td>
                         <td></td>
-                        <td><b>Rp. {{ number_format($total_spending,2,',','.') }}</b></td>
+                        <td><b>Rp. {{ number_format($total_spending,0,'','.') }}</b></td>
                         
                     </tr>
                 </tbody>

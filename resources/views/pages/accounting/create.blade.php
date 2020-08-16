@@ -14,6 +14,23 @@
         <form action="{{ route('akunting.store') }}" method="post">
             @csrf
             <div class="form-group">
+                <label for="">Status <span style="color:red">*</span> </label>
+                <select name="status" id="" class="form-control">
+                    <option value="" disabled selected>-- Pilih --</option>
+                    <option value="1">Masuk</option>
+                    <option value="0">Keluar</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="">Kategori <span style="color:red">*</span> </label>
+                <select name="category_id" id="" class="form-control">
+                    <option value="" disabled selected>-- Pilih --</option>
+                    @foreach ($category_transaction as $ct)
+                        <option value="{{ $ct->id }}">{{ $ct->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="">Nama <span style="color:red">*</span> </label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name">
                 @error('name')
@@ -31,25 +48,6 @@
                 </span>
                 @enderror
             </div>
-            <div class="form-group">
-                <label for="">Status <span style="color:red">*</span> </label>
-                <select name="status" id="" class="form-control">
-                    <option value="" disabled selected>-- Pilih --</option>
-                    <option value="1">Masuk</option>
-                    <option value="0">Keluar</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="">Kategori <span style="color:red">*</span> </label>
-                <select name="category_id" id="" class="form-control">
-                    <option value="" disabled selected>-- Pilih --</option>
-                    @foreach ($category_transaction as $ct)
-                        <option value="{{ $ct->id }}">{{ $ct->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            
             <div class="form-group">
                 <label for="">Deskripsi</label>
                 <textarea name="description" id="" rows="10" class="form-control"></textarea>

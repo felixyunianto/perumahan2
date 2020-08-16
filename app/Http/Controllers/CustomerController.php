@@ -8,6 +8,7 @@ use App\Filing;
 use App\House;
 use App\DetailHouse;
 use App\Akunting;
+use Storage;
 
 class CustomerController extends Controller
 {
@@ -263,7 +264,8 @@ class CustomerController extends Controller
     }
 
     public function sp3(){
-        $customers = Customer::with('detail_house')->get();
+        $customers = Customer::with('detail_house')->where('file_status',1)->where('utj_status',1)
+        ->where('dp_status',1)->where('lpa_status',0)->get();
     
         return view('pages.bank.sp3', compact('customers'));
     }
@@ -272,13 +274,19 @@ class CustomerController extends Controller
         $customer = Customer::where('id', $request->id_customer)->first();
         $detail_house = DetailHouse::with('house')->where('customer_id', $request->id_customer)->first();
         if ($request->sp3 == 1) {
-            $customer->update([
-                'sp3_status' => 1
-            ]);
-            $detail_house->house->update([
-                'status_process' => 'SP3'
-            ]);
-            return redirect()->route('sp3')->with('success', 'Sp3 telah berhasil');
+            if($detail_house != null){
+                $customer->update([
+                    'sp3_status' => 1
+                ]);
+
+                $detail_house->house->update([
+                    'status_process' => 'SP3'
+                ]);
+                return redirect()->route('sp3')->with('success', 'Sp3 telah berhasil');
+            }else{
+                return redirect()->route('sp3')->with('warning', 'Pelanggan ini belum memilih rumah');
+            }
+            
         } else {
             $customer->update([
                 'sp3_status' => 0
@@ -287,29 +295,180 @@ class CustomerController extends Controller
         }    
     }
 
-    public function lpa(){
-        $customers = Customer::with('detail_house')->get();
-    
-        return view('pages.bank.lpa', compact('customers'));
-    }
 
-    public function updateLPA(Request $request){
+    public function payLPA(Request $request){
+        $rule = [
+            'total_lpa' => 'required'
+        ];
+        
+        $message = [
+            'required' => 'Bidang :attribute tidak boleh kosong!'
+        ];
+
+        $this->validate($request, $rule, $message);
+        
         $customer = Customer::where('id', $request->id_customer)->first();
         $detail_house = DetailHouse::with('house')->where('customer_id', $request->id_customer)->first();
-        if ($request->lpa == 1) {
+
+        $price = (int)str_replace(".","",$request->input('total_lpa'));
+
+        $customer->update([
+            'lpa_status' => 1,
+        ]);
+
+        $detail_house->house->update([
+            'status_process' => 'ACC'
+        ]);
+
+        $lpa = Akunting::create([
+            'name' => 'LPA atas nama '. $customer->name,
+            'price' => $price,
+            'date' => date('Y-m-d'),
+            'status' => 1,
+            'description' => 'Pembayaran LPA atas nama ' . $customer->name,
+            'category_id' => 1,
+            'id_customer' => $request->id_customer
+        ]);
+
+        return redirect()->route('pemberkasan.index')->with('success', 'Pembayaran LPA telah berhasil');
+        
+    }
+
+    public function akad(){
+        $customers = Customer::with('detail_house')->where('sp3_status',1)->where('lpa_status',1)->get();
+    
+        return view('pages.bank.akad', compact('customers'));
+    }
+
+    public function updateAkad(Request $request){
+        $customer = Customer::where('id', $request->id_customer)->first();
+        $detail_house = DetailHouse::with('house')->where('customer_id', $request->id_customer)->first();
+        if ($request->akad == 1) {
             $customer->update([
-                'lpa_status' => 1
+                'akad_status' => 1
             ]);
 
             $detail_house->house->update([
-                'status_process' => 'ACC'
+                'status_process' => 'Akad'
             ]);
-            return redirect()->route('lpa')->with('success', 'LPA telah berhasil');
+            return redirect()->route('akad')->with('success', 'Akad telah berhasil');
         } else {
             $customer->update([
-                'lpa_status' => 0
+                'akad_status' => 0
             ]);
-            return redirect()->route('lpa')->with('success', 'Pembatalan LPA telah berhasil');
+            return redirect()->route('akad')->with('success', 'Pembatalan Akad telah berhasil');
         }    
+    }
+
+    public function failProcess(Request $request){
+        $this->authorize('pelanggan');
+        $rule = [
+            'total-fail' => 'required'
+        ];
+        
+        $message = [
+            'required' => 'Bidang :attribute tidak boleh kosong!'
+        ];
+
+        $this->validate($request, $rule, $message);
+
+        $customer = Customer::where('id', $request->id_customer)->first();
+        $house = DetailHouse::with('house')->where('customer_id', $request->id_customer)->first();
+        
+        $price = (int)str_replace(".","",$request->input('total-fail'));
+
+        $filing = Filing::where('customer_id', $request->id_customer)->first();
+        
+        $photos = $filing->photos;
+
+        if(Storage::exists($photos)){
+            Storage::delete($photos);
+        }
+
+        $fc_id_card = $filing->fc_id_card;
+        
+        if(Storage::exists($fc_id_card)){
+            Storage::delete($fc_id_card);
+        }
+
+        $fc_family_card = $filing->fc_family_card;
+
+        if(Storage::exists($fc_family_card)){
+            Storage::delete($fc_family_card);
+        }
+
+        $fc_marriage_certificate = $filing->fc_marriage_certificate;
+
+        if(Storage::exists($fc_marriage_certificate)){
+            Storage::delete($fc_marriage_certificate);
+        }
+
+        $fc_taxpayer_identification = $filing->fc_taxpayer_identification;
+
+        if(Storage::exists($fc_taxpayer_identification)){
+            Storage::delete($fc_taxpayer_identification);
+        }
+
+        $tax_status = $filing->tax_status;
+
+        if(Storage::exists($tax_status)){
+            Storage::delete($tax_status);
+        }
+        
+        $income = $filing->income;
+
+        if(Storage::exists($income)){
+            Storage::delete($income);
+        }
+
+        $current_account = $filing->current_account;
+
+        if(Storage::exists($current_account)){
+            Storage::delete($current_account);
+        }
+        
+        $ls_havent_house = $filing->ls_havent_house;
+
+        if(Storage::exists($ls_havent_house)){
+            Storage::delete($ls_havent_house);
+        }
+
+        $filing->update([
+            'photos' => NULL,
+            'fc_id_card' => NULL,
+            'fc_family_card' => NULL,
+            'fc_marriage_certificate' => NULL,
+            'fc_taxpayer_identification' => NULL,
+            'tax_status' => NULL,
+            'income' => NULL,
+            'current_account' => NULL,
+            'saving' => NULL,
+            'ls_havent_house' => NULL,
+        ]);
+
+        $utj = Akunting::create([
+            'name' => 'Refund uang atas nama '. $customer->name,
+            'price' => $price,
+            'date' => date('Y-m-d'),
+            'status' => 1,
+            'description' => 'Refund uang karena gagal atas nama ' . $customer->name,
+            'category_id' => 1,
+            'id_customer' => $request->id_customer
+        ]);
+
+        $customer->update([
+            'file_status' => 0,
+            'utj_status' => 0,
+            'dp_status' => 0,
+            'sp3_status' => 0,
+            'lpa_status' => 0,
+        ]);
+
+        $house->house->update([
+            'status' => 0,
+            'status_process' => 'Kosong'
+        ]);
+
+        return redirect()->route('customer.index')->with('success', 'Penggagalan customer telah berhasil');
     }
 }

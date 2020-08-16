@@ -18,10 +18,7 @@
 <link rel="stylesheet" href="{{ asset('assets/css/uikit.css')}}">
 <link rel="stylesheet" href="{{ asset('assets/libs/perfect-scrollbar/perfect-scrollbar.css')}}">
 <link rel="stylesheet" href="{{ asset('assets/libs/datatables/datatables.css')}}">
-{{-- <link rel="stylesheet" href="assets/libs/bootstrap-sweetalert/bootstrap-sweetalert.css"> --}}
-{{-- <script src="{{asset('assets/js/jquery-3.3.1.min.js')}}"></script> --}}
 <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
 <script src="{{asset('assets/libs/datatables/datatables.js')}}"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-{{-- <script src="assets/libs/bootstrap-sweetalert/bootstrap-sweetalert.js"></script> --}}
 

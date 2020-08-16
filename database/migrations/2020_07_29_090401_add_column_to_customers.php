@@ -17,6 +17,7 @@ class AddColumnToCustomers extends Migration
             $table->boolean('dp_status')->default(false)->after('utj_status');
             $table->boolean('sp3_status')->default(false)->after('dp_status');
             $table->boolean('lpa_status')->default(false)->after('sp3_status');
+            $table->boolean('akad_status')->default(false)->after('lpa_status');
         });
     }
 

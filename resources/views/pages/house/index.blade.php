@@ -18,6 +18,7 @@
         <table id="house-table" class="table table-striped table-hover">
           <thead>
             <tr>
+              <th>Perumahan</th>
               <th>Nama</th>
               <th>Alamat</th>
               <th>Harga</th>
@@ -27,6 +28,7 @@
           <tbody>
             @foreach($houses as $house)
             <tr>
+              <td>{{ $house->block->name_block }}</td>
               <td>{{ $house->name }}</td>
               <td>{{ $house->address }}</td>
               <td>Rp. {{ number_format($house->price , 2, ',','.' ) }}</td>
@@ -35,8 +37,8 @@
                   @csrf
                   <input type="hidden" name="_method" value="DELETE">
                 </form>
-                <a href="{{ route('rumah.edit', $house->id) }}" class="btn btn-warning btn-sm"><i class="feather icon-edit"></i>Edit</a>
-                <button class="btn btn-danger btn-sm" onclick="deleteRow({{$house->id}})"><i class="feather icon-trash"></i>Hapus</button>
+                <a href="{{ route('rumah.edit', $house->id) }}" class="btn btn-warning btn-sm btn-round"><i class="feather icon-edit"></i>Edit</a>
+                <button class="btn btn-danger btn-sm btn-round" onclick="deleteRow({{$house->id}})"><i class="feather icon-trash"></i>Hapus</button>
               </td>
             </tr>
             @endforeach

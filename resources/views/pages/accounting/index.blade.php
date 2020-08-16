@@ -71,9 +71,9 @@
                                 @csrf
                                 <input type="hidden" name="_method" value="DELETE">
                             </form>
-                            <a href="{{ route('akunting.edit', $accounting->id) }}" class="btn btn-warning btn-sm"> <i
+                            <a href="{{ route('akunting.edit', $accounting->id) }}" class="btn btn-warning btn-sm btn-round"> <i
                                     class="feather icon-edit"></i>Ubah</a>
-                            <button onclick="deleteRow({{$accounting->id}})" class="btn btn-danger btn-sm"><i
+                            <button onclick="deleteRow({{$accounting->id}})" class="btn btn-danger btn-sm btn-round"><i
                                     class="feather icon-trash"></i>&nbsp;Hapus</button>
                         </td>
                     </tr>

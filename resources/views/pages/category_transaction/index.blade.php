@@ -28,7 +28,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-primary btn-round">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -62,8 +62,8 @@
                                             @csrf
                                             <input type="hidden" name="_method" value="DELETE">
                                         </form>
-                                        <a href="{{ route('kategori-transaksi.edit', $ct->id) }}" class="btn btn-warning btn-sm"><i class="feather icon-edit"></i>Edit</a>
-                                        <button class="btn btn-danger btn-sm" onclick="deleteRow({{$ct->id}})"><i class="feather icon-trash"></i>Hapus</button>
+                                        <a href="{{ route('kategori-transaksi.edit', $ct->id) }}" class="btn btn-warning btn-sm btn-round"><i class="feather icon-edit"></i>Edit</a>
+                                        <button class="btn btn-danger btn-sm btn-round" onclick="deleteRow({{$ct->id}})"><i class="feather icon-trash"></i>Hapus</button>
                                     </td>
                                 </tr>
                             @endforeach
