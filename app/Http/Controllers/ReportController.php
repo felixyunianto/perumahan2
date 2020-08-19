@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Akunting;
+use App\House;
+use App\Block;
 
 class ReportController extends Controller
 {
@@ -30,5 +32,15 @@ class ReportController extends Controller
         $total_spending = $spendings->sum('price');
 
         return view('pages.report.spending', compact('spendings','total_spending'));
+    }
+
+    public function house(Request $request){
+        $reports = House::with('block','detail_house','detail_house.customer','detail_house.customer.filing')->get();
+        if($request->block_id){
+            $reports = House::with('block','detail_house','detail_house.customer','detail_house.customer.filing')->where('block_id', $request->block_id)->get();
+        }
+        
+        $blocks = Block::all();        
+        return view('pages.report.reporthouse', compact('reports','blocks'));
     }
 }

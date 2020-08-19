@@ -24,7 +24,7 @@ class HousesTableSeeder extends Seeder
         ]);
 
         \App\Block::create([
-            'name_block' => 'Perumahan OASE 2',
+            'name_block' => 'Perumahan OASE 3',
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now(),
         ]);

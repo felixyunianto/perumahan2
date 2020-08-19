@@ -119,6 +119,11 @@
                         <div>Pengeluaran</div>
                     </a>
                 </li>
+                <li class="sidenav-item">
+                    <a href="{{ route('report.house') }}" class="sidenav-link">
+                        <div>Laporan Perumahan</div>
+                    </a>
+                </li>
             </ul>
         </li>
 

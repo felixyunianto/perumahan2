@@ -22,7 +22,11 @@ class CreateCustomersTable extends Migration
             $table->string('no_hp', 20);
             $table->string('job_status');
             $table->boolean('file_status')->nullable()->default(false);
-            $table->boolean('utj_status')->nullable()->default(false);
+            $table->date('utj_status')->nullable();
+            $table->date('dp_status')->nullable();
+            $table->date('sp3_status')->nullable();
+            $table->date('lpa_status')->nullable();
+            $table->date('akad_status')->nullable();
             $table->bigInteger('user_id')->unsigned();
             $table->timestamps();
 

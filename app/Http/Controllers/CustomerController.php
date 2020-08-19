@@ -65,7 +65,7 @@ class CustomerController extends Controller
         ]);
 
         $filing = Filing::create([
-          'customer_id' => $customer->id
+          'customer_id' => $customer->id,
         ]);
         return redirect()->route('customer.index')->with('success', 'Data berhasil ditambahkan!');;
     }
@@ -156,6 +156,9 @@ class CustomerController extends Controller
 
     public function payUtj(Request $request){
         $this->authorize('pelanggan');
+
+        $current_date = date('Y-m-d');
+
         $rule = [
             'total-utj' => 'required'
         ];
@@ -171,8 +174,8 @@ class CustomerController extends Controller
         $price = (int)str_replace(".","",$request->input('total-utj'));
         if($price >= 7500000){
             $customer->update([
-                'utj_status' => 1,
-                'dp_status' => 1,
+                'utj_status' => $current_date,
+                'dp_status' => $current_date,
             ]);
 
             $utj = Akunting::create([
@@ -186,7 +189,7 @@ class CustomerController extends Controller
             ]);
         }else{
             $customer->update([
-                'utj_status' => 1,
+                'utj_status' => $current_date,
             ]);
 
             $utj = Akunting::create([
@@ -229,8 +232,8 @@ class CustomerController extends Controller
         
         if((int)$canFilling >= 7500000){
             $customer->update([
-                'utj_status' => 1,
-                'dp_status' => 1
+                'utj_status' => $current_date,
+                'dp_status' => $current_date
             ]);
 
             $dp = Akunting::create([
@@ -244,7 +247,7 @@ class CustomerController extends Controller
             ]);
         }else{
             $customer->update([
-                'utj_status' => 1,
+                'utj_status' => $current_date,
             ]);
 
             $dp = Akunting::create([
@@ -264,8 +267,8 @@ class CustomerController extends Controller
     }
 
     public function sp3(){
-        $customers = Customer::with('detail_house')->where('file_status',1)->where('utj_status',1)
-        ->where('dp_status',1)->where('lpa_status',0)->get();
+        $customers = Customer::with('detail_house')->where('file_status',1)->whereNotNull('utj_status')
+        ->whereNotNull('dp_status')->whereNotNull('lpa_status')->get();
     
         return view('pages.bank.sp3', compact('customers'));
     }
@@ -273,10 +276,10 @@ class CustomerController extends Controller
     public function updateSP3(Request $request){
         $customer = Customer::where('id', $request->id_customer)->first();
         $detail_house = DetailHouse::with('house')->where('customer_id', $request->id_customer)->first();
-        if ($request->sp3 == 1) {
+        if ($request->sp3 !== NULL) {
             if($detail_house != null){
                 $customer->update([
-                    'sp3_status' => 1
+                    'sp3_status' => date('Y-m-d')
                 ]);
 
                 $detail_house->house->update([
@@ -289,7 +292,7 @@ class CustomerController extends Controller
             
         } else {
             $customer->update([
-                'sp3_status' => 0
+                'sp3_status' => date('Y-m-d')
             ]);
             return redirect()->route('sp3')->with('success', 'Pembatalan Sp3 telah berhasil');
         }    
@@ -313,7 +316,7 @@ class CustomerController extends Controller
         $price = (int)str_replace(".","",$request->input('total_lpa'));
 
         $customer->update([
-            'lpa_status' => 1,
+            'lpa_status' => date('Y-m-d'),
         ]);
 
         $detail_house->house->update([
@@ -335,7 +338,7 @@ class CustomerController extends Controller
     }
 
     public function akad(){
-        $customers = Customer::with('detail_house')->where('sp3_status',1)->where('lpa_status',1)->get();
+        $customers = Customer::with('detail_house')->whereNotNull('sp3_status')->whereNotNull('lpa_status')->get();
     
         return view('pages.bank.akad', compact('customers'));
     }
@@ -343,9 +346,9 @@ class CustomerController extends Controller
     public function updateAkad(Request $request){
         $customer = Customer::where('id', $request->id_customer)->first();
         $detail_house = DetailHouse::with('house')->where('customer_id', $request->id_customer)->first();
-        if ($request->akad == 1) {
+        if ($request->akad !== NULL) {
             $customer->update([
-                'akad_status' => 1
+                'akad_status' => date('Y-m-d')
             ]);
 
             $detail_house->house->update([
@@ -354,7 +357,7 @@ class CustomerController extends Controller
             return redirect()->route('akad')->with('success', 'Akad telah berhasil');
         } else {
             $customer->update([
-                'akad_status' => 0
+                'akad_status' => date('Y-m-d')
             ]);
             return redirect()->route('akad')->with('success', 'Pembatalan Akad telah berhasil');
         }    
@@ -457,11 +460,11 @@ class CustomerController extends Controller
         ]);
 
         $customer->update([
-            'file_status' => 0,
-            'utj_status' => 0,
-            'dp_status' => 0,
-            'sp3_status' => 0,
-            'lpa_status' => 0,
+            'file_status' => NULL,
+            'utj_status' => NULL,
+            'dp_status' => NULL,
+            'sp3_status' => NULL,
+            'lpa_status' => NULL,
         ]);
 
         $house->house->update([

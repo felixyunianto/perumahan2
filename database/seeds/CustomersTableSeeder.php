@@ -46,5 +46,17 @@ class CustomersTableSeeder extends Seeder
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now(),
         ]);
+
+        App\Filing::create([
+            'customer_id' => 1,
+        ]);
+
+        App\Filing::create([
+            'customer_id' => 2,
+        ]);
+
+        App\Filing::create([
+            'customer_id' => 3,
+        ]);
     }
 }

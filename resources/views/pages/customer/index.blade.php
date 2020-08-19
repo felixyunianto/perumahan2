@@ -80,7 +80,7 @@
                                         @csrf
                                         <input type="hidden" name="_method" value="DELETE">
                                     </form>
-                                    @if($customer->utj_status !== 0)
+                                    @if($customer->utj_status !== NULL)
                                     <a href="" class="btn btn-success btn-sm  btn-round">Sudah UTJ</a>
                                     @else
                                     <button type="button" class="btn btn-danger btn-sm id_customer btn-round" data-toggle="modal"
@@ -92,7 +92,7 @@
                                         class="btn btn-sm btn-info btn-round">Pilih Rumah</a>
                                     @else
                                     <a href="javascript: void(0)"
-                                        class="btn btn-sm btn-info btn-round" onclick="return alert('Harap membayar UTJ terlebih dahulu')">Pilih Rumah</a>
+                                        class="btn btn-sm btn-info btn-round" onclick="return chooseHouse()">Pilih Rumah</a>
                                     @endif
                                     @if ($customer->akad_status == 0)
                                     <button class="btn btn-primary btn-sm btn-round fail_customer" data-toggle="modal"
@@ -182,9 +182,8 @@
     </div>
 </div>
 <script>
-    // DataTable start
     $('#report-table').DataTable({});
-    // DataTable end
+    
     $(document).ready(function () {
         $(".input-utj").maskMoney({
             thousands: '.',
@@ -216,6 +215,14 @@
             if (willDelete) {
                 $('#data-' + id).submit();
             }
+        })
+    }
+
+    function chooseHouse() {
+        swal({
+            title: "Pemberitahuan",
+            text: "Mohon maaf anda belum membayar UTJ",
+            icon: "warning",
         })
     }
 

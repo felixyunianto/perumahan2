@@ -49,8 +49,7 @@ Route::resource('rumah', 'HouseController');
 Route::resource('role', 'RoleController');
 Route::resource('user', 'UserController');
 
-Route::get('pemasukan', 'ReportController@income')->name('income');
-Route::get('pengeluaran', 'ReportController@spending')->name('spending');
+
 
 Route::resource('permission', 'PermissionController');
 Route::resource('kategori-transaksi', 'CategoryTransaksiController');
@@ -59,3 +58,9 @@ Route::resource('kategori-transaksi', 'CategoryTransaksiController');
 Route::get('/incomeChart', 'ChartController@incomeChart')->name('incomeChart');
 Route::get('/outcomeChart', 'ChartController@outcomeChart')->name('outcomeChart');
 Route::get('/statusHouse', 'ChartController@statusHouse')->name('statusHouse');
+
+//Report
+Route::get('pemasukan', 'ReportController@income')->name('income');
+Route::get('pengeluaran', 'ReportController@spending')->name('spending');
+Route::get('laporan-rumah', 'ReportController@house')->name('report.house');
+//End Report
