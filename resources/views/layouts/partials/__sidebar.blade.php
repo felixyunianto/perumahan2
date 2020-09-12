@@ -18,6 +18,7 @@
                 <div>Beranda</div>
             </a>
         </li>
+        @if(Auth::user()->role->name == 'marketing' || Auth::user()->role->name == 'admin' || Auth::user()->role->name == 'pemberkasan' )
         <li class="sidenav-item">
             <a href="javascript:" class="sidenav-link sidenav-toggle">
                 <i class="sidenav-icon feather icon-home"></i>
@@ -36,40 +37,16 @@
                 </li>
             </ul>
         </li>
-        @if(Auth::user()->role->name == 'marketing' || Auth::user()->role->name == 'admin' )
+        
         <li class="sidenav-item @if(Request::is('customer')) active @endif">
             <a href="{{ route('customer.index') }}" class="sidenav-link">
                 <i class="sidenav-icon feather icon-users"></i>
-                <div>Pelanggan</div>
+                <div>Customer</div>
             </a>
         </li>
         @endif
-        @if(Auth::user()->role->name == 'pemberkasan' || Auth::user()->role->name == 'admin' )
-        <li class="sidenav-item @if(Request::is('pemberkasan')) active @endif">
-            <a href="{{ route('pemberkasan.index') }}" class="sidenav-link">
-                <i class="sidenav-icon feather icon-folder"></i>
-                <div>Pemberkasan</div>
-            </a>
-        </li>
-        @endif
-        <li class="sidenav-item @if (Request::is('customer/sp3') || Request::is('customer/lpa')) active @endif">
-            <a href="javascript:" class="sidenav-link sidenav-toggle">
-                <i class="sidenav-icon lnr lnr-apartment"></i>
-                <div>Bank</div>
-            </a>
-            <ul class="sidenav-menu">
-                <li class="sidenav-item">
-                    <a href="{{ route('sp3') }}" class="sidenav-link">
-                        <div>SP3</div>
-                    </a>
-                </li>
-                <li class="sidenav-item ">
-                    <a href="{{ route('akad') }}" class="sidenav-link">
-                        <div>Akad</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
+        
+        
         @if(Auth::user()->role->name == 'akuntansi' || Auth::user()->role->name == 'admin' )
         <li class="sidenav-item">
             <a href="{{ route('kategori-transaksi.index') }}" class="sidenav-link">
@@ -84,7 +61,7 @@
             </a>
         </li>
         @endif
-        
+        @if (Auth::user()->role->name == 'admin')
         <li class="sidenav-item @if (Request::is('role') || Request::is('user')) active @endif">
             <a href="javascript:" class="sidenav-link sidenav-toggle">
                 <i class="sidenav-icon feather icon-user"></i>
@@ -102,13 +79,16 @@
                     </a>
                 </li>
             </ul>
-        </li>
+        </li>    
+        @endif
+        
         <li class="sidenav-item">
             <a href="javascript:" class="sidenav-link sidenav-toggle">
                 <i class="sidenav-icon feather icon-home"></i>
                 <div>Laporan</div>
             </a>
             <ul class="sidenav-menu">
+                @if (Auth::user()->role->name == 'admin' || Auth::user()->role->name == 'akuntansi')
                 <li class="sidenav-item">
                     <a href="{{ route('income') }}" class="sidenav-link">
                         <div>Pemasukan</div>
@@ -118,12 +98,22 @@
                     <a href="{{ route('spending') }}" class="sidenav-link">
                         <div>Pengeluaran</div>
                     </a>
-                </li>
+                </li>    
+                @endif
+                
+                @if (Auth::user()->role->name == 'marketing' || Auth::user()->role->name == 'admin' || Auth::user()->role->name == 'pemberkasan')
                 <li class="sidenav-item">
                     <a href="{{ route('report.house') }}" class="sidenav-link">
                         <div>Laporan Perumahan</div>
                     </a>
                 </li>
+                <li class="sidenav-item">
+                    <a href="{{ route('report.laba-rugi') }}" class="sidenav-link">
+                        <div>Laporan Transaksi</div>
+                    </a>
+                </li>   
+                @endif
+                
             </ul>
         </li>
 

@@ -149,7 +149,7 @@ class FilingController extends Controller
         }
 
 
-        return redirect()->route('pemberkasan.index');
+        return redirect()->route('customer.index');
     }
 
     public function show($id){

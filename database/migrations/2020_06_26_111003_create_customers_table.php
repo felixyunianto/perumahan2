@@ -22,6 +22,7 @@ class CreateCustomersTable extends Migration
             $table->string('no_hp', 20);
             $table->string('job_status');
             $table->boolean('file_status')->nullable()->default(false);
+            $table->enum('transaction',['Cash', 'Proses'])->nullable();
             $table->date('utj_status')->nullable();
             $table->date('dp_status')->nullable();
             $table->date('sp3_status')->nullable();

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Akunting;
 use App\House;
 use App\Block;
+use App\CategoryTransaksi;
 
 class ReportController extends Controller
 {
@@ -42,5 +43,18 @@ class ReportController extends Controller
         
         $blocks = Block::all();        
         return view('pages.report.reporthouse', compact('reports','blocks'));
+    }
+
+
+    public function category_transaction(){
+        $income = Akunting::where('category_id' , 1)->sum('price');
+        $cost_of_goods_sold = Akunting::where('category_id', 2)->sum('price');
+        $business_expenses = Akunting::where('category_id', 3)->sum('price');
+        $other_income = Akunting::where('category_id', 4)->sum('price');
+        $other_expenses = Akunting::where('category_id', 5)->sum('price');
+        $total_income_expenses = $other_income - $other_expenses;
+        $estimated_income = Akunting::where('category_id',6)->sum('price');
+
+        return view('pages.report.report_category', compact('income','cost_of_goods_sold','business_expenses','profit','other_income','other_expenses','total_income_expenses','profit_before_tax','estimated_income'));
     }
 }

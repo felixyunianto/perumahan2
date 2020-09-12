@@ -28,6 +28,7 @@ Route::post('customer/store_house','CustomerController@store_house')->name('stor
 
 Route::post('customer/utj','CustomerController@payUTJ')->name('customer.pay');
 Route::post('customer/dp','CustomerController@payDP')->name('customer.payDP');
+Route::post('customer/bank', 'CustomerController@chooseBank')->name('customer.chooseBank');
 Route::post('customer/lpa/update', 'CustomerController@payLPA')->name('customer.payLPA');
 
 Route::post('customer/fail-process','CustomerController@failProcess')->name('customer.fail');
@@ -35,10 +36,9 @@ Route::post('customer/fail-process','CustomerController@failProcess')->name('cus
 Route::resource('pemberkasan', 'FilingController');
 Route::get('pemberkasan/{id}/isi','FilingController@filling')->name('filling');
 
-Route::get('customer/sp3', 'CustomerController@sp3')->name('sp3');
+
 Route::post('customer/sp3/update', 'CustomerController@updateSP3')->name('update.sp3');
 
-Route::get('customer/akad', 'CustomerController@akad')->name('akad');
 Route::post('customer/akad/update', 'CustomerController@updateAkad')->name('update.akad');
 
 Route::resource('akunting', 'AkuntingController');
@@ -63,4 +63,5 @@ Route::get('/statusHouse', 'ChartController@statusHouse')->name('statusHouse');
 Route::get('pemasukan', 'ReportController@income')->name('income');
 Route::get('pengeluaran', 'ReportController@spending')->name('spending');
 Route::get('laporan-rumah', 'ReportController@house')->name('report.house');
+Route::get('laporan-laba-rugi', 'ReportController@category_transaction')->name('report.laba-rugi');
 //End Report

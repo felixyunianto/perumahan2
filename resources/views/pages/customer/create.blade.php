@@ -11,14 +11,14 @@
 </div>
 <div class="card">
     <div class="card-header">
-        <h5>Tambah Pelanggan</h5>
+        <h5>Tambah Customer</h5>
     </div>
     <div class="card-body">
         <form action="{{ route('customer.store') }}" method="post">
             @csrf
             <div class="form-group">
                 <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                <label for="">Nama Pelanggan <span style="color:red">*</span> </label>
+                <label for="">Nama Customer <span style="color:red">*</span> </label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{old('name')}}">
                 @error('name')
                 <span class="invalid-feedback" role="alert">
@@ -27,7 +27,7 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="">NIK Pelanggan <span style="color:red">*</span> </label>
+                <label for="">NIK Customer <span style="color:red">*</span> </label>
                 <input type="number" class="form-control  @error('nik') is-invalid @enderror" name="nik"  value="{{old('nik')}}" min="1">
                 @error('nik')
                 <span class="invalid-feedback" role="alert">
@@ -36,7 +36,7 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="">Alamat Pelanggan <span style="color:red">*</span> </label>
+                <label for="">Alamat Customer <span style="color:red">*</span> </label>
                 <textarea name="address" id="" cols="30" rows="10" class="form-control @error('address') is-invalid @enderror">{{old('address')}}</textarea>
                 @error('address')
                 <span class="invalid-feedback" role="alert">
@@ -45,7 +45,7 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="">Email Pelanggan <span style="color:red">*</span> </label>
+                <label for="">Email Customer <span style="color:red">*</span> </label>
                 <input type="email" class="form-control  @error('email') is-invalid @enderror" name="email"  value="{{old('email')}}">
                 @error('email')
                 <span class="invalid-feedback" role="alert">
@@ -54,7 +54,7 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="">No Handphone Pelanggan <span style="color:red">*</span> </label>
+                <label for="">No Handphone Customer <span style="color:red">*</span> </label>
                 <input type="text" class="form-control  @error('no_hp') is-invalid @enderror" name="no_hp" value="{{old('no_hp')}}">
                 @error('no_hp')
                 <span class="invalid-feedback" role="alert">
@@ -63,7 +63,7 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="">Pekerjaan Pelanggan <span style="color:red">*</span> </label>
+                <label for="">Pekerjaan Customer <span style="color:red">*</span> </label>
                 <input type="text" class="form-control  @error('job_status') is-invalid @enderror" name="job_status" value="{{old('job_status')}}">
                 @error('job_status')
                 <span class="invalid-feedback" role="alert">

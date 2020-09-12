@@ -42,10 +42,10 @@ class PermissionsTableSeeder extends Seeder
         ]);
 
         $marketing = Role::where('name', 'marketing')->first();
-        $marketing->permissions()->attach([1,2]);
+        $marketing->permissions()->attach([1,2,6,7]);
 
         $pemberkasan = Role::where('name', 'pemberkasan')->first();
-        $pemberkasan->permissions()->attach([1,2]);
+        $pemberkasan->permissions()->attach([1,2,6,7]);
 
         $akuntan = Role::where('name', 'akuntansi')->first();
         $akuntan->permissions()->attach([3]);

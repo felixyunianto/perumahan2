@@ -11,23 +11,28 @@
 
 <div class="card">
     <div class="card-body">
-        <div class="table-responsive">
-
-            <form action="{{ route('report.house') }}" method="get">
-                <div class="row">
-                    <div class="col-md-8">
-                        <select name="block_id" id="" class="form-control">
-                            @foreach ($blocks as $block)
-                            <option value="{{ $block->id }}">{{ $block->name_block }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <button type="submit" class="btn btn-primary form-control">Cari</button>
-                    </div>
+        <form action="{{ route('report.house') }}" method="get">
+            <div class="row">
+                <div class="col-md-8">
+                    <select name="block_id" id="" class="form-control">
+                        {{-- <option value="">-- Pilih Perumahan --</option> --}}
+                        @foreach ($blocks as $block)
+                        <option value="{{ $block->id }}" {{ (old('block_id') == $block->id) ? "selected" : "" }} >{{ $block->name_block }}</option>
+                        @endforeach
+                    </select>
                 </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary form-control">Cari</button>
+                </div>
+            </div>
 
-            </form>
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
             <table id="report-table" class="table table-striped table-hover">
                 <thead style="text-align: center">
                     <tr>
@@ -51,7 +56,7 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
+                            <td>{{$report->status_process}}</td>
                             <td></td>
                         @else
                             @foreach ($report->detail_house as $rdh)
@@ -62,9 +67,13 @@
                             <td>{{ $rdh->customer->job_status }}</td>
                             @endforeach
                             <td>{{ $report->status_process }}</td>
-                            <td></td>
+                            
+                            @if ($rdh->customer->bank == NULL)
+                            <td>Belum ada</td>
+                            @else
+                            <td>{{ $rdh->customer->bank }}</td>
+                            @endif
                         @endif
-
                     </tr>
                     @endforeach
                 </tbody>

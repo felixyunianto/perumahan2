@@ -151,12 +151,13 @@
                 Total.push(dataStatusHouse.total);
                 statusProcess.push(dataStatusHouse.status_process + ' = ' + dataStatusHouse
                     .total);
+                Labels.push(dataStatusHouse.status_process)
             });
             var ctx = document.getElementById("canvas-statusHouse").getContext('2d');
             var myChart = new Chart(ctx, {
                 type: 'pie',
                 data: {
-                    labels: ['Akad', 'ACC', 'SP3', 'Proses', 'Cash', 'Kosong'],
+                    labels: Labels,
                     datasets: [{
                         data: Total,
                         backgroundColor: ["#0074D9", "#FF4136", "#2ECC40",
@@ -191,12 +192,13 @@
                     Total.push(dataStatusHouse.total);
                     statusProcess.push(dataStatusHouse.status_process + ' = ' + dataStatusHouse
                         .total);
+                        Labels.push(dataStatusHouse.status_process)
                 });
                 var ctx = document.getElementById("canvas-statusHouse").getContext('2d');
                 var myChart = new Chart(ctx, {
                     type: 'pie',
                     data: {
-                        labels: ['Akad', 'ACC', 'SP3', 'Proses', 'Cash', 'Kosong'],
+                        labels: Labels,
                         datasets: [{
                             data: Total,
                             backgroundColor: ["#0074D9", "#FF4136", "#2ECC40",

@@ -37,19 +37,32 @@
                                 @endforeach
                             </td>
                             <td>
-                                @if ($customer->dp_status !== 0)
+                                @if ($customer->dp_status !== NULL)
                                 <a href="" class="btn btn-success btn-sm btn-round">Sudah DP</a>
                                 @else
                                 <button type="button" class="btn btn-danger btn-sm id_customer btn-round" data-toggle="modal"
                                 data-target="#modals-dp" data-id="{{ $customer->id }}" id="id_customer" >Pelunasan DP</button>
                                 @endif
-                                <button type="button" class="btn btn-info btn-sm id_customer_lpa btn-round" data-toggle="modal"
+                                @if ($customer->file_status == 1)
+                                <button type="button" class="btn btn-info btn-sm id_customer_bank btn-round" data-toggle="modal"
+                                data-target="#modals-bank" data-id="{{ $customer->id }}" id="" >Pilih Bank</button>
+                                @endif
+                                @if ($customer->sp3_status !== NULL)
+                                    @if ($customer->lpa_status == NULL)
+                                        <button type="button" class="btn btn-info btn-sm id_customer_lpa btn-round" data-toggle="modal"
                                         data-target="#modals-lpa" data-id="{{ $customer->id }}" id="" >Bayar LPA</button>
-                                @if ($customer->dp_status !== 0)
+                                    @else
+                                        <button type="button" class="btn btn-success btn-sm btn-round" id="" >Sudah LPA</button>
+                                    @endif    
+                                @else
+                                <button type="button" class="btn btn-info btn-sm btn-round" onclick="return payLPA()" >Bayar LPA</button>
+                                @endif
+                                
+                                @if ($customer->dp_status !== NULL)
                                 <a href="{{ route('filling', $customer->id) }}" class="btn btn-warning btn-sm btn-round">Pemberkasan</a>
                                 @else
                                 <a href="javascript: void(0)"
-                                        class="btn btn-sm btn-primary btn-round" onclick="return alert('Harap melunasi DP terlebih dahulu')">Pemberkasan</a>
+                                        class="btn btn-sm btn-primary btn-round" onclick="return filingCustomer()">Pemberkasan</a>
                                 @endif
                                 
                                 <a href="{{ route('pemberkasan.show', $customer->id) }}" class="btn btn-primary btn-sm btn-round">Detail</a>
@@ -59,6 +72,38 @@
                 </tbody>
             </table>
         </div>
+    </div>
+</div>
+<div class="modal fade" id="modals-bank">
+    <div class="modal-dialog">
+        <form class="modal-content" method="post" action="{{ route('customer.chooseBank') }}">
+        @csrf
+            <div class="modal-header">
+                <h5 class="modal-title">Isikan Bank yang dituju
+                    <br>
+                </h5>
+                <a type="button" class="close" data-dismiss="modal" aria-label="Close">×</a>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <input type="text" class="form-control" id="id_customer_bank" name="id_customer">
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col mb-0">
+                        <label class="form-label">Nama Bank</label>
+                        <input type="text" class="form-control" name="bank">
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a type="button" class="btn btn-default" data-dismiss="modal">Close</a>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
     </div>
 </div>
 <div class="modal fade" id="modals-dp">
@@ -75,8 +120,7 @@
             <div class="modal-body">
                 <div class="form-row">
                     <div class="form-group col">
-                        <label class="form-label">ID</label>
-                        <input type="text" class="form-control" id="id_customer_input" name="id_customer">
+                        <input type="hidden" class="form-control" id="id_customer_input" name="id_customer">
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -109,8 +153,7 @@
             <div class="modal-body">
                 <div class="form-row">
                     <div class="form-group col">
-                        <label class="form-label">ID</label>
-                        <input type="text" class="form-control" id="id_customer_lpa" name="id_customer">
+                        <input type="hidden" class="form-control" id="id_customer_lpa" name="id_customer">
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -133,35 +176,11 @@
 
 <script>
     $('#filing-table').DataTable({});
-    $(document).on("click",".id_customer", function(){
-        var idCustomer = $(this).data('id');
-        $('#id_customer_input').val(idCustomer);
 
-    });
+    
 
-    $(document).on("click",".id_customer_lpa", function(){
-        var idCustomerLPA = $(this).data('id');
-        console.log(idCustomerLPA);
-        $('#id_customer_lpa').val(idCustomerLPA);
+    
 
-    });
-
-    $(document).ready(function () {
-        $(".input-dp").maskMoney({
-            thousands: '.',
-            decimal: ',',
-            affixesStay: false,
-            precision: 0
-        });
-    });
-
-    $(document).ready(function () {
-        $(".input-lpa").maskMoney({
-            thousands: '.',
-            decimal: ',',
-            affixesStay: false,
-            precision: 0
-        });
-    });
+    
 </script>
 @endsection

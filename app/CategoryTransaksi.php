@@ -10,6 +10,6 @@ class CategoryTransaksi extends Model
     protected $guarded = [];
 
     public function accountings(){
-        return $this->hasMany(Akunting::class);
+        return $this->hasMany(Akunting::class,'category_id');
     }
 }

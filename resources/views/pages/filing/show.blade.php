@@ -124,7 +124,7 @@
                 @endforeach
             </table>
         </ul>
-        <a href="{{ route('pemberkasan.index') }}" class="btn btn-primary btn-sm float-right">Kembali</a>
+        <a href="{{ route('customer.index') }}" class="btn btn-primary btn-sm float-right">Kembali</a>
     </div>
 </div>
 @endsection

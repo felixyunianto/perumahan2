@@ -27,6 +27,7 @@
                 <div class="row">
                     <div class="col-md-4">
                     <select name="status_process" id="" class="form-control">
+                    <option value="">-- Pilih Status Transaksi --</option>
                     <option value="Cash">Cash</option>
                     <option value="Process">Process</option>
                 </select>

@@ -10,6 +10,6 @@ class Akunting extends Model
     protected $guarded = [];
 
     public function ct(){
-        return $this->belongsTo(CategoryTransaksi::class);
+        return $this->belongsTo(CategoryTransaksi::class,'category_id');
     }
 }

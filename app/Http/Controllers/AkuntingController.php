@@ -83,8 +83,6 @@ class AkuntingController extends Controller
             'description' => $request->description
         ]);
         
-        
-
         return redirect()->route('akunting.index')->with('success', 'Data berhasil diubah!');
     }
 

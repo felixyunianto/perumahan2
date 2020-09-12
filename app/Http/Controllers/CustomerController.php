@@ -20,10 +20,12 @@ class CustomerController extends Controller
 
     public function index(){
         $this->authorize('pelanggan');
-        $confirmed = Customer::where('file_status', 1)->count();
+        $confirmed = Customer::where('file_status', 1)->where('transaction', 'Proses')->count();
         $not_yet_confirmed = Customer::where('file_status', 0)->count();
+        $cash = Customer::where('transaction', 'Cash')->count();
+        $process = Customer::where('transaction', 'Proses')->count();
         $customers = Customer::all();
-        return view('pages.'.$this->path.'.index', compact('customers','confirmed', 'not_yet_confirmed'));
+        return view('pages.'.$this->path.'.index', compact('customers','confirmed', 'not_yet_confirmed','cash','process'));
     }
     
     public function create()
@@ -132,6 +134,19 @@ class CustomerController extends Controller
 
     public function store_house(Request $request){
         $this->authorize('pelanggan');
+
+        $rule = [
+            'house_id' => 'required',
+            'customer_id' => 'required',
+            'status_process' => 'required'
+        ];
+
+        $message = [
+            'required' => 'Bidang :attribute tidak boleh kosong!'
+        ];
+
+        $this->validate($request, $rule, $message);
+
         DetailHouse::create([
             'customer_id' => $request->customer_id,
             'house_id' => $request->house_id
@@ -141,12 +156,26 @@ class CustomerController extends Controller
         if($request->status_process == 'Cash'){
             $house->update([
                 'status' => 1,
-                'status_process' => 'Cash'
+                'status_process' => 'Cash',
             ]);
+
+            $customer = Customer::where('id', $request->customer_id)->first();
+            $customer->update([
+                'file_status' => 1,
+                'sp3_status' => date('Y-m-d'),
+                'lpa_status' => date('Y-m-d'),
+                'transaction' => 'Cash'
+            ]);
+
         }else{
             $house->update([
                 'status' => 1,
                 'status_process' => 'Proses'
+            ]);
+
+            $customer = Customer::where('id', $request->customer_id)->first();
+            $customer->update([
+                'transaction' => 'Proses'
             ]);
         }
 
@@ -232,8 +261,8 @@ class CustomerController extends Controller
         
         if((int)$canFilling >= 7500000){
             $customer->update([
-                'utj_status' => $current_date,
-                'dp_status' => $current_date
+                'utj_status' => date('Y-m-d'),
+                'dp_status' => date('Y-m-d'),
             ]);
 
             $dp = Akunting::create([
@@ -247,7 +276,7 @@ class CustomerController extends Controller
             ]);
         }else{
             $customer->update([
-                'utj_status' => $current_date,
+                'utj_status' => date('Y-m-d'),
             ]);
 
             $dp = Akunting::create([
@@ -263,20 +292,36 @@ class CustomerController extends Controller
 
         
 
-        return redirect()->route('pemberkasan.index')->with('success', 'Pembayaran DP telah berhasil');
+        return redirect()->route('customer.index')->with('success', 'Pembayaran DP telah berhasil');
     }
 
-    public function sp3(){
-        $customers = Customer::with('detail_house')->where('file_status',1)->whereNotNull('utj_status')
-        ->whereNotNull('dp_status')->whereNotNull('lpa_status')->get();
-    
-        return view('pages.bank.sp3', compact('customers'));
+    public function chooseBank(Request $request){
+        $this->authorize('pelanggan');
+        $rule = [
+            'bank' => 'required'
+        ];
+        
+        $message = [
+            'required' => 'Bidang :attribute tidak boleh kosong!'
+        ];
+
+        $this->validate($request, $rule, $message);
+
+        $customer = Customer::where('id', $request->id_customer)->first();
+        $customer->update([
+            'bank' => $request->bank
+        ]);
+        return redirect()->route('customer.index')->with('success', 'Pemilihan Bank telah berhasil');
     }
+
 
     public function updateSP3(Request $request){
+        $this->authorize('pelanggan');
         $customer = Customer::where('id', $request->id_customer)->first();
         $detail_house = DetailHouse::with('house')->where('customer_id', $request->id_customer)->first();
-        if ($request->sp3 !== NULL) {
+        $sp3 = (int)$request->sp3;
+        
+        if ($sp3 !== 0) {
             if($detail_house != null){
                 $customer->update([
                     'sp3_status' => date('Y-m-d')
@@ -285,21 +330,27 @@ class CustomerController extends Controller
                 $detail_house->house->update([
                     'status_process' => 'SP3'
                 ]);
-                return redirect()->route('sp3')->with('success', 'Sp3 telah berhasil');
+                return redirect()->route('customer.index')->with('success', 'Sp3 telah berhasil');
             }else{
-                return redirect()->route('sp3')->with('warning', 'Pelanggan ini belum memilih rumah');
+                return redirect()->route('customer.index')->with('warning', 'Pelanggan ini belum memilih rumah');
             }
             
         } else {
             $customer->update([
-                'sp3_status' => date('Y-m-d')
+                'sp3_status' => NULL
             ]);
+
+            $detail_house->house->update([
+                'status_process' => 'Proses'
+            ]);
+
             return redirect()->route('sp3')->with('success', 'Pembatalan Sp3 telah berhasil');
         }    
     }
 
 
     public function payLPA(Request $request){
+        $this->authorize('pelanggan');
         $rule = [
             'total_lpa' => 'required'
         ];
@@ -333,33 +384,52 @@ class CustomerController extends Controller
             'id_customer' => $request->id_customer
         ]);
 
-        return redirect()->route('pemberkasan.index')->with('success', 'Pembayaran LPA telah berhasil');
+        return redirect()->route('customer.index')->with('success', 'Pembayaran LPA telah berhasil');
         
     }
 
-    public function akad(){
-        $customers = Customer::with('detail_house')->whereNotNull('sp3_status')->whereNotNull('lpa_status')->get();
     
-        return view('pages.bank.akad', compact('customers'));
-    }
-
     public function updateAkad(Request $request){
+        $this->authorize('pelanggan');
         $customer = Customer::where('id', $request->id_customer)->first();
         $detail_house = DetailHouse::with('house')->where('customer_id', $request->id_customer)->first();
-        if ($request->akad !== NULL) {
+        $akad = (int)$request->akad;
+        if ($akad !== 0) {
             $customer->update([
                 'akad_status' => date('Y-m-d')
             ]);
 
-            $detail_house->house->update([
-                'status_process' => 'Akad'
-            ]);
-            return redirect()->route('akad')->with('success', 'Akad telah berhasil');
+            if($customer->transaction == 'Cash'){
+                $detail_house->house->update([
+                    'status_process' => 'Cash'
+                ]);
+            }else{
+                $detail_house->house->update([
+                    'status_process' => 'Akad'
+                ]);
+            }
+
+            
+
+            return redirect()->route('customer.index')->with('success', 'Akad telah berhasil');
         } else {
             $customer->update([
-                'akad_status' => date('Y-m-d')
+                'akad_status' => NULL
             ]);
-            return redirect()->route('akad')->with('success', 'Pembatalan Akad telah berhasil');
+
+            if($customer->transaction == 'Cash'){
+                $detail_house->house->update([
+                    'status_process' => 'Cash'
+                ]);
+            }else{
+                $detail_house->house->update([
+                    'status_process' => 'ACC'
+                ]);
+            }
+
+            
+
+            return redirect()->route('customer.index')->with('success', 'Pembatalan Akad telah berhasil');
         }    
     }
 
