@@ -58,10 +58,21 @@ Route::resource('kategori-transaksi', 'CategoryTransaksiController');
 Route::get('/incomeChart', 'ChartController@incomeChart')->name('incomeChart');
 Route::get('/outcomeChart', 'ChartController@outcomeChart')->name('outcomeChart');
 Route::get('/statusHouse', 'ChartController@statusHouse')->name('statusHouse');
-
 //Report
 Route::get('pemasukan', 'ReportController@income')->name('income');
 Route::get('pengeluaran', 'ReportController@spending')->name('spending');
 Route::get('laporan-rumah', 'ReportController@house')->name('report.house');
 Route::get('laporan-laba-rugi', 'ReportController@category_transaction')->name('report.laba-rugi');
 //End Report
+
+//PDF
+Route::get('pdf-income/{daterange}','pdf\PdfController@pdfIncome')->name('report.pdf-income');
+Route::get('pdf-spending/{daterange}','pdf\PdfController@pdfSpending')->name('report.pdf-spending');
+Route::get('pdf-house/{block_id}','pdf\PdfController@pdfHouse')->name('report.pdf-house');
+Route::get('pdf-category-transaction/{daterange}', 'pdf\PdfController@pdfCategory')->name('report.pdf-category');
+//EndPDF
+
+//Excel
+Route::get('excel-spending/{daterange}', 'Excel\ExcelController@excelSpending')->name('excel.spending');
+Route::get('excel-income/{daterange}', 'Excel\ExcelController@excelIncome')->name('excel.income');
+//EndExcel

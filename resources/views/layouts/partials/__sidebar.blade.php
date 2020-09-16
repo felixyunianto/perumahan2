@@ -56,7 +56,7 @@
         </li>
         <li class="sidenav-item">
             <a href="{{ route('akunting.index') }}" class="sidenav-link">
-                <i class="sidenav-icon feather icon-file"></i>
+                <i class="sidenav-icon feather icon-book"></i>
                 <div>Akuntan</div>
             </a>
         </li>

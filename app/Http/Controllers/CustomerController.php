@@ -8,6 +8,7 @@ use App\Filing;
 use App\House;
 use App\DetailHouse;
 use App\Akunting;
+use App\Block;
 use Storage;
 
 class CustomerController extends Controller
@@ -24,7 +25,8 @@ class CustomerController extends Controller
         $not_yet_confirmed = Customer::where('file_status', 0)->count();
         $cash = Customer::where('transaction', 'Cash')->count();
         $process = Customer::where('transaction', 'Proses')->count();
-        $customers = Customer::all();
+        $customers = Customer::with('detail_house.house.block')->get();
+        // dd($customers);
         return view('pages.'.$this->path.'.index', compact('customers','confirmed', 'not_yet_confirmed','cash','process'));
     }
     
@@ -127,7 +129,9 @@ class CustomerController extends Controller
     public function choose($id){
         $this->authorize('pelanggan');
         $customer = Customer::find($id);
-        $houses = House::where('status', 0)->get();
+        // $houses = House::where('status', 0)->get();
+        $houses = Block::with('house')->get();
+        
         $detail_house = DetailHouse::where('customer_id', $id)->get();
         return view('pages.filing.choose', compact('customer','houses','detail_house'));
     }
@@ -396,7 +400,7 @@ class CustomerController extends Controller
         $akad = (int)$request->akad;
         if ($akad !== 0) {
             $customer->update([
-                'akad_status' => date('Y-m-d')
+                'akad_status' => $request->date
             ]);
 
             if($customer->transaction == 'Cash'){

@@ -83,7 +83,9 @@ $(document).ready(function () {
         thousands: '.',
         decimal: ',',
         affixesStay: false,
-        precision: 0
+        precision: 0,
+        allowZero : 1,
+        // allowEmpty: 1,
     });
 });
 //EndMaskMoney
@@ -97,7 +99,6 @@ $(document).on("click",".id_customer", function(){
 
 $(document).on("click",".fail_customer", function(){
     var idCustomer = $(this).data('id');
-    console.log(idCustomer);
     $('#id_customer_fail').val(idCustomer);
 })
 
@@ -108,15 +109,18 @@ $(document).on("click",".dp_customer", function(){
 
 $(document).on("click",".id_customer_lpa", function(){
     var idCustomerLPA = $(this).data('id');
-    console.log(idCustomerLPA);
     $('#id_customer_lpa').val(idCustomerLPA);
 });
 
 $(document).on("click",".id_customer_bank", function(){
     var idCustomerBank = $(this).data('id');
-    console.log(idCustomerBank);
     $('#id_customer_bank').val(idCustomerBank);
 });
+
+$(document).on('click', '.id_customer_akad',function(){
+    var idCustomerAkad = $(this).data('id');
+    $('#id_customer_akad').val(idCustomerAkad);
+})
 //EndFunction
 
 

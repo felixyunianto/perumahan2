@@ -21,4 +21,4 @@
 <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
 <script src="{{asset('assets/libs/datatables/datatables.js')}}"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+@yield('link')

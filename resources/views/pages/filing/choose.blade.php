@@ -18,7 +18,13 @@
                 <select name="house_id" id="" class="form-control">
                     <option value="" selected>-- Pilih Rumah --</option>
                     @foreach ($houses as $house)
-                    <option value="{{ $house->id }}">{{ $house->name }}</option>
+                        <optgroup label="{{ $house->name_block }}">
+                            @forelse ($house->house as $house_child)
+                                <option value="{{ $house_child->id }}">{{$house_child->name}}</option>
+                            @empty
+                                <option value="" disabled>Tidak ada data!</option>
+                            @endforelse
+                        </optgroup>
                     @endforeach
                 </select>
             </div>

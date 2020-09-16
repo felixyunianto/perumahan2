@@ -67,6 +67,7 @@
             var Labels = new Array();
             var priceIn = new Array();
             var priceOut = new Array();
+            var profit = new Array();
 
             response[0].forEach(function (data) {
                 priceIn.push(data)
@@ -77,6 +78,8 @@
                 priceOut.push(data)
                 console.log('Data Keluar ' + data);
             });
+
+            profit = response[2];
 
             var ctx = document.getElementById("canvas-income").getContext('2d');
             var myChart = new Chart(ctx, {
@@ -106,6 +109,12 @@
                             pointHoverBackgroundColor: "#FF4A00",
                             pointHoverBorderColor: "#FF4A00",
                             fill: false
+                        },
+                        {
+                            label: "Laba : Rp. " + profit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."),
+                            borderWidth: 1,
+                            borderColor: "#00ff00",
+                            backgroundColor: "#00ff00",
                         }
                     ]
                 },

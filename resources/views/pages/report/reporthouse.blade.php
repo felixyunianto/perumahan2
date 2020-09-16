@@ -14,16 +14,18 @@
         <form action="{{ route('report.house') }}" method="get">
             <div class="row">
                 <div class="col-md-8">
-                    <select name="block_id" id="" class="form-control">
-                        {{-- <option value="">-- Pilih Perumahan --</option> --}}
+                    <select name="block_id" id="block_id" class="form-control">
+                        <option value="">-- Pilih Perumahan --</option>
                         @foreach ($blocks as $block)
-                        <option value="{{ $block->id }}" {{ (old('block_id') == $block->id) ? "selected" : "" }} >{{ $block->name_block }}</option>
+                        <option value="{{ $block->id }}" @if($selected == $block->id)  selected @endif >{{ $block->name_block }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="col-md-4">
-                    <button type="submit" class="btn btn-primary form-control">Cari</button>
+                    <button type="submit" class="btn btn-secondary">Filter</button>
+                    <a href="" target="_blank" id="exportPDF" class="btn btn-primary ml-2"><i class="fa fa-file-pdf"></i> Export PDF</a>
                 </div>
+                
             </div>
 
         </form>
@@ -83,6 +85,16 @@
 </div>
 <script>
     $('#report-table').DataTable({})
-
 </script>
+@endsection
+@section('script')
+    <script>
+        let blockID = $('#block_id').val();
+        // $('#exportPDF').attr('href','/pdf-house/')
+        $('#block_id').change(function(){
+            $('#exportPDF').attr('href','/pdf-house/'+ this.value);
+        })
+
+        $('#exportPDF').attr('href','/pdf-house/'+ $('#block_id').val());
+    </script>
 @endsection

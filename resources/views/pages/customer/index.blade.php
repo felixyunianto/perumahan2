@@ -79,6 +79,7 @@
                                 <th>Alamat</th>
                                 <th>No Handphone</th>
                                 <th>Marketing</th>
+                                <th>Perumahan</th>
                                 <th>Opsi</th>
                             </tr>
                         </thead>
@@ -93,6 +94,11 @@
                                 <td>{{ $customer->address }}</td>
                                 <td>{{ $customer->no_hp }}</td>
                                 <td>{{ $customer->user->name }}</td>
+                                <td>
+                                    @foreach ($customer->detail_house as $dh)
+                                        {{ $dh->house->block->name_block }}
+                                    @endforeach
+                                </td>
                                 <td>
                                     <form action="{{route('customer.destroy', $customer->id)}}" method="post"
                                         class="sa-remove" id="data-{{$customer->id}}">
@@ -271,14 +277,13 @@
                                 id="dp_customer">Pelunasan DP</button>
                             @endif
 
-                            @if ($customer->dp_status !== NULL)
+                            {{-- @if ($customer->dp_status !== NULL) --}}
                             <a href="{{ route('filling', $customer->id) }}"
                                 class="btn btn-warning btn-sm btn-round">Pemberkasan</a>
-                            @else
+                            {{-- @else
 
-                            <a href="javascript: void(0)" class="btn btn-sm btn-primary btn-round"
-                                onclick="return filingCustomer()">Pemberkasan</a>
-                            @endif
+                            <a href="javascript: void(0)" class="btn btn-sm btn-primary btn-round">Pemberkasan</a>
+                            @endif --}}
 
                             @if ($customer->file_status == 1 && $customer->sp3_status == NULL)
                             <button type="button" class="btn btn-info btn-sm id_customer_bank btn-round"
@@ -321,7 +326,7 @@
                                 </button>
                             @else
                                 @if ($customer->lpa_status !== NULL)
-                                    <button class="btn btn-danger btn-sm btn-round" onclick="return document.getElementById('form-akad-{{$customer->id}}').submit()">
+                                    <button class="btn btn-danger btn-sm btn-round id_customer_akad" data-toggle="modal" data-target="#modals-akad" data-id="{{ $customer->id }}">
                                         AKAD
                                     </button>
                                 @else
@@ -341,6 +346,8 @@
         </div>
     </div>
 </div>
+
+{{-- BANK --}}
 <div class="modal fade" id="modals-bank">
     <div class="modal-dialog">
         <form class="modal-content" method="post" action="{{ route('customer.chooseBank') }}">
@@ -373,6 +380,8 @@
         </form>
     </div>
 </div>
+
+{{-- DP --}}
 <div class="modal fade" id="modals-dp">
     <div class="modal-dialog">
         <form class="modal-content" method="post" action="{{ route('customer.payDP') }}">
@@ -406,6 +415,8 @@
         </form>
     </div>
 </div>
+
+{{-- LPA --}}
 <div class="modal fade" id="modals-lpa">
     <div class="modal-dialog">
         <form class="modal-content" method="post" action="{{ route('customer.payLPA') }}">
@@ -428,6 +439,42 @@
                     <div class="form-group col mb-0">
                         <label class="form-label">Total Uang LPA</label>
                         <input type="text" class="form-control input-lpa" name="total_lpa">
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a type="button" class="btn btn-default" data-dismiss="modal">Close</a>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{{-- AKAD --}}
+<div class="modal fade" id="modals-akad">
+    <div class="modal-dialog">
+        <form class="modal-content" method="post" action="{{ route('update.akad') }}">
+            @csrf
+            <div class="modal-header">
+                <h5 class="modal-title">Penerimaan
+                    <span class="font-weight-light">Akad</span>
+                    <br>
+                </h5>
+                <a type="button" class="close" data-dismiss="modal" aria-label="Close">×</a>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <input type="text" class="form-control" id="id_customer_akad" name="id_customer">
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col mb-0">
+                        <input type="hidden" value="1" name="akad">
+                        <label class="form-label">Tanggal Akad</label>
+                        <input type="date" class="form-control input-akad" name="date">
                         <div class="clearfix"></div>
                     </div>
                 </div>

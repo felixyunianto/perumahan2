@@ -36,22 +36,9 @@ class ChartController extends Controller
         foreach ($chartAccounting1 as $key) {
             $month1[$key->months-1] = $key->outcome;
         }
-        return response()->json([$month, $month1]);
-    }
 
-    public function outcomeChart(){
-        $chartAccounting = Akunting::orderBy('date')->select(
-            \DB::raw('sum(price) as sums'), 
-            // \DB::raw("DATE_FORMAT(date,'%m') as months")
-            \DB::raw('MONTH(date) as months')
-        )
-        ->where('status', 0)->groupBy('months')->get();
-        dd($chartAccounting);
-        $month = [0,0,0,0,0,0,0,0,0,0,0,0];
-        foreach ($chartAccounting as $key) {
-            $month[$key->months-1] = $key->sums;
-        }
-        return response()->json($month);
+        $profit = $chartAccounting->sum('income') - $chartAccounting1->sum('outcome');
+        return response()->json([$month, $month1, $profit]);
     }
 
     public function statusHouse(Request $request){

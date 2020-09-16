@@ -12,11 +12,19 @@ class HouseController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('house');
+        $blocks = Block::all();
         $houses = House::all();
-        return view('pages.house.index', compact('houses'));
+
+        if($request->block_id){
+            $houses = House::where('block_id', $request->block_id)->get();
+        }
+
+        $selected = $request->block_id;
+
+        return view('pages.house.index', compact('houses','blocks','selected'));
     }
 
     public function create()
