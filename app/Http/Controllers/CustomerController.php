@@ -9,6 +9,7 @@ use App\House;
 use App\DetailHouse;
 use App\Akunting;
 use App\Block;
+use App\MoneySetting;
 use Storage;
 
 class CustomerController extends Controller
@@ -19,15 +20,33 @@ class CustomerController extends Controller
         $this->path = 'customer';
     }
 
-    public function index(){
+    public function index(Request $request){
         $this->authorize('pelanggan');
+        $blocks = Block::all();
+        $selected = $request->block_id;
+
         $confirmed = Customer::where('file_status', 1)->where('transaction', 'Proses')->count();
         $not_yet_confirmed = Customer::where('file_status', 0)->count();
         $cash = Customer::where('transaction', 'Cash')->count();
         $process = Customer::where('transaction', 'Proses')->count();
         $customers = Customer::with('detail_house.house.block')->get();
+        $akad = House::where('status_process', 'Akad')->get();
+        $utj = House::where('status_process', 'Proses')->get();
+        $sp3 = House::where('status_process', 'SP3')->get();
+        $lpa = House::where('status_process', 'ACC')->get();
         // dd($customers);
-        return view('pages.'.$this->path.'.index', compact('customers','confirmed', 'not_yet_confirmed','cash','process'));
+
+        if($request->block_id){
+            $customers = Customer::WhereHas('detail_house', function($query) use($request){
+            return $query->whereHas('house.block', function($block)use($request){
+                return $block->where('id', $request->block_id);
+            });
+        })->get();
+        }
+
+        
+        // dd($grouping_customer);
+        return view('pages.'.$this->path.'.index', compact('customers','confirmed', 'not_yet_confirmed','cash','process','akad','sp3','utj','lpa','blocks','selected'));
     }
     
     public function create()
@@ -130,7 +149,9 @@ class CustomerController extends Controller
         $this->authorize('pelanggan');
         $customer = Customer::find($id);
         // $houses = House::where('status', 0)->get();
-        $houses = Block::with('house')->get();
+        $houses = Block::with(['house' => function ($query){
+            $query->where('status',0)->get();
+        }])->get();
         
         $detail_house = DetailHouse::where('customer_id', $id)->get();
         return view('pages.filing.choose', compact('customer','houses','detail_house'));
@@ -253,6 +274,8 @@ class CustomerController extends Controller
 
         $this->validate($request, $rule, $message);
 
+        $priceDP = MoneySetting::where('name','DP')->first();
+
         $customer = Customer::where('id', $request->id_customer)->first();
         
         $statusDP = Akunting::select(
@@ -263,7 +286,7 @@ class CustomerController extends Controller
         
         $canFilling = $statusDP->price + $price;
         
-        if((int)$canFilling >= 7500000){
+        if((int)$canFilling >= $priceDP->price){
             $customer->update([
                 'utj_status' => date('Y-m-d'),
                 'dp_status' => date('Y-m-d'),
@@ -368,28 +391,33 @@ class CustomerController extends Controller
         $customer = Customer::where('id', $request->id_customer)->first();
         $detail_house = DetailHouse::with('house')->where('customer_id', $request->id_customer)->first();
 
+        $priceLPA = MoneySetting::where('name','LPA')->first();
+
         $price = (int)str_replace(".","",$request->input('total_lpa'));
 
-        $customer->update([
-            'lpa_status' => date('Y-m-d'),
-        ]);
+        if($price >= $priceLPA->price){
+            $customer->update([
+                'lpa_status' => date('Y-m-d'),
+            ]);
+    
+            $detail_house->house->update([
+                'status_process' => 'ACC'
+            ]);
+    
+            $lpa = Akunting::create([
+                'name' => 'LPA atas nama '. $customer->name,
+                'price' => $price,
+                'date' => date('Y-m-d'),
+                'status' => 1,
+                'description' => 'Pembayaran LPA atas nama ' . $customer->name,
+                'category_id' => 1,
+                'id_customer' => $request->id_customer
+            ]);
 
-        $detail_house->house->update([
-            'status_process' => 'ACC'
-        ]);
-
-        $lpa = Akunting::create([
-            'name' => 'LPA atas nama '. $customer->name,
-            'price' => $price,
-            'date' => date('Y-m-d'),
-            'status' => 1,
-            'description' => 'Pembayaran LPA atas nama ' . $customer->name,
-            'category_id' => 1,
-            'id_customer' => $request->id_customer
-        ]);
-
-        return redirect()->route('customer.index')->with('success', 'Pembayaran LPA telah berhasil');
-        
+            return redirect()->route('customer.index')->with('success', 'Pembayaran LPA telah berhasil');
+        }else{
+            return redirect()->route('customer.index')->with('warning', 'Minimal pembayaran Rp. '. number_format($priceLPA->price,0,"","."));
+        }
     }
 
     
@@ -447,10 +475,11 @@ class CustomerController extends Controller
             'required' => 'Bidang :attribute tidak boleh kosong!'
         ];
 
-        $this->validate($request, $rule, $message);
+        // $this->validate($request, $rule, $message);
 
         $customer = Customer::where('id', $request->id_customer)->first();
-        $house = DetailHouse::with('house')->where('customer_id', $request->id_customer)->first();
+        $house = DetailHouse::with('house')->where('customer_id', $request->id_customer)->where('house_id', $request->id_house)->first();
+        
         
         $price = (int)str_replace(".","",$request->input('total-fail'));
 
@@ -527,9 +556,9 @@ class CustomerController extends Controller
             'name' => 'Refund uang atas nama '. $customer->name,
             'price' => $price,
             'date' => date('Y-m-d'),
-            'status' => 1,
+            'status' => 0,
             'description' => 'Refund uang karena gagal atas nama ' . $customer->name,
-            'category_id' => 1,
+            'category_id' => 3,
             'id_customer' => $request->id_customer
         ]);
 
@@ -541,11 +570,13 @@ class CustomerController extends Controller
             'lpa_status' => NULL,
         ]);
 
-        $house->house->update([
-            'status' => 0,
-            'status_process' => 'Kosong'
-        ]);
-
+        if($house !== NULL){
+            $house->house->update([
+                'status' => 0,
+                'status_process' => 'Kosong'
+            ]);
+            DetailHouse::where('customer_id', $request->id_customer)->where('house_id', $request->id_house)->delete();
+        }
         return redirect()->route('customer.index')->with('success', 'Penggagalan customer telah berhasil');
     }
 }

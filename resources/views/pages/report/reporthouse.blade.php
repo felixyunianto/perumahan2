@@ -81,6 +81,32 @@
                 </tbody>
             </table>
         </div>
+        <table width="30%" border="1pt" style="text-align: center">
+            <tr>
+                <td width="40%">Total SP3</td>
+                <td>{{ $sp3->count('id') }}</td>
+            </tr>
+            <tr>
+                <td>Total Akad</td>
+                <td>{{ $akad->count('id') }}</td>
+            </tr>
+            <tr>
+                <td>Proses</td>
+                <td>{{ $proses->count('id') }}</td>
+            </tr>
+            <tr>
+                <td>Cash</td>
+                <td>{{ $cash->count('id') }}</td>
+            </tr>
+            <tr>
+                <td>Total</td>
+                <td>{{ $total->count('id') }}</td>
+            </tr>
+            <tr>
+                <td>Kosong</td>
+                <td>{{ $kosong->count('id') }}</td>
+            </tr>
+        </table>
     </div>
 </div>
 <script>

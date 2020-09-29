@@ -10,6 +10,6 @@ class Block extends Model
     protected $guarded = [];
 
     public function house(){
-      return $this->hasMany(House::class);
+      return $this->hasMany(House::class, 'block_id');
     }
 }

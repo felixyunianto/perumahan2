@@ -9,6 +9,7 @@ use carbon\Carbon;
 use App\Akunting;
 use App\House;
 use App\Block;
+use App\Customer;
 
 class PdfController extends Controller
 {
@@ -39,7 +40,14 @@ class PdfController extends Controller
     public function pdfHouse($block_id){
         $reports = House::with('block','detail_house','detail_house.customer','detail_house.customer.filing')->where('block_id', $block_id)->get();
         $block = Block::where('id', $block_id)->first();
-        $pdf = PDF::loadview('pages.pdf.pdf_house', compact('reports','block'));
+        $sp3 = House::where('status_process','SP3')->where('block_id', $block_id)->get();
+        $akad = House::where('status_process','Akad')->where('block_id', $block_id)->get();
+        $proses = House::where('status_process','Proses')->where('block_id', $block_id)->get();
+        $cash = House::where('status_process','Cash')->where('block_id', $block_id)->get();
+        $total = House::whereNotIn('status_process',['Kosong'])->where('block_id', $block_id)->get();
+        $kosong = House::where('status_process','Kosong')->where('block_id', $block_id)->get();
+
+        $pdf = PDF::loadview('pages.pdf.pdf_house', compact('reports','block','sp3','akad','proses','cash','total','kosong'));
 
         return $pdf->setPaper('A4','landscape')->stream();
 
@@ -67,5 +75,13 @@ class PdfController extends Controller
         $pdf = PDF::loadview('pages.pdf.pdf_category', compact('income','cost_of_goods_sold','business_expenses','other_income','other_expenses','total_income_expenses','estimated_income'));
         
         return $pdf->stream();
+    }
+
+    public function pdfCustomer(){
+        $customers = Customer::all();
+        $totalCustomer = count($customers);
+        $pdf = PDF::loadview('pages.pdf.pdf_customer', compact('customers', 'totalCustomer'));
+
+        return $pdf->setPaper('A4')->stream();
     }
 }

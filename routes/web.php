@@ -49,7 +49,7 @@ Route::resource('rumah', 'HouseController');
 Route::resource('role', 'RoleController');
 Route::resource('user', 'UserController');
 
-
+Route::resource('money-setting', 'MoneySettingController');
 
 Route::resource('permission', 'PermissionController');
 Route::resource('kategori-transaksi', 'CategoryTransaksiController');
@@ -63,6 +63,7 @@ Route::get('pemasukan', 'ReportController@income')->name('income');
 Route::get('pengeluaran', 'ReportController@spending')->name('spending');
 Route::get('laporan-rumah', 'ReportController@house')->name('report.house');
 Route::get('laporan-laba-rugi', 'ReportController@category_transaction')->name('report.laba-rugi');
+Route::get('total-customer', 'ReportController@totalCustomer')->name('report.total-customer');
 //End Report
 
 //PDF
@@ -70,9 +71,22 @@ Route::get('pdf-income/{daterange}','pdf\PdfController@pdfIncome')->name('report
 Route::get('pdf-spending/{daterange}','pdf\PdfController@pdfSpending')->name('report.pdf-spending');
 Route::get('pdf-house/{block_id}','pdf\PdfController@pdfHouse')->name('report.pdf-house');
 Route::get('pdf-category-transaction/{daterange}', 'pdf\PdfController@pdfCategory')->name('report.pdf-category');
+Route::get('pdf-customer/', 'pdf\PdfController@pdfCustomer')->name('report.pdf-customer');
 //EndPDF
 
 //Excel
 Route::get('excel-spending/{daterange}', 'Excel\ExcelController@excelSpending')->name('excel.spending');
 Route::get('excel-income/{daterange}', 'Excel\ExcelController@excelIncome')->name('excel.income');
 //EndExcel
+
+//Download
+Route::get('download-image/{customer_id}', 'DownloadController@downloadImage')->name('downloadImage');
+Route::get('download-id-card/{customer_id}', 'DownloadController@downloadIDCard')->name('downloadIDCard');
+Route::get('download-family-card/{customer_id}', 'DownloadController@downloadFamilyCard')->name('downloadFamilyCard');
+Route::get('download-marriage-certificate/{customer_id}', 'DownloadController@downloadMarriage')->name('downloadMarriage');
+Route::get('download-tax-payer/{customer_id}', 'DownloadController@downloadTaxpayer')->name('downloadTaxpayer');
+Route::get('download-tax-status/{customer_id}', 'DownloadController@downloadTaxStatus')->name('downloadTaxStatus');
+Route::get('download-income/{customer_id}', 'DownloadController@downloadIncome')->name('downloadIncome');
+Route::get('download-current-account/{customer_id}', 'DownloadController@downloadCurrentAccount')->name('downloadCurrentAccount');
+Route::get('download-saving/{customer_id}', 'DownloadController@downloadSaving')->name('downloadSaving');
+Route::get('download-havent-house/{customer_id}', 'DownloadController@downloadHaventHouse')->name('downloadHaventHouse');

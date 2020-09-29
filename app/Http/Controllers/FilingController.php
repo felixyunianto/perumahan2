@@ -141,7 +141,7 @@ class FilingController extends Controller
         if($filings->photos !== NULL && $filings->fc_id_card !== NULL && $filings->fc_family_card !== NULL
           && $filings->fc_taxpayer_identification !== NULL
           && $filings->tax_status !== NULL && $filings->income !== NULL
-          && $filings->current_account !== NULL && $filings->saving !== NULL && $filings->ls_havent_house !== NULL){
+          && $filings->current_account !== NULL && $filings->ls_havent_house !== NULL){
           $customer = Customer::where('id', $request->customer_id)->firstOrFail();
           $customer->update([
             'file_status' => 1

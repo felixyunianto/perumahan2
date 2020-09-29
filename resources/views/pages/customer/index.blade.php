@@ -60,6 +60,34 @@
             </div>
         </div>
     </div>
+
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <form action="{{ route('customer.index') }}" method="get">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <select name="block_id" id="block_id" class="form-control">
+                                <option value="">-- Pilih Perumahan --</option>
+                                @foreach ($blocks as $block)
+                                <option value="{{ $block->id }}" @if($selected == $block->id)  selected @endif >{{ $block->name_block }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="row">
+                                <div class="col-sm-6"><button type="submit" class="btn btn-secondary form-control ">Filter</button></div>
+                                <div class="col-sm-6"><a href="{{route('customer.index')}}" class="btn btn-primary form-control">Refresh</a></div>
+                            </div>
+                        </div>
+                        
+                    </div>
+        
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="col-sm-12">
         <div class="card">
             <div class="card-body">
@@ -67,6 +95,7 @@
                     <div class="col-sm-6">
                     </div>
                     <div class="col-sm-6 text-right">
+                        <a href="{{ route('report.pdf-customer') }}" target="_blank" class="btn btn-danger btn-sm mb-3"> <i class="fa fa-file-pdf">PDF</i> </a>
                         <a href="{{route('customer.create')}}" class="btn btn-success btn-sm mb-3">Tambah Customer</a>
                     </div>
                 </div>
@@ -120,9 +149,9 @@
                                     <a href="javascript: void(0)" class="btn btn-sm btn-info btn-round"
                                         onclick="return chooseHouse()">Pilih Rumah</a>
                                     @endif
-                                    @if ($customer->akad_status == 0)
+                                    @if ($customer->akad_status == NULL && $customer->utj_status !== NULL)
                                     <button class="btn btn-primary btn-sm btn-round fail_customer" data-toggle="modal"
-                                        data-target="#modals-fail" data-id="{{ $customer->id }}"
+                                        data-target="#modals-fail" data-id="{{ $customer->id }}" @forelse($customer->detail_house as $dh) data-house="{{ $dh->house->id }}" @empty  @endforelse
                                         id="fail_customer">Gagal</button>
                                     @endif
 
@@ -142,6 +171,7 @@
         </div>
     </div>
 </div>
+{{-- UTJ --}}
 <div class="modal fade" id="modals-utj">
     <div class="modal-dialog">
         <form class="modal-content" method="post" action="{{ route('customer.pay') }}">
@@ -156,7 +186,7 @@
             <div class="modal-body">
                 <div class="form-row">
                     <div class="form-group col">
-                        <input type="text" class="form-control" id="id_customer_input" name="id_customer">
+                        <input type="hidden" class="form-control" id="id_customer_input" name="id_customer">
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -175,6 +205,7 @@
         </form>
     </div>
 </div>
+{{-- Refund --}}
 <div class="modal fade" id="modals-fail">
     <div class="modal-dialog">
         <form class="modal-content" method="post" action="{{ route('customer.fail') }}">
@@ -189,8 +220,8 @@
             <div class="modal-body">
                 <div class="form-row">
                     <div class="form-group col">
-                        <label class="form-label">ID</label>
-                        <input type="text" class="form-control" id="id_customer_fail" name="id_customer">
+                        <input type="hidden" class="form-control" id="id_customer_fail" name="id_customer">
+                        <input type="text" class="form-control" id="id_house_fail" name="id_house">
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -361,7 +392,7 @@
             <div class="modal-body">
                 <div class="form-row">
                     <div class="form-group col">
-                        <input type="text" class="form-control" id="id_customer_bank" name="id_customer">
+                        <input type="hidden" class="form-control" id="id_customer_bank" name="id_customer">
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -396,7 +427,7 @@
             <div class="modal-body">
                 <div class="form-row">
                     <div class="form-group col">
-                        <input type="text" class="form-control" id="id_customer_dp" name="id_customer">
+                        <input type="hidden" class="form-control" id="id_customer_dp" name="id_customer">
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -431,7 +462,7 @@
             <div class="modal-body">
                 <div class="form-row">
                     <div class="form-group col">
-                        <input type="text" class="form-control" id="id_customer_lpa" name="id_customer">
+                        <input type="hidden" class="form-control" id="id_customer_lpa" name="id_customer">
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -466,7 +497,7 @@
             <div class="modal-body">
                 <div class="form-row">
                     <div class="form-group col">
-                        <input type="text" class="form-control" id="id_customer_akad" name="id_customer">
+                        <input type="hidden" class="form-control" id="id_customer_akad" name="id_customer">
                         <div class="clearfix"></div>
                     </div>
                 </div>

@@ -20,6 +20,7 @@
                     <input type="file" name="photos" class="form-control">
                     @if($filings->photos !== NULL)
                     <img src="{{ asset($filings->photos) }}" alt="" width="80px" height="80px">
+                    <a href="{{ route('downloadImage', $customers->id) }}" style="color: green;"><i class="fa fa-download" style="color: green"></i> Download</a>
                     @endif
                 </div>
                 <div class="form-group">
@@ -27,6 +28,7 @@
                     <input type="file" name="fc_id_card" class="form-control">
                     @if($filings->fc_id_card !== NULL)
                     <img src="{{ asset($filings->fc_id_card) }}" alt="" width="80px" height="80px">
+                    <a href="{{ route('downloadIDCard', $customers->id) }}" style="color: green;"><i class="fa fa-download" style="color: green"></i> Download</a>
                     @endif
                 </div>
                 <div class="form-group">
@@ -34,6 +36,7 @@
                     <input type="file" name="fc_family_card" class="form-control">
                     @if($filings->fc_family_card !== NULL)
                     <img src="{{ asset($filings->fc_family_card) }}" alt="" width="80px" height="80px">
+                    <a href="{{ route('downloadFamilyCard', $customers->id) }}" style="color: green;"><i class="fa fa-download" style="color: green"></i> Download</a>
                     @endif
                 </div>
                 <div class="form-group">
@@ -41,6 +44,7 @@
                     <input type="file" name="fc_marriage_certificate" class="form-control">
                     @if($filings->fc_marriage_certificate !== NULL)
                     <img src="{{ asset($filings->fc_marriage_certificate) }}" alt="" width="80px" height="80px">
+                    <a href="{{ route('downloadMarriage', $customers->id) }}" style="color: green;"><i class="fa fa-download" style="color: green"></i> Download</a>
                     @endif
                 </div>
               </div>
@@ -50,6 +54,7 @@
                     <input type="file" name="fc_taxpayer_identification" class="form-control">
                     @if($filings->fc_taxpayer_identification !== NULL)
                     <img src="{{ asset($filings->fc_taxpayer_identification) }}" alt="" width="80px" height="80px">
+                    <a href="{{ route('downloadTaxpayer', $customers->id) }}" style="color: green;"><i class="fa fa-download" style="color: green"></i> Download</a>
                     @endif
                 </div>
                 <div class="form-group">
@@ -57,6 +62,7 @@
                     <input type="file" name="tax_status" class="form-control">
                     @if($filings->tax_status !== NULL)
                     <img src="{{ asset($filings->tax_status) }}" alt="" width="80px" height="80px">
+                    <a href="{{ route('downloadTaxStatus', $customers->id) }}" style="color: green;"><i class="fa fa-download" style="color: green"></i> Download</a>
                     @endif
                 </div>
                 <div class="form-group">
@@ -64,6 +70,7 @@
                     <input type="file" name="income" class="form-control">
                     @if($filings->income !== NULL)
                     <img src="{{ asset($filings->income) }}" alt="" width="80px" height="80px">
+                    <a href="{{ route('downloadIncome', $customers->id) }}" style="color: green;"><i class="fa fa-download" style="color: green"></i> Download</a>
                     @endif
                 </div>
               </div>
@@ -73,13 +80,15 @@
                     <input type="file" name="current_account" class="form-control">
                     @if($filings->current_account !== NULL)
                     <img src="{{ asset($filings->current_account) }}" alt="" width="80px" height="80px">
+                    <a href="{{ route('downloadCurrentAccount', $customers->id) }}" style="color: green;"><i class="fa fa-download" style="color: green"></i> Download</a>
                     @endif
                 </div>
                 <div class="form-group">
-                    <label for="">Tabungan BTN</label>
+                    <label for="">Tabungan BTN (Optional)</label>
                     <input type="file" name="saving" class="form-control">
                     @if($filings->saving !== NULL)
                     <img src="{{ asset($filings->saving) }}" alt="" width="80px" height="80px">
+                    <a href="{{ route('downloadSaving', $customers->id) }}" style="color: green;"><i class="fa fa-download" style="color: green"></i> Download</a>
                     @endif
                 </div>
                 <div class="form-group">
@@ -87,6 +96,7 @@
                     <input type="file" name="ls_havent_house" class="form-control">
                     @if($filings->ls_havent_house !== NULL)
                     <img src="{{ asset($filings->ls_havent_house) }}" alt="" width="80px" height="80px">
+                    <a href="{{ route('downloadHaventHouse', $customers->id) }}" style="color: green;"><i class="fa fa-download" style="color: green"></i> Download</a>
                     @endif
                 </div>
               </div>

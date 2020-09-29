@@ -25,7 +25,7 @@ function chooseHouse() {
     })
 }
 
-function cantSp3(){
+function cantSp3() {
     swal({
         title: "Pemberitahuan",
         text: "Mohon maaf customer tersebut belum pemberkasan.",
@@ -33,7 +33,7 @@ function cantSp3(){
     })
 }
 
-function cantLPA(){
+function cantLPA() {
     swal({
         title: "Pemberitahuan",
         text: "Mohon maaf customer tersebut belum SP3.",
@@ -41,7 +41,7 @@ function cantLPA(){
     })
 }
 
-function cantAkad(){
+function cantAkad() {
     swal({
         title: "Pemberitahuan",
         text: "Mohon maaf customer tersebut memenuhi syarat.",
@@ -84,7 +84,7 @@ $(document).ready(function () {
         decimal: ',',
         affixesStay: false,
         precision: 0,
-        allowZero : 1,
+        allowZero: 1,
         // allowEmpty: 1,
     });
 });
@@ -92,32 +92,34 @@ $(document).ready(function () {
 
 
 //Funtion
-$(document).on("click",".id_customer", function(){
+$(document).on("click", ".id_customer", function () {
     var idCustomer = $(this).data('id');
     $('#id_customer_input').val(idCustomer);
 })
 
-$(document).on("click",".fail_customer", function(){
+$(document).on("click", ".fail_customer", function () {
     var idCustomer = $(this).data('id');
+    var idHouse = $(this).data('house')
     $('#id_customer_fail').val(idCustomer);
+    $("#id_house_fail").val(idHouse);
 })
 
-$(document).on("click",".dp_customer", function(){
+$(document).on("click", ".dp_customer", function () {
     var idCustomer = $(this).data('id');
     $('#id_customer_dp').val(idCustomer);
 });
 
-$(document).on("click",".id_customer_lpa", function(){
+$(document).on("click", ".id_customer_lpa", function () {
     var idCustomerLPA = $(this).data('id');
     $('#id_customer_lpa').val(idCustomerLPA);
 });
 
-$(document).on("click",".id_customer_bank", function(){
+$(document).on("click", ".id_customer_bank", function () {
     var idCustomerBank = $(this).data('id');
     $('#id_customer_bank').val(idCustomerBank);
 });
 
-$(document).on('click', '.id_customer_akad',function(){
+$(document).on('click', '.id_customer_akad', function () {
     var idCustomerAkad = $(this).data('id');
     $('#id_customer_akad').val(idCustomerAkad);
 })

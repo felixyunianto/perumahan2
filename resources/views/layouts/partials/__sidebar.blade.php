@@ -19,6 +19,12 @@
             </a>
         </li>
         @if(Auth::user()->role->name == 'marketing' || Auth::user()->role->name == 'admin' || Auth::user()->role->name == 'pemberkasan' )
+        <li class="sidenav-item @if(Request::is('money-setting')) active @endif">
+            <a href="{{ route('money-setting.index') }}" class="sidenav-link">
+                <i class="sidenav-icon fa fa-donate"></i>
+                <div>Atur Uang</div>
+            </a>
+        </li>
         <li class="sidenav-item">
             <a href="javascript:" class="sidenav-link sidenav-toggle">
                 <i class="sidenav-icon feather icon-home"></i>
@@ -111,9 +117,13 @@
                     <a href="{{ route('report.laba-rugi') }}" class="sidenav-link">
                         <div>Laporan Transaksi</div>
                     </a>
-                </li>   
+                </li>
                 @endif
-                
+                <li class="sidenav-item">
+                    <a href="{{ route('report.total-customer') }}" class="sidenav-link">
+                        <div>Laporan Total Customer</div>
+                    </a>
+                </li>
             </ul>
         </li>
 

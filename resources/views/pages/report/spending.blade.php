@@ -22,7 +22,6 @@
             </div>
         </form>
         <div class="table-responsive">
-            
             <table id="spending-table" class="table table-striped table-hover">
                 <thead>
                     <tr>
