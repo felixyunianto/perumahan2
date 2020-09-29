@@ -563,7 +563,7 @@ class CustomerController extends Controller
         ]);
 
         $customer->update([
-            'file_status' => NULL,
+            'file_status' => 0,
             'utj_status' => NULL,
             'dp_status' => NULL,
             'sp3_status' => NULL,

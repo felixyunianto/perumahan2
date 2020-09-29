@@ -14,14 +14,14 @@
     <ul class="sidenav-inner py-1">
         <li class="sidenav-item @if(Request::is('/')) active @endif">
             <a href="{{ route('home') }}" class="sidenav-link">
-                <i class="sidenav-icon fa fa-tachometer-alt"></i>
+                <i class="sidenav-icon feather icon-command"></i>
                 <div>Beranda</div>
             </a>
         </li>
         @if(Auth::user()->role->name == 'marketing' || Auth::user()->role->name == 'admin' || Auth::user()->role->name == 'pemberkasan' )
         <li class="sidenav-item @if(Request::is('money-setting')) active @endif">
             <a href="{{ route('money-setting.index') }}" class="sidenav-link">
-                <i class="sidenav-icon fa fa-donate"></i>
+                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="sidenav-item"><line x1="10" y1="1" x2="10" y2="23"></line><path d="M14 5H8.5a2.3 2.5 0 0 0 0 7h3a3.3 3.5 0 0 1 0 7H5"></path></svg>
                 <div>Atur Uang</div>
             </a>
         </li>

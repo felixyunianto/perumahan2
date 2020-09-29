@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
         if(!Schema::hasTable('customers')){
             return;
         }else{
-            $notYet = Customer::with('filing')->where('file_status', 0)->get();
+            $notYet = Customer::with('filing')->where('file_status', 0)->whereNotNull('utj_status')->get();
             View::share('notYet', $notYet);
         }
         
