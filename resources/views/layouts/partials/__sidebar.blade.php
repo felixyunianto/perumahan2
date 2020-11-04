@@ -55,17 +55,29 @@
         
         @if(Auth::user()->role->name == 'akuntansi' || Auth::user()->role->name == 'admin' )
         <li class="sidenav-item">
-            <a href="{{ route('kategori-transaksi.index') }}" class="sidenav-link">
+            <a href="javascript:" class="sidenav-link sidenav-toggle">
                 <i class="sidenav-icon feather icon-file"></i>
-                <div>Kategori Transaksi</div>
+                <div>Transaksi</div>
             </a>
+            <ul class="sidenav-menu">
+                <li class="sidenav-item">
+                    <a href="{{ route('kategori-transaksi.index') }}" class="sidenav-link">
+                        <div>Kategori Transaksi</div>
+                    </a>
+                </li>
+                <li class="sidenav-item">
+                    <a href="{{ route('sub-kategori-transaksi.index') }}" class="sidenav-link">
+                        <div>Sub Kategori Transaksi</div>
+                    </a>
+                </li>
+                <li class="sidenav-item">
+                    <a href="{{ route('akunting.index') }}" class="sidenav-link">
+                        <div>Akuntan</div>
+                    </a>
+                </li>
+            </ul>
         </li>
-        <li class="sidenav-item">
-            <a href="{{ route('akunting.index') }}" class="sidenav-link">
-                <i class="sidenav-icon feather icon-book"></i>
-                <div>Akuntan</div>
-            </a>
-        </li>
+        
         @endif
         @if (Auth::user()->role->name == 'admin')
         <li class="sidenav-item @if (Request::is('role') || Request::is('user')) active @endif">

@@ -14,7 +14,7 @@ class AkuntingController extends Controller
 
     public function index(){
         $this->authorize('akuntan');
-        $accountings = Akunting::all();
+        $accountings = Akunting::with('ct', 'subCategory')->orderBy('date','DESC')->get();
         $income = Akunting::where('status','1')->sum('price');
         $out = Akunting::where('status','0')->sum('price');
 
@@ -55,6 +55,7 @@ class AkuntingController extends Controller
             'date' => $current_date,
             'status' => $request->status,
             'category_id' => $request->category_id,
+            'sub_category_id' => $request->sub_category_id,
             'description' => $request->description
         ]);
         

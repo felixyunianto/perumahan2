@@ -23,7 +23,7 @@
             </div>
             <div class="form-group">
                 <label for="">Kategori <span style="color:red">*</span> </label>
-                <select name="category_id" id="" class="form-control">
+                <select name="category_id" id="category_id" class="form-control">
                     <option value="" disabled selected>-- Pilih --</option>
                     @foreach ($category_transaction as $ct)
                         <option value="{{ $ct->id }}">{{ $ct->name }}</option>
@@ -31,7 +31,14 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="">Nama <span style="color:red">*</span> </label>
+                <label for="">Sub Kategori</label>
+                <select name="sub_category_id" id="show-sub" class="form-control">
+                    <option value="">--Pilih --</option>
+                </select>
+                
+            </div>
+            <div class="form-group">
+                <label for="">Uraian <span style="color:red">*</span> </label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name">
                 @error('name')
                 <span class="invalid-feedback" role="alert">
@@ -60,6 +67,27 @@
 </div>
 
 <script>
+
+    const url = 'http://localhost:8000/api/';
+    const showSub = document.querySelector('#show-sub');
+    const chooseCategory = document.querySelector('#category_id');
+
+    chooseCategory.addEventListener('change', async function() {
+        const subCategory = await search(chooseCategory.value);
+        // option = '';
+        for(i = showSub.options.length-1; i >= 0; i--){
+            showSub.options[i] = null
+        }
+        subCategory.forEach((b) => {
+            
+            option = document.createElement("OPTION");
+            const name = document.createTextNode(b.name);
+            option.value = b.id;
+            option.appendChild(name);
+            showSub.append(option)
+        })
+    })
+
     $(document).ready(function () {
         $(".money-input").maskMoney({
             thousands: '.',
@@ -68,6 +96,18 @@
             precision: 0
         });
     });
+
+    function search(keyword){
+        return fetch(url + 'json-sub-kategori/' + keyword).then(res => res.json()).then(res => res.results)
+    }
+
+    
+
+    // function showContainer(b){
+    //     `
+    //         <option value="${b.id}">${b.name}</option>
+    //     `;
+    // }
 
 </script>
 <script src="{{ asset('assets/js/money.js') }}"></script>

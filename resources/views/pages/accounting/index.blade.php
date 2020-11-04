@@ -47,6 +47,8 @@
                         <th>Jumlah</th>
                         <th>Tanggal</th>
                         <th>Status</th>
+                        <th>Kategori</th>
+                        <th>Sub Kategori</th>
                         <th>Opsi</th>
                     </tr>
                 </thead>
@@ -65,6 +67,8 @@
                                 <path fill="red" d="M8 10h-5l9-10 9 10h-5v10h-8v-10zm8 12h-8v2h8v-2z" /></svg>
                             @endif
                         </td>
+                        <td>{{ $accounting->ct->name }}</td>
+                        <td>{{ $accounting->subCategory->name }}</td>
                         <td>
                             <form action="{{route('akunting.destroy', $accounting->id)}}" method="post"
                                 class="sa-remove" id="data-{{$accounting->id}}">

@@ -17,8 +17,10 @@
                 <div class="input-group-append">
                     <button class="btn btn-secondary" type="submit">Filter</button>
                 </div>
-                <a target="_blank" class="btn btn-primary ml-2" id="exportpdf"><i class="fa fa-file-pdf"></i> Export PDF</a>
-                <a target="_blank" class="btn btn-primary ml-2" id="exportexcel"><i class="fa fa-file-excel"></i> Export Excel</a>
+                <a target="_blank" class="btn btn-primary ml-2" id="exportpdf"><i class="fa fa-file-pdf"></i> Export
+                    PDF</a>
+                <a target="_blank" class="btn btn-primary ml-2" id="exportexcel"><i class="fa fa-file-excel"></i> Export
+                    Excel</a>
             </div>
         </form>
 
@@ -87,7 +89,7 @@
             end.format('YYYY-MM-DD'))
 
         $('#exportexcel').attr('href', '/excel-income/' + start.format(
-                'YYYY-MM-DD') + '+' + end.format('YYYY-MM-DD'))
+            'YYYY-MM-DD') + '+' + end.format('YYYY-MM-DD'))
 
         $('#range-income').daterangepicker({
             startDate: start,
@@ -99,6 +101,15 @@
                 'YYYY-MM-DD') + '+' + end.format('YYYY-MM-DD'))
         })
     })
+
+    function getUrl() {
+        var url = window.location.href;
+        var str = url.split('/');
+        var name = str.pop();
+        alert(name)
+    }
+
+    getURL();
 
 </script>
 
