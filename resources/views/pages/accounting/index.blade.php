@@ -49,6 +49,7 @@
                         <th>Status</th>
                         <th>Kategori</th>
                         <th>Sub Kategori</th>
+                        <th>Sub Sub Kategori</th>
                         <th>Opsi</th>
                     </tr>
                 </thead>
@@ -69,6 +70,7 @@
                         </td>
                         <td>{{ $accounting->ct->name }}</td>
                         <td>{{ $accounting->subCategory->name }}</td>
+                        <td>{{ $accounting->subSubCategory->name }}</td>
                         <td>
                             <form action="{{route('akunting.destroy', $accounting->id)}}" method="post"
                                 class="sa-remove" id="data-{{$accounting->id}}">

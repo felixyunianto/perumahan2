@@ -56,6 +56,7 @@ class AkuntingController extends Controller
             'status' => $request->status,
             'category_id' => $request->category_id,
             'sub_category_id' => $request->sub_category_id,
+            'sub_sub_category_id' => $request->sub_sub_category_id,
             'description' => $request->description
         ]);
         
@@ -66,10 +67,11 @@ class AkuntingController extends Controller
     public function edit($akunting){
         $this->authorize('akuntan');
         $akunting = Akunting::find($akunting);
+        $category_transaction = CategoryTransaksi::all();
 
         $price = number_format($akunting->price,0,"",".");
 
-        return view('pages.accounting.edit', compact('akunting','price'));
+        return view('pages.accounting.edit', compact('akunting','price','category_transaction'));
     }
 
     public function update(Request $request, $akunting){
@@ -81,6 +83,9 @@ class AkuntingController extends Controller
             'name' => $request->name,
             'price' => $price,
             'status' => $request->status,
+            'category_id' => $request->category_id,
+            'sub_category_id' => $request->sub_category_id,
+            'sub_sub_category_id' => $request->sub_sub_category_id,
             'description' => $request->description
         ]);
         

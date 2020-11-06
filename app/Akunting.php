@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\CategoryTransaksi;
 use App\Customer;
 use App\SubCategoryAccounting;
+use App\SubSubCategory;
 
 class Akunting extends Model
 {
@@ -17,6 +18,10 @@ class Akunting extends Model
 
     public function subCategory(){
         return $this->belongsTo(SubCategoryAccounting::class);
+    }
+
+    public function subSubCategory(){
+        return $this->belongsTo(SubSubCategory::class);
     }
 
     public function customer(){

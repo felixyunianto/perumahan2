@@ -15,3 +15,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('json-sub-kategori/{keyword}','SubCategoryAccountingController@jsonCategory');
+Route::get('json-sub-sub-kategori/{keyword}','SubSubCategoryController@jsonSubCategory');

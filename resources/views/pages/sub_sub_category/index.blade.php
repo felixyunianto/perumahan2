@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('content')
-<h4 class="font-weight-bold py-3 mb-0">Sub Kategori Transaksi</h4>
+<h4 class="font-weight-bold py-3 mb-0">Child Sub Kategori Transaksi</h4>
 <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#"><i class="feather icon-home"></i></a></li>
         <li class="breadcrumb-item"><a href="#!">Projek</a></li>
-        <li class="breadcrumb-item active"><a href="#!">Sub Kategori Transaksi</a></li>
+        <li class="breadcrumb-item active"><a href="#!">Child Sub Kategori Transaksi</a></li>
     </ol>
 </div>
 
@@ -14,17 +14,17 @@
         <div class="card">  
             <div class="card-header">
                 <div class="row">
-                    <div class="col-md-10 d-flex align-items-center"><h5 class="">Tambah Sub Kategori Transaksi</h5></div>
+                    <div class="col-md-10 d-flex align-items-center"><h5 class="">Tambah Child Sub Kategori Transaksi</h5></div>
                     <div class="col-md-2"><button class="btn btn-info" onclick="funRefresh()"><i class="feather icon-refresh-ccw"></i></button></div>
                 </div> 
             </div>
             <div class="card-body">
-                <form action="{{ route('sub-kategori-transaksi.store') }}" method="post">
+                <form action="{{ route('sub-sub-kategori-transaksi.store') }}" method="post">
                     @csrf
                     <div class="form-group">
                         <label for="">Uraian</label>
                         <input type="hidden" id='sub_id' name="id">
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" id="name" placeholder="Isikan nama kategori">
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" id="name" placeholder="Isikan nama child sub kategori">
                         @error('name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -33,13 +33,13 @@
                     </div>
                     <div class="form-group">
                         <label for="">Kategory Transaksi</label>
-                        <select name="category_id" id="category_id" class="form-control  @error('category_id') is-invalid @enderror">
+                        <select name="sub_category_id" id="category_id" class="form-control  @error('category_id') is-invalid @enderror">
                             <option value="">-- Pilih --</option>
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @foreach ($subCategories as $subCategory)
+                                <option value="{{ $subCategory->id }}">{{ $subCategory->name }}</option>
                             @endforeach
                         </select>
-                        @error('category_id')
+                        @error('sub_category_id')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -63,7 +63,7 @@
                         <thead>
                             <tr>
                                 <td>No</td>
-                                <td>Sub Kategori</td>
+                                <td>Child Sub Kategori</td>
                                 <td>Kategori</td>
                                 <td>Opsi</td>
                             </tr>
@@ -72,39 +72,19 @@
                             @php
                                 $no = 1;
                             @endphp
-                            {{-- @foreach ($categories as $category)
-                                <tr>
-                                    <td colspan="3">{{ $category->name }}</td>
-                                </tr>
-                                @foreach ($category->subCategory as $cs)
-                                    <tr>
-                                        <td>{{ $no++ }}</td>
-                                        <td>{{ $cs->name }}</td>
-                                        <td>
-                                            <form action="{{ route('sub-kategori-transaksi.destroy', $cs->id) }}" method="post" id="data-{{$cs->id}}" >
-                                                @csrf
-                                                <input type="hidden" name="_method" value="DELETE">
-                                            </form>
-                                            <button href="" data-id="{{ $cs->id}}" data-name="{{ $cs->name }}" 
-                                                data-category="{{ $cs->category_id}}"class="btn btn-warning btn-sm btn-round btn-edit"><i class="feather icon-edit"></i>Edit</button>
-                                            <button class="btn btn-danger btn-sm btn-round" onclick="deleteRow({{$cs->id}})"><i class="feather icon-trash"></i>Hapus</button>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @endforeach --}}
-                            @foreach ($sub_category_accountings as $sub_category_accounting)
+                            @foreach ($subSubCategories as $subSubCategory)
                                 <tr>
                                     <td>{{ $no++ }}</td>
-                                    <td>{{ $sub_category_accounting->name }}</td>
-                                    <td>{{ $sub_category_accounting->category->name }}</td>
+                                    <td>{{ $subSubCategory->name }}</td>
+                                    <td>{{ $subSubCategory->subCategory->name }}</td>
                                     <td>
-                                        <form action="{{ route('sub-kategori-transaksi.destroy', $sub_category_accounting->id) }}" method="post" id="data-{{$sub_category_accounting->id}}" >
+                                        <form action="{{ route('sub-sub-kategori-transaksi.destroy', $subSubCategory->id) }}" method="post" id="data-{{$subSubCategory->id}}" >
                                             @csrf
                                             <input type="hidden" name="_method" value="DELETE">
                                         </form>
-                                        <button href="" data-id="{{ $sub_category_accounting->id}}" data-name="{{ $sub_category_accounting->name }}" 
-                                            data-category="{{ $sub_category_accounting->category_id}}"class="btn btn-warning btn-sm btn-round btn-edit"><i class="feather icon-edit"></i>Edit</button>
-                                        <button class="btn btn-danger btn-sm btn-round" onclick="deleteRow({{$sub_category_accounting->id}})"><i class="feather icon-trash"></i>Hapus</button>
+                                        <button href="" data-id="{{ $subSubCategory->id}}" data-name="{{ $subSubCategory->name }}" 
+                                            data-category="{{ $subSubCategory->sub_category_id}}"class="btn btn-warning btn-sm btn-round btn-edit"><i class="feather icon-edit"></i>Edit</button>
+                                        <button class="btn btn-danger btn-sm btn-round" onclick="deleteRow({{$subSubCategory->id}})"><i class="feather icon-trash"></i>Hapus</button>
                                     </td>
                                 </tr>
                             @endforeach

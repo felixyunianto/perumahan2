@@ -31,7 +31,7 @@ class SubCategoryAccountingController extends Controller
             'required' => 'Bidang :attribute tidak boleh kosong'
         ];
 
-        // $this->validate($request, $rule, $message);
+        $this->validate($request, $rule, $message);
 
         if ($request->id == null) {
             

@@ -54,6 +54,7 @@ Route::resource('money-setting', 'MoneySettingController');
 Route::resource('permission', 'PermissionController');
 Route::resource('kategori-transaksi', 'CategoryTransaksiController');
 Route::resource('sub-kategori-transaksi', 'SubCategoryAccountingController');
+Route::resource('sub-sub-kategori-transaksi', 'SubSubCategoryController');
 
 //Chart
 Route::get('/incomeChart', 'ChartController@incomeChart')->name('incomeChart');

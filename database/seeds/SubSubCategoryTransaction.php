@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\SubCategoryAccounting;
+use App\SubSubCategory;
 use Carbon\Carbon;
 
-class SubCategoryTransaction extends Seeder
+class SubSubCategoryTransaction extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,105 +15,105 @@ class SubCategoryTransaction extends Seeder
     {
         $inputs = [
             [
-                'name' => 'Perumahan',
-                'category_id' => 1,
+                'name' => 'Harga Tanah',
+                'sub_category_id' => 2,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
-                'name' => 'Perolehan Tanah',
-                'category_id' => 2,
+                'name' => 'BPHTB',
+                'sub_category_id' => 2,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
-                'name' => 'Perijinan',
-                'category_id' => 2,
+                'name' => 'Pengukuran',
+                'sub_category_id' => 2,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
-                'name' => 'Pengolahan Lahan',
-                'category_id' => 2,
+                'name' => 'Ijin Kedinasan',
+                'sub_category_id' => 3,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
-                'name' => 'Prasarana',
-                'category_id' => 2,
+                'name' => 'Ijin BPN',
+                'sub_category_id' => 3,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
-                'name' => 'Legalitas Rumah',
-                'category_id' => 2,
+                'name' => 'Pengurugan',
+                'sub_category_id' => 4,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
-                'name' => 'Legalitas Penjualan Rumah',
-                'category_id' => 2,
+                'name' => 'Jalan',
+                'sub_category_id' => 5,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
-                'name' => 'Sarana Rumah',
-                'category_id' => 2,
+                'name' => 'Saluran',
+                'sub_category_id' => 5,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
-                'name' => 'Pembuatan Rumah',
-                'category_id' => 2,
+                'name' => 'Fasum',
+                'sub_category_id' => 5,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
-                'name' => 'Pemasaran',
-                'category_id' => 3,
+                'name' => 'Split',
+                'sub_category_id' => 6,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
-                'name' => 'Karyawan',
-                'category_id' => 3,
+                'name' => 'IMB Tiap Unit',
+                'sub_category_id' => 6,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
-                'name' => 'Operasional',
-                'category_id' => 3,
+                'name' => 'Akta Jual Beli',
+                'sub_category_id' => 7,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
-                'name' => 'Bunga Bank',
-                'category_id' => 4,
+                'name' => 'Listrik KWH',
+                'sub_category_id' => 8,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
-                'name' => 'Hutang',
-                'category_id' => 4,
+                'name' => 'Peralatan Kantor',
+                'sub_category_id' => 12,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
-                'name' => 'Bunga Pinjaman',
-                'category_id' => 5,
+                'name' => 'Perlengkapan Kantor',
+                'sub_category_id' => 12,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
-                'name' => 'Bayar Hutang',
-                'category_id' => 5,
+                'name' => 'Operasional Kantor',
+                'sub_category_id' => 12,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
-            ]
-        ];
+            ],
+        ]; 
 
         foreach ($inputs as $input){
-            SubCategoryAccounting::create($input);
+            SubSubCategory::create($input);
         }
     }
 }

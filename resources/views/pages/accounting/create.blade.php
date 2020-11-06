@@ -35,7 +35,12 @@
                 <select name="sub_category_id" id="show-sub" class="form-control">
                     <option value="">--Pilih --</option>
                 </select>
-                
+            </div>
+            <div class="form-group">
+                <label for="">Sub Sub Kategori</label>
+                <select name="sub_sub_category_id" id="show-sub-sub" class="form-control">
+                    <option value="">--Pilih --</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="">Uraian <span style="color:red">*</span> </label>
@@ -70,6 +75,7 @@
 
     const url = 'http://localhost:8000/api/';
     const showSub = document.querySelector('#show-sub');
+    const showSubSub = document.querySelector('#show-sub-sub');
     const chooseCategory = document.querySelector('#category_id');
 
     chooseCategory.addEventListener('change', async function() {
@@ -86,6 +92,26 @@
             option.appendChild(name);
             showSub.append(option)
         })
+
+        
+    })
+
+    showSub.addEventListener('change', async function(){
+        const subSubCategory = await searchSub(showSub.value);
+
+        for(i = showSubSub.options.length-1; i >= 0; i--){
+            showSubSub.options[i] = null;
+        }
+
+        subSubCategory.forEach((b) => {
+            option = document.createElement('OPTION');
+            const name = document.createTextNode(b.name)
+            option.value = b.id;
+            option.appendChild(name);
+            showSubSub.append(option)
+        })
+
+        console.log(subSubCategory);
     })
 
     $(document).ready(function () {
@@ -101,13 +127,9 @@
         return fetch(url + 'json-sub-kategori/' + keyword).then(res => res.json()).then(res => res.results)
     }
 
-    
-
-    // function showContainer(b){
-    //     `
-    //         <option value="${b.id}">${b.name}</option>
-    //     `;
-    // }
+    function searchSub(keyword){
+        return fetch(url + 'json-sub-sub-kategori/' + keyword).then(res => res.json()).then(res => res.results)
+    }
 
 </script>
 <script src="{{ asset('assets/js/money.js') }}"></script>
