@@ -187,6 +187,7 @@ class CustomerController extends Controller
             $customer = Customer::where('id', $request->customer_id)->first();
             $customer->update([
                 'file_status' => 1,
+                'dp_status' => date('Y-m-d'),
                 'sp3_status' => date('Y-m-d'),
                 'lpa_status' => date('Y-m-d'),
                 'transaction' => 'Cash'
@@ -239,6 +240,7 @@ class CustomerController extends Controller
                 'status' => 1,
                 'description' => 'Pembayaran UTJ dan DP atas nama ' . $customer->name,
                 'category_id' => 1,
+                'sub_category_id' => 1,
                 'id_customer' => $request->id_customer
             ]);
         }else{
@@ -253,6 +255,7 @@ class CustomerController extends Controller
                 'status' => 1,
                 'description' => 'Pembayaran UTJ atas nama ' . $customer->name,
                 'category_id' => 1,
+                'sub_category_id' => 1,
                 'id_customer' => $request->id_customer
             ]);
         }
@@ -299,6 +302,7 @@ class CustomerController extends Controller
                 'status' => 1,
                 'description' => 'Pelunasan DP atas nama ' . $customer->name,
                 'category_id' => 1,
+                'sub_category_id' => 1,
                 'id_customer' => $request->id_customer
             ]);
         }else{
@@ -313,6 +317,7 @@ class CustomerController extends Controller
                 'status' => 1,
                 'description' => 'Pembayaran DP atas nama ' . $customer->name,
                 'category_id' => 1,
+                'sub_category_id' => 1,
                 'id_customer' => $request->id_customer
             ]);
         }
@@ -411,6 +416,7 @@ class CustomerController extends Controller
                 'status' => 1,
                 'description' => 'Pembayaran LPA atas nama ' . $customer->name,
                 'category_id' => 1,
+                'sub_category_id' => 1,
                 'id_customer' => $request->id_customer
             ]);
 

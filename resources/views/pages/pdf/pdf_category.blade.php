@@ -5,14 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Laporan Tanggal {{ date('d F Y', strtotime($date[0])) }} - {{ date('d F Y', strtotime($date[1])) }}</title>
+    <title>Laporan Tanggal</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.4.1/paper.css">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.4.1/paper.css"> --}}
     <style>
-        @page {
-            size: A4
-        }
-
         h1 {
             font-weight: bold;
             font-size: 20pt;
@@ -43,10 +39,10 @@
     </style>
 </head>
 
-<body class="A4">
-    <section class="sheet padding-10mm">
+<body>
+    {{-- <section class="sheet padding-10mm"> --}}
         <h1>PERUMAHAN OASE PEMALANG</h1>
-        <p style="text-align: right">Laporan Tanggal {{ date('d F Y', strtotime($date[0])) }} - {{ date('d F Y', strtotime($date[1])) }}</h3>
+        {{-- <p style="text-align: right">Laporan Tanggal {{ date('d F Y', strtotime($date[0])) }} - {{ date('d F Y', strtotime($date[1])) }}</h3> --}}
         <table width="100%" class="table">
             <thead>
                 <tr>
@@ -97,7 +93,7 @@
                 </tr>
             </tbody>
         </table>
-    </section>
+    {{-- </section> --}}
 
 </body>
 

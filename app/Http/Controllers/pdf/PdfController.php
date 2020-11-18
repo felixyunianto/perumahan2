@@ -74,7 +74,7 @@ class PdfController extends Controller
 
         $pdf = PDF::loadview('pages.pdf.pdf_category', compact('income','cost_of_goods_sold','business_expenses','other_income','other_expenses','total_income_expenses','estimated_income'));
         
-        return $pdf->stream();
+        return $pdf->setPaper('A4')->stream();
     }
 
     public function pdfCustomer(){

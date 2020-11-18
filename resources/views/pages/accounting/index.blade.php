@@ -70,7 +70,11 @@
                         </td>
                         <td>{{ $accounting->ct->name }}</td>
                         <td>{{ $accounting->subCategory->name }}</td>
-                        <td>{{ $accounting->subSubCategory->name }}</td>
+                        @if ($accounting->sub_sub_category_id !== null)
+                            <td>{{ $accounting->subSubCategory->name }}</td>                            
+                        @else
+                            <td>Kosong</td>
+                        @endif
                         <td>
                             <form action="{{route('akunting.destroy', $accounting->id)}}" method="post"
                                 class="sa-remove" id="data-{{$accounting->id}}">
