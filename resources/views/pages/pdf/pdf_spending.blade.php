@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Laporan Tanggal {{ date('d F Y', strtotime($date[0])) }} - {{ date('d F Y', strtotime($date[1])) }}</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.4.1/paper.css">
+    
     <style>
         @page {
             size: A4

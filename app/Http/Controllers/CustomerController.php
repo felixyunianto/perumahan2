@@ -565,6 +565,7 @@ class CustomerController extends Controller
             'status' => 0,
             'description' => 'Refund uang karena gagal atas nama ' . $customer->name,
             'category_id' => 3,
+            'sub_category_id' => 12,
             'id_customer' => $request->id_customer
         ]);
 

@@ -53,7 +53,8 @@
 
 <body>
     {{-- <section class="sheet padding-10mm"> --}}
-    <h1>PERUMAHAN OASE PEMALANG {{ strtoupper($block->name_block) }}</h1>
+    {{-- <h1>PERUMAHAN OASE PEMALANG {{ strtoupper($block->name_block) }}</h1> --}}
+    <h1>PERUMAHAN OASE PEMALANG</h1>
     <h3 style="text-align: right">Laporan Rumah</h3>
     <table width="100%" class="table">
         <thead style="text-align: center">

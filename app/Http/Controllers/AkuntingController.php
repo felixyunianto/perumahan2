@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Akunting;
 use App\CategoryTransaksi;
+use App\Block;
 
 class AkuntingController extends Controller
 {
@@ -27,8 +28,9 @@ class AkuntingController extends Controller
         $this->authorize('akuntan');
 
         $category_transaction = CategoryTransaksi::all();
+        $blocks = Block::all();
 
-        return view('pages.accounting.create',compact('category_transaction'));
+        return view('pages.accounting.create',compact('category_transaction','blocks'));
     }
 
     public function store(Request $request){
@@ -38,6 +40,8 @@ class AkuntingController extends Controller
             'price' => 'required',
             'status' => 'required',
             'category_id' => 'required',
+            'sub_category_id' => 'required',
+            'block_id' => 'required'
         ];
 
         $message = [
@@ -57,7 +61,8 @@ class AkuntingController extends Controller
             'category_id' => $request->category_id,
             'sub_category_id' => $request->sub_category_id,
             'sub_sub_category_id' => $request->sub_sub_category_id,
-            'description' => $request->description
+            'description' => $request->description,
+            'block_id' => $request->block_id
         ]);
         
 

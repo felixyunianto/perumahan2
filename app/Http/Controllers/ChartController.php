@@ -11,14 +11,13 @@ class ChartController extends Controller
     public function incomeChart(){
     
         $current_year = date('Y');
-
+        
         $chartAccounting = Akunting::orderBy('date')->select(
             \DB::raw('sum(price) as income'), 
             // \DB::raw("DATE_FORMAT(date,'%m') as months")
             \DB::raw('MONTH(date) as months')
         )
         ->where('status', 1)->whereYear('date', $current_year)->groupBy('months')->get();
-        
         
         $chartAccounting1 = Akunting::orderBy('date')->select(
             \DB::raw('sum(price) as outcome'), 
@@ -38,6 +37,7 @@ class ChartController extends Controller
         }
 
         $profit = $chartAccounting->sum('income') - $chartAccounting1->sum('outcome');
+        
         return response()->json([$month, $month1, $profit]);
     }
 

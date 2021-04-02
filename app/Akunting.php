@@ -7,6 +7,7 @@ use App\CategoryTransaksi;
 use App\Customer;
 use App\SubCategoryAccounting;
 use App\SubSubCategory;
+use App\Block;
 
 class Akunting extends Model
 {
@@ -26,5 +27,9 @@ class Akunting extends Model
 
     public function customer(){
         return $this->belongsTo(Customer::class);
+    }
+
+    public function block() {
+        return $this->belongsTo(Block::class);
     }
 }

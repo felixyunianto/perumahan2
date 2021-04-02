@@ -5,20 +5,20 @@
     <title>OASE PEMALANG</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="public/assets/img/favicon.ico">
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('assets/fonts/fontawesome.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/fonts/ionicons.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/fonts/linearicons.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/fonts/open-iconic.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/fonts/pe-icon-7-stroke.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/fonts/feather.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/css/bootstrap-material.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/css/shreerang-material.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/css/uikit.css')}}">
-    {{-- <link rel="stylesheet" href="{{asset('assets/libs/perfect-scrollbar/perfect-scrollbar.css')}}"> --}}
-    <link rel="stylesheet" href="{{asset('assets/css/pages/authentication.css')}}">
+    <link rel="stylesheet" href="{{asset('public/assets/fonts/fontawesome.css')}}">
+    <link rel="stylesheet" href="{{asset('public/assets/fonts/ionicons.css')}}">
+    <link rel="stylesheet" href="{{asset('public/assets/fonts/linearicons.css')}}">
+    <link rel="stylesheet" href="{{asset('public/assets/fonts/open-iconic.css')}}">
+    <link rel="stylesheet" href="{{asset('public/assets/fonts/pe-icon-7-stroke.css')}}">
+    <link rel="stylesheet" href="{{asset('public/assets/fonts/feather.css')}}">
+    <link rel="stylesheet" href="{{asset('public/assets/css/bootstrap-material.css')}}">
+    <link rel="stylesheet" href="{{asset('public/assets/css/shreerang-material.css')}}">
+    <link rel="stylesheet" href="{{asset('public/assets/css/uikit.css')}}">
+    {{-- <link rel="stylesheet" href="{{asset('public/assets/libs/perfect-scrollbar/perfect-scrollbar.css')}}"> --}}
+    <link rel="stylesheet" href="{{asset('public/assets/css/pages/authentication.css')}}">
     <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
@@ -35,7 +35,7 @@
 
 
             <div class="d-none d-lg-flex col-lg-8 align-items-center ui-bg-cover ui-bg-overlay-container p-5"
-                style="background-image: url('assets/img/bg/21.jpg');">
+                style="background-image: url('public/assets/img/bg/21.jpg');">
                 <div class="ui-bg-overlay bg-dark opacity-50"></div>
 
                 <div class="w-100 text-white px-5">
@@ -53,7 +53,7 @@
                         <div class="d-flex justify-content-center align-items-center">
                             <div class="ui-w-60">
                                 <div class="w-100 position-relative">
-                                    <img src="assets/img/logo-dark.png" alt="Brand Logo" class="img-fluid">
+                                    <img src="public/assets/img/logo-dark.png" alt="Brand Logo" class="img-fluid">
                                     <div class="clearfix"></div>
                                 </div>
                             </div>
@@ -110,16 +110,16 @@
     
 
 
-    {{-- <script src="{{asset('assets/js/pace.js')}}"></script> --}}
-    {{-- <script src="{{asset('assets/js/jquery-3.3.1.min.js')}}"></script> --}}
-    {{-- <script src="{{asset('assets/libs/popper/popper.js')}}"></script> --}}
-    {{-- <script src="{{asset('assets/js/bootstrap.js')}}"></script> --}}
-    {{-- <script src="{{asset('assets/js/sidenav.js')}}"></script> --}}
-    {{-- <script src="{{asset('assets/js/layout-helpers.js')}}"></script> --}}
-    {{-- <script src="{{asset('assets/js/material-ripple.js')}}"></script> --}}
-    {{-- <script src="{{asset('assets/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script> --}}
-    {{-- <script src="{{asset('assets/js/demo.js')}}"></script> --}}
-    {{-- <script src="{{asset('assets/js/analytics.js')}}"></script> --}}
+    {{-- <script src="{{asset('public/assets/js/pace.js')}}"></script> --}}
+    {{-- <script src="{{asset('public/assets/js/jquery-3.3.1.min.js')}}"></script> --}}
+    {{-- <script src="{{asset('public/assets/libs/popper/popper.js')}}"></script> --}}
+    {{-- <script src="{{asset('public/assets/js/bootstrap.js')}}"></script> --}}
+    {{-- <script src="{{asset('public/assets/js/sidenav.js')}}"></script> --}}
+    {{-- <script src="{{asset('public/assets/js/layout-helpers.js')}}"></script> --}}
+    {{-- <script src="{{asset('public/assets/js/material-ripple.js')}}"></script> --}}
+    {{-- <script src="{{asset('public/assets/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script> --}}
+    {{-- <script src="{{asset('public/assets/js/demo.js')}}"></script> --}}
+    {{-- <script src="{{asset('public/assets/js/analytics.js')}}"></script> --}}
     @include('sweet::alert')
     
 </body>

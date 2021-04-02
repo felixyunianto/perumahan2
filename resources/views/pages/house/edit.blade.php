@@ -74,5 +74,5 @@
   });
 </script>
 
-<script src="{{ asset('assets/js/money.js') }}"></script>
+<script src="{{ asset('public/assets/js/money.js') }}"></script>
 @endsection

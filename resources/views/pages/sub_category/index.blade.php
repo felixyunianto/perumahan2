@@ -72,26 +72,6 @@
                             @php
                                 $no = 1;
                             @endphp
-                            {{-- @foreach ($categories as $category)
-                                <tr>
-                                    <td colspan="3">{{ $category->name }}</td>
-                                </tr>
-                                @foreach ($category->subCategory as $cs)
-                                    <tr>
-                                        <td>{{ $no++ }}</td>
-                                        <td>{{ $cs->name }}</td>
-                                        <td>
-                                            <form action="{{ route('sub-kategori-transaksi.destroy', $cs->id) }}" method="post" id="data-{{$cs->id}}" >
-                                                @csrf
-                                                <input type="hidden" name="_method" value="DELETE">
-                                            </form>
-                                            <button href="" data-id="{{ $cs->id}}" data-name="{{ $cs->name }}" 
-                                                data-category="{{ $cs->category_id}}"class="btn btn-warning btn-sm btn-round btn-edit"><i class="feather icon-edit"></i>Edit</button>
-                                            <button class="btn btn-danger btn-sm btn-round" onclick="deleteRow({{$cs->id}})"><i class="feather icon-trash"></i>Hapus</button>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @endforeach --}}
                             @foreach ($sub_category_accountings as $sub_category_accounting)
                                 <tr>
                                     <td>{{ $no++ }}</td>
@@ -116,21 +96,23 @@
     </div>
 </div>
 <script>
-    $('#kt-table').DataTable({})
-
     btnEdit = document.querySelectorAll('.btn-edit');
-    for(i = 0; i < btnEdit.length; i++){
-        let id = btnEdit[i].getAttribute('data-id');
-        let name = btnEdit[i].getAttribute('data-name');
-        let category = btnEdit[i].getAttribute('data-category');
-        btnEdit[i].addEventListener('click', (e) => {
-            e.preventDefault();
-            document.querySelector('#sub_id').value = id;
-            document.querySelector('#name').value = name;
-            document.querySelector('#category_id').value = category;
+    $('#kt-table').DataTable({
+        drawCallback: function(){
+            for(i = 0; i < btnEdit.length; i++){
+                let id = btnEdit[i].getAttribute('data-id');
+                let name = btnEdit[i].getAttribute('data-name');
+                let category = btnEdit[i].getAttribute('data-category');
+                btnEdit[i].addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.querySelector('#sub_id').value = id;
+                    document.querySelector('#name').value = name;
+                    document.querySelector('#category_id').value = category;
 
-        })
-    }
+                })
+            }      
+        }
+    })
 
     funRefresh = () => {
         document.querySelector('#sub_id').value = null;

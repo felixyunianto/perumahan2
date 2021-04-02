@@ -40,17 +40,43 @@ class PdfController extends Controller
     public function pdfHouse($block_id){
         $reports = House::with('block','detail_house','detail_house.customer','detail_house.customer.filing')->where('block_id', $block_id)->get();
         $block = Block::where('id', $block_id)->first();
+        
         $sp3 = House::where('status_process','SP3')->where('block_id', $block_id)->get();
+        
         $akad = House::where('status_process','Akad')->where('block_id', $block_id)->get();
+        
         $proses = House::where('status_process','Proses')->where('block_id', $block_id)->get();
+        
         $cash = House::where('status_process','Cash')->where('block_id', $block_id)->get();
+        
         $total = House::whereNotIn('status_process',['Kosong'])->where('block_id', $block_id)->get();
+        
         $kosong = House::where('status_process','Kosong')->where('block_id', $block_id)->get();
 
         $pdf = PDF::loadview('pages.pdf.pdf_house', compact('reports','block','sp3','akad','proses','cash','total','kosong'));
 
         return $pdf->setPaper('A4','landscape')->stream();
 
+    }
+    
+    public function pdfHouseById($house_id) {
+        $reports = House::with('block','detail_house','detail_house.customer','detail_house.customer.filing')->where('id', $house_id)->get();
+        
+        $sp3 = House::where('status_process','SP3')->where('id', $house_id)->get();
+        
+        $akad = House::where('status_process','Akad')->where('id', $house_id)->get();
+        
+        $proses = House::where('status_process','Proses')->where('id', $house_id)->get();
+        
+        $cash = House::where('status_process','Cash')->where('id', $house_id)->get();
+        
+        $total = House::whereNotIn('status_process',['Kosong'])->where('id', $house_id)->get();
+        
+        $kosong = House::where('status_process','Kosong')->where('id', $house_id)->get();
+
+        $pdf = PDF::loadview('pages.pdf.pdf_house', compact('reports','sp3','akad','proses','cash','total','kosong'));
+        
+        return $pdf->setPaper('A4','landscape')->stream();
     }
 
     public function pdfCategory($daterange){

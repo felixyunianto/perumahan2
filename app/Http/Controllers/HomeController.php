@@ -30,6 +30,6 @@ class HomeController extends Controller
         
         $house = Block::all();
 
-        return view('home', compact('akad','cash','acc','proses','kosong','sp3','house'));
+        return view('home', compact('house'));
     }
 }
