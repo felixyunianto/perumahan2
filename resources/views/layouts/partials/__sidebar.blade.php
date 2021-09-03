@@ -71,6 +71,11 @@
                     </a>
                 </li>
                 <li class="sidenav-item">
+                    <a href="{{ route('sub-sub-kategori-transaksi.index') }}" class="sidenav-link">
+                        <div>Sub Sub Kategori Transaksi</div>
+                    </a>
+                </li>
+                <li class="sidenav-item">
                     <a href="{{ route('akunting.index') }}" class="sidenav-link">
                         <div>Akuntan</div>
                     </a>
@@ -134,6 +139,18 @@
                 <li class="sidenav-item">
                     <a href="{{ route('report.total-customer') }}" class="sidenav-link">
                         <div>Laporan Total Customer</div>
+                    </a>
+                </li>
+
+                <li class="sidenav-item">
+                    <a href="{{ route('report.week-profit') }}" class="sidenav-link">
+                        <div>Laporan Total Profit</div>
+                    </a>
+                </li>
+
+                <li class="sidenav-item">
+                    <a href="{{ route('report.inout') }}" class="sidenav-link">
+                        <div class="">Laporan Pemasukan dan Pengeluaran</div>
                     </a>
                 </li>
             </ul>

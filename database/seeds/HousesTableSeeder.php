@@ -64,5 +64,32 @@ class HousesTableSeeder extends Seeder
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now(),
         ]);
+
+        \App\House::create([
+            'name' => 'Blok A1',
+            'address' => 'Jl. Perumahan OASE 2 blok A1',
+            'price' => 190000000,
+            'block_id' => 2,
+            'created_at' => \Carbon\Carbon::now(),
+            'updated_at' => \Carbon\Carbon::now(),
+        ]);
+
+        \App\House::create([
+            'name' => 'Blok A2',
+            'address' => 'Jl. Perumahan OASE 2 blok A2',
+            'price' => 190000000,
+            'block_id' => 2,
+            'created_at' => \Carbon\Carbon::now(),
+            'updated_at' => \Carbon\Carbon::now(),
+        ]);
+
+        \App\House::create([
+            'name' => 'Blok A3',
+            'address' => 'Jl. Perumahan OASE 2 blok A3',
+            'price' => 190000000,
+            'block_id' => 2,
+            'created_at' => \Carbon\Carbon::now(),
+            'updated_at' => \Carbon\Carbon::now(),
+        ]);
     }
 }

@@ -67,6 +67,7 @@ Route::get('laporan-rumah', 'ReportController@house')->name('report.house');
 Route::get('laporan-laba-rugi', 'ReportController@category_transaction')->name('report.laba-rugi');
 Route::get('total-customer', 'ReportController@totalCustomer')->name('report.total-customer');
 Route::get('laporan-total-profit', 'ReportController@weekProfit')->name('report.week-profit');
+Route::get('laporan-pemasukan-dan-pengeluaran', 'ReportController@inout')->name('report.inout');
 //End Report
 
 //PDF

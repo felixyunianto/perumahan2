@@ -29,7 +29,7 @@ class ReportController extends Controller
 
         $total = $incomes->sum('price');
         
-        return view('pages.report.income', compact('incomes','total','oldValue'));
+        return view('pages.report.income', compact('incomes','total'));
     }
 
     public function spending(Request $request){
@@ -103,7 +103,7 @@ class ReportController extends Controller
 
         $estimated_income = Akunting::where('category_id',6)->whereBetween('date', [$start, $end])->sum('price');
         
-        return view('pages.report.report_category', compact('income','cost_of_goods_sold','business_expenses','profit','other_income','other_expenses','total_income_expenses','profit_before_tax','estimated_income'));
+        return view('pages.report.report_category', compact('income','cost_of_goods_sold','business_expenses','other_income','other_expenses','total_income_expenses','estimated_income'));
     }
 
     public function totalCustomer(Request $request){
@@ -204,5 +204,19 @@ class ReportController extends Controller
                 'debt','loan_interest','pay_debt'
             )
         );
+    }
+
+    public function inout(){
+        $incomes = Akunting::with('block', 'ct')->groupBy('block_id')
+        ->selectRaw('block_id,SUM(price) as total_price')->where('status',1)
+        ->get();
+
+        $outcomes = Akunting::with('block', 'ct')->groupBy('block_id','category_id')
+        ->selectRaw('block_id,SUM(price) as total_price')->where('status',0)
+        ->get();
+
+        dd($outcomes);
+
+        return view('pages.report.inout', compact('incomes'));
     }
 }
