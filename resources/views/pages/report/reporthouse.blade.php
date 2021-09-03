@@ -27,7 +27,28 @@
                 </div>
                 
             </div>
+        </form>
+    </div>
+</div>
 
+<div class="card">
+    <div class="card-body">
+        <form action="{{ route('report.house') }}" method="get">
+            <div class="row">
+                <div class="col-md-8">
+                    <select name="house_id" id="house_id" class="form-control">
+                        <option value="">-- Pilih Blok --</option>
+                        @foreach ($houses as $house)
+                        <option value="{{ $house->id }}" @if($selected == $house->id)  selected @endif >{{ $house->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-secondary">Filter</button>
+                    <a href="" target="_blank" id="exportPDFById" class="btn btn-primary ml-2"><i class="fa fa-file-pdf"></i> Export PDF</a>
+                </div>
+                
+            </div>
         </form>
     </div>
 </div>
@@ -119,6 +140,10 @@
         // $('#exportPDF').attr('href','/pdf-house/')
         $('#block_id').change(function(){
             $('#exportPDF').attr('href','/pdf-house/'+ this.value);
+        })
+        
+        $('#house_id').change(function(){
+            $('#exportPDFById').attr('href', '/pdf-house-by-id/'+ this.value);
         })
 
         $('#exportPDF').attr('href','/pdf-house/'+ $('#block_id').val());

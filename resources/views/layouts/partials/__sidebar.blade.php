@@ -2,7 +2,7 @@
 
     <div class="app-brand demo">
         <span class="app-brand-logo demo">
-            <img src="{{asset('assets/img/logo.png')}}" alt="Brand Logo" class="img-fluid" width="20px">
+            <img src="{{asset('public/assets/img/logo.png')}}" alt="Brand Logo" class="img-fluid" width="20px">
         </span>
         <a href="index.html" class="app-brand-text demo sidenav-text font-weight-normal ml-2">OASE</a>
         <a href="javascript:" class="layout-sidenav-toggle sidenav-link text-large ml-auto">
@@ -141,6 +141,7 @@
                         <div>Laporan Total Customer</div>
                     </a>
                 </li>
+<<<<<<< HEAD
 
                 <li class="sidenav-item">
                     <a href="{{ route('report.week-profit') }}" class="sidenav-link">
@@ -153,6 +154,14 @@
                         <div class="">Laporan Pemasukan dan Pengeluaran</div>
                     </a>
                 </li>
+=======
+                <li class="sidenav-item">
+                    <a href="{{ route('report.week-profit') }}" class="sidenav-link">
+                        <div>Laporan Profit</div>
+                    </a>
+                </li>
+                
+>>>>>>> a6fcac09e416e1b4250c9a0ffccab4ecde40d020
             </ul>
         </li>
 

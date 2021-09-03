@@ -72,26 +72,6 @@
                             @php
                                 $no = 1;
                             @endphp
-                            {{-- @foreach ($categories as $category)
-                                <tr>
-                                    <td colspan="3">{{ $category->name }}</td>
-                                </tr>
-                                @foreach ($category->subCategory as $cs)
-                                    <tr>
-                                        <td>{{ $no++ }}</td>
-                                        <td>{{ $cs->name }}</td>
-                                        <td>
-                                            <form action="{{ route('sub-kategori-transaksi.destroy', $cs->id) }}" method="post" id="data-{{$cs->id}}" >
-                                                @csrf
-                                                <input type="hidden" name="_method" value="DELETE">
-                                            </form>
-                                            <button href="" data-id="{{ $cs->id}}" data-name="{{ $cs->name }}" 
-                                                data-category="{{ $cs->category_id}}"class="btn btn-warning btn-sm btn-round btn-edit"><i class="feather icon-edit"></i>Edit</button>
-                                            <button class="btn btn-danger btn-sm btn-round" onclick="deleteRow({{$cs->id}})"><i class="feather icon-trash"></i>Hapus</button>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @endforeach --}}
                             @foreach ($sub_category_accountings as $sub_category_accounting)
                                 <tr>
                                     <td>{{ $no++ }}</td>

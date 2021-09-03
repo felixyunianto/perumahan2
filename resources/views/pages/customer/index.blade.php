@@ -518,7 +518,7 @@
     </div>
 </div>
 
-<script src="{{ asset('assets/js/money.js') }}"></script>
-<script src="{{ asset('assets/js/custom/customer.js') }}"></script>
+<script src="{{ asset('public/assets/js/money.js') }}"></script>
+<script src="{{ asset('public/assets/js/custom/customer.js') }}"></script>
 
 @endsection

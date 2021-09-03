@@ -2,7 +2,7 @@
 
     <a href="index.html" class="navbar-brand app-brand demo d-lg-none py-0 mr-4">
         <span class="app-brand-logo demo">
-            <img src="{{asset('assets/img/logo-dark.png')}}" alt="Brand Logo" class="img-fluid">
+            <img src="{{asset('public/assets/img/logo-dark.png')}}" alt="Brand Logo" class="img-fluid">
         </span>
         <span class="app-brand-text demo font-weight-normal ml-2">OASE</span>
     </a>
@@ -27,7 +27,7 @@
                     @endif
                     <span class="d-lg-none align-middle">&nbsp; Notifications</span>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right">
+                <div class="dropdown-menu dropdown-menu-right" style="height: auto; max-height: 200px; overflow-y: scroll;">
                     <div class="bg-primary text-center text-white font-weight-bold p-3">
                         {{ $notYet->count() }} Notifications
                     </div>
@@ -87,7 +87,7 @@
             <div class="demo-navbar-user nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
                     <span class="d-inline-flex flex-lg-row-reverse align-items-center align-middle">
-                        <img src="{{asset('assets/img/1.png')}}" alt class="d-block ui-w-30 rounded-circle" style="opacity: 0">
+                        <img src="{{asset('public/assets/img/1.png')}}" alt class="d-block ui-w-30 rounded-circle" style="opacity: 0">
                         <span class="px-1 mr-lg-2 ml-2 ml-lg-0">{{ Auth::user()->name }}</span>
                     </span>
                 </a>

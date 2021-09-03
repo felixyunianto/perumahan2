@@ -60,6 +60,7 @@ Route::resource('sub-sub-kategori-transaksi', 'SubSubCategoryController');
 Route::get('/incomeChart', 'ChartController@incomeChart')->name('incomeChart');
 Route::get('/outcomeChart', 'ChartController@outcomeChart')->name('outcomeChart');
 Route::get('/statusHouse', 'ChartController@statusHouse')->name('statusHouse');
+
 //Report
 Route::get('pemasukan', 'ReportController@income')->name('income');
 Route::get('pengeluaran', 'ReportController@spending')->name('spending');
@@ -74,6 +75,7 @@ Route::get('laporan-pemasukan-dan-pengeluaran', 'ReportController@inout')->name(
 Route::get('pdf-income/{daterange}','pdf\PdfController@pdfIncome')->name('report.pdf-income');
 Route::get('pdf-spending/{daterange}','pdf\PdfController@pdfSpending')->name('report.pdf-spending');
 Route::get('pdf-house/{block_id}','pdf\PdfController@pdfHouse')->name('report.pdf-house');
+Route::get('pdf-house-by-id/{house_id}','pdf\PdfController@pdfHouseById')->name('report.pdf-housebyid');
 Route::get('pdf-category-transaction/{daterange}', 'pdf\PdfController@pdfCategory')->name('report.pdf-category');
 Route::get('pdf-customer/', 'pdf\PdfController@pdfCustomer')->name('report.pdf-customer');
 //EndPDF
@@ -94,3 +96,7 @@ Route::get('download-income/{customer_id}', 'DownloadController@downloadIncome')
 Route::get('download-current-account/{customer_id}', 'DownloadController@downloadCurrentAccount')->name('downloadCurrentAccount');
 Route::get('download-saving/{customer_id}', 'DownloadController@downloadSaving')->name('downloadSaving');
 Route::get('download-havent-house/{customer_id}', 'DownloadController@downloadHaventHouse')->name('downloadHaventHouse');
+
+Route::get('/test', function(){
+    dd('TEST');
+});

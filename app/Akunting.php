@@ -29,7 +29,7 @@ class Akunting extends Model
         return $this->belongsTo(Customer::class);
     }
 
-    public function block(){
+    public function block() {
         return $this->belongsTo(Block::class);
     }
 }

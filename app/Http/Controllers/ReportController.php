@@ -70,11 +70,23 @@ class ReportController extends Controller
             $total = House::whereNotIn('status_process',['Kosong'])->where('block_id', $request->block_id)->get();
             $kosong = House::where('status_process','Kosong')->where('block_id', $request->block_id)->get();
         }
+        
+        if($request->house_id){
+            $reports = House::with('block','detail_house','detail_house.customer','detail_house.customer.filing')->where('id', $request->house_id)->get();
+            
+            $sp3 = House::where('status_process','SP3')->where('id', $request->house_id)->get();
+            $akad = House::where('status_process','Akad')->where('id', $request->id)->get();
+            $proses = House::where('status_process','Proses')->where('id', $request->id)->get();
+            $cash = House::where('status_process','Cash')->where('id', $request->id)->get();
+            $total = House::whereNotIn('status_process',['Kosong'])->where('id', $request->house_id)->get();
+            $kosong = House::where('status_process','Kosong')->where('id', $request->house_id)->get();
+        }
 
         $selected = $request->block_id;
         
-        $blocks = Block::all();        
-        return view('pages.report.reporthouse', compact('reports','blocks','selected','sp3','akad','proses','cash','total','kosong'));
+        $blocks = Block::all();
+        $houses = House::orderBy('name')->get();
+        return view('pages.report.reporthouse', compact('reports','houses','blocks','selected','sp3','akad','proses','cash','total','kosong'));
     }
 
 
@@ -128,80 +140,46 @@ class ReportController extends Controller
 
         $startWeek = $now->startOfWeek()->format('Y-m-d');
         $endWeek = $now->endOfWeek()->format('Y-m-d');
+        $housing_incomes = Block::with(['accountings' => function($query){
+            $query->where('category_id',1)->where('status', 1);
+        }])->get();
 
-        $order_house = Akunting::whereBetween('date', [$startWeek, $endWeek])
-        ->where('category_id', 1)->where('sub_category_id', 1)->sum('price');
+        $total_income = Akunting::where('category_id',1)->where('status', 1)->sum('price');
 
-        $land_price = Akunting::whereBetween('date', [$startWeek, $endWeek])
-        ->where('category_id', 2)->where('sub_category_id', 2)->where('sub_sub_category_id', 1)->sum('price');
-        
-        $bphtb = Akunting::whereBetween('date', [$startWeek, $endWeek])
-        ->where('category_id', 2)->where('sub_category_id', 2)->where('sub_sub_category_id', 2)->sum('price');
+        $housing_outcomes = Akunting::with('block', 'subCategory')->select(
+            \DB::raw('SUM(price) as price'),
+            \DB::raw('block_id'),
+            \DB::raw('sub_category_id')
+        )->where('status',0)->where('category_id', 2)->groupBy('category_id','sub_category_id','sub_sub_category_id', 'block_id')->orderBy('block_id')->get();
 
-        $measurement = Akunting::whereBetween('date', [$startWeek, $endWeek])
-        ->where('category_id', 2)->where('sub_category_id', 2)->where('sub_sub_category_id', 3)->sum('price');
+        $total_per_blocks = Akunting::with('block')->select(
+            \DB::raw('SUM(price) as price'),
+            \DB::raw('block_id'),
+            \DB::raw('sub_category_id')
+        )->where('status',0)->where('category_id', 2)->groupBy('block_id')->get();
+        // dd($total_per_blocks);
 
-        $official_license = Akunting::whereBetween('date', [$startWeek, $endWeek])
-        ->where('category_id', 2)->where('sub_category_id', 3)->where('sub_sub_category_id', 4)->sum('price');
+        $total_outcome = Akunting::where('category_id',2)->where('status', 0)->sum('price');
+        // dd($housing_outcomes);
 
-        $bpn_license = Akunting::whereBetween('date', [$startWeek, $endWeek])
-        ->where('category_id', 2)->where('sub_category_id', 3)->where('sub_sub_category_id', 5)->sum('price');
+        $operating_exprenses = Akunting::with('block', 'subCategory', 'ct')->select(
+            \DB::raw('SUM(price) as price'),
+            \DB::raw('block_id'),
+            \DB::raw('category_id'),
+            \DB::raw('sub_category_id')
+        )->where('status',0)->where('category_id', 3)->groupBy('category_id', 'sub_category_id')->orderBy('sub_category_id')->get();
 
-        $dropping = Akunting::whereBetween('date', [$startWeek, $endWeek])
-        ->where('category_id', 2)->where('sub_category_id', 4)->where('sub_sub_category_id', 6)->sum('price');
-
-        $road = Akunting::whereBetween('date', [$startWeek, $endWeek])
-        ->where('category_id', 2)->where('sub_category_id', 5)->where('sub_sub_category_id', 7)->sum('price');
-
-        $channel = Akunting::whereBetween('date', [$startWeek, $endWeek])
-        ->where('category_id', 2)->where('sub_category_id', 5)->where('sub_sub_category_id', 8)->sum('price');
-
-        $fasum = Akunting::whereBetween('date', [$startWeek, $endWeek])
-        ->where('category_id', 2)->where('sub_category_id', 5)->where('sub_sub_category_id', 9)->sum('price');
-
-        $split = Akunting::whereBetween('date', [$startWeek, $endWeek])
-        ->where('category_id', 2)->where('sub_category_id', 6)->where('sub_sub_category_id', 10)->sum('price');
-
-        $imb = Akunting::whereBetween('date', [$startWeek, $endWeek])
-        ->where('category_id', 2)->where('sub_category_id', 6)->where('sub_sub_category_id', 11)->sum('price');
-
-        $listrik_kwh = Akunting::whereBetween('date', [$startWeek, $endWeek])
-        ->where('category_id', 2)->where('sub_category_id', 8)->where('sub_sub_category_id', 13)->sum('price');
-
-        $marketing = Akunting::whereBetween('date', [$startWeek, $endWeek])
-        ->where('category_id', 3)->where('sub_category_id', 10)->sum('price');
-
-        $employee = Akunting::whereBetween('date', [$startWeek, $endWeek])
-        ->where('category_id', 3)->where('sub_category_id', 11)->sum('price');
-
-        $office_tools = Akunting::whereBetween('date', [$startWeek, $endWeek])
-        ->where('category_id', 3)->where('sub_category_id', 12)->where('sub_sub_category_id', 14)->sum('price');
-
-        $office_supplies = Akunting::whereBetween('date', [$startWeek, $endWeek])
-        ->where('category_id', 3)->where('sub_category_id', 12)->where('sub_sub_category_id', 15)->sum('price');
-
-        $office_operational = Akunting::whereBetween('date', [$startWeek, $endWeek])
-        ->where('category_id', 3)->where('sub_category_id', 12)->where('sub_sub_category_id', 16)->sum('price');
-
-        $bank_interest = Akunting::whereBetween('date', [$startWeek, $endWeek])
-        ->where('category_id', 4)->where('sub_category_id', 13)->sum('price');
-
-        $debt = Akunting::whereBetween('date', [$startWeek, $endWeek])
-        ->where('category_id', 4)->where('sub_category_id', 14)->sum('price');
-
-        $loan_interest = Akunting::whereBetween('date', [$startWeek, $endWeek])
-        ->where('category_id', 5)->where('sub_category_id', 15)->sum('price');
-
-        $pay_debt = Akunting::whereBetween('date', [$startWeek, $endWeek])
-        ->where('category_id', 5)->where('sub_category_id', 16)->sum('price');
-
-
-        return view('pages.report.profit', 
+        $total_exprenses = Akunting::where('category_id',3)->sum('price');
+        // dd($operating_exprenses);
+        return view('pages.report.profit',
             compact(
-                'order_house','land_price','bphtb','measurement','official_license','bpn_license',
-                'dropping','road','channel','fasum','split', 'imb','listrik_kwh', 'marketing',
-                'employee','office_tools','office_supplies','office_operational', 'bank_interest',
-                'debt','loan_interest','pay_debt'
+                'housing_incomes',
+                'total_income',
+                'housing_outcomes',
+                'total_per_blocks',
+                'total_outcome',
+                'operating_exprenses',
+                'total_exprenses'
             )
         );
     }

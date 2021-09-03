@@ -79,13 +79,13 @@
 </script>
 @endsection
 @section('link')
-<link rel="stylesheet" href="assets/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css">
+<link rel="stylesheet" href="public/assets/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css">
 
 @endsection
 @section('script')
 
-<script src="{{asset('assets/libs/moment/moment.js')}}"></script>
-<script src="{{asset('assets/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js')}}"></script>
+<script src="{{asset('public/assets/libs/moment/moment.js')}}"></script>
+<script src="{{asset('public/assets/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js')}}"></script>
 
 <script>
     $(function () {

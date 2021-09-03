@@ -22,6 +22,15 @@
                 </select>
             </div>
             <div class="form-group">
+                <label for="">Blocks <span style="color:red">*</span> </label>
+                <select name="block_id" id="block_id" class="form-control">
+                    <option value="" disabled selected>-- Pilih --</option>
+                    @foreach ($blocks as $block)
+                        <option value="{{ $block->id }}">{{ $block->name_block }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="">Kategori <span style="color:red">*</span> </label>
                 <select name="category_id" id="category_id" class="form-control">
                     <option value="" disabled selected>-- Pilih --</option>
@@ -31,7 +40,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="">Sub Kategori</label>
+                <label for="">Sub Kategori <span style="color:red">*</span></label>
                 <select name="sub_category_id" id="show-sub" class="form-control">
                     <option value="">--Pilih --</option>
                 </select>
@@ -73,14 +82,14 @@
 
 <script>
 
-    const url = 'http://localhost:8000/api/';
+    const url = 'http://localhost/perumahan/api/';
     const showSub = document.querySelector('#show-sub');
     const showSubSub = document.querySelector('#show-sub-sub');
     const chooseCategory = document.querySelector('#category_id');
 
     chooseCategory.addEventListener('change', async function() {
         const subCategory = await search(chooseCategory.value);
-        // option = '';
+
         for(i = showSub.options.length-1; i >= 0; i--){
             showSub.options[i] = null
         }
@@ -132,6 +141,6 @@
     }
 
 </script>
-<script src="{{ asset('assets/js/money.js') }}"></script>
+<script src="{{ asset('public/assets/js/money.js') }}"></script>
 
 @endsection
